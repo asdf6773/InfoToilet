@@ -1,0 +1,24 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <script language="javascript" type="text/javascript" src="http://192.168.137.1:4000/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://192.168.137.1:4000/user')
+    </script>
+    <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post">
+        <input type="file" name="imgUploader"/>
+        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+    </form>
+</body>
+
+</html>

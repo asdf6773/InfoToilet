@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+  <script src="/socket.io/socket.io.js"></script>
+  <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post">
+    <input type="file" name="imgUploader" multiple />
+    <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+</form>
+</body>
+
+</html>
