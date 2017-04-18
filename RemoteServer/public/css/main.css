@@ -1,0 +1,68 @@
+#file {
+    display: none;
+}
+
+body {
+    font-family: 'Varela Round', sans-serif;
+    font-family: 16px;
+}
+
+h1 {
+    color: #3c4954;
+    text-align: center;
+    margin-top: 100px;
+    font-size: 36px;
+}
+
+p {
+    color: #a4b0b9;
+    line-height: 200%;
+}
+
+* {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-div {
+    margin-top: 50px;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+}
+
+.fa {
+    margin-right: 10px;
+}
+
+.input-label:hover {
+    background: #aaaaaa;
+    cursor: pointer;
+}
+.submit-label:hover {
+    background: #aaeeaa;
+    cursor: pointer;
+}
+
+.submit-label {
+    width: 100%;
+    background: #aaeeaa;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.input-label {
+    width: 100%;
+    background: #bbbbbb;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+#btnSubmit {
+    display: none;
+}

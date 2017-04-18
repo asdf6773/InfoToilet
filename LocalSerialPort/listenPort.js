@@ -29,7 +29,7 @@ io.sockets.on('connection', function(socket) {
         lastFlush = flush;
         if (flush === true && send === false) {
             send = true;
-            socket.broadcast.emit('flush', flush);
+            socket.broadcast.emit('flushFromToilet', flush);
         }
     }, 200);
 
@@ -71,6 +71,6 @@ myPort.on('data', function(data) {
         }
         // flag=false;
     }, 200);
-//      console.log(flush + " " + send)
+      console.log(flush + " " + send)
 
 })

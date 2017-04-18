@@ -2,6 +2,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://192.168.137.1:4000/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="http://192.168.137.1:4000/css/main.css">
     <style>
         body {
             padding: 0;
@@ -11,14 +14,29 @@
 </head>
 
 <body>
+    <h1>Info Toilet</h1>
+    <p>Please upload any image as you want</p>
+    <script language="javascript" type="text/javascript" src="http://192.168.137.1:4000/jquery-3.2.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="http://192.168.137.1:4000/app.js"></script>
+
     <script language="javascript" type="text/javascript" src="http://192.168.137.1:4000/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://192.168.137.1:4000/user')
     </script>
-    <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post">
-        <input type="file" name="imgUploader"/>
-        <input type="submit" name="submit" id="btnSubmit" value="Upload" />
-    </form>
+    <div class="form-div">
+        <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post">
+            <label for="file" class="input-label">
+            <i class="fa fa-file-image-o" aria-hidden="true"></i>
+            <span id="label_span"> Select Image File </span>
+            </label>
+            <input id="file" type="file" accept="image/gif,image/jpeg,image/png,image/jpg" name="imgUploader" />
+            <label for="btnSubmit" class="submit-label">
+            <span id="label_span">Upload</span>
+            </label>
+            <input type="submit" name="submit" id="btnSubmit" value="Upload" />
+        </form>
+    </div>
+    </div>
 </body>
 
 </html>
