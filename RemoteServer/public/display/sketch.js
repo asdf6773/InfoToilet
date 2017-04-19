@@ -33,7 +33,7 @@ function setup() {
     flush.position(0, height);
     upload.position(width / 2, height);
     flush.mousePressed(flushing);
-    socket = io.connect('./projector')
+    socket = io.connect('http://59.110.143.143:4000/projector')
     //    socketToLocal = io.connect('http://localhost:5000/')
     // socket = io.connect('http://127.0.0.1:4000/')
     // socketToLocal = io.connect('http://127.0.0.1:5000/');
