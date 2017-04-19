@@ -49,7 +49,7 @@ function setup() {
 function loadBuffer(buffer) {
     if (!bufferLoaded) {
         for (var i = 0; i < buffer.length; i++) {
-            img.push(loadImage("./images/" + buffer[i]));
+            img.push(loadImage("http://59.110.143.143:4000/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
         }
         bufferLoaded = true;
