@@ -10,14 +10,28 @@ var attractForce = 0;
 var imgPos = [];
 var attractor;
 var bufferLoaded = false;
+var upload;
+var hole;
 
 function setup() {
+    hole = 50;
+
     imageMode(CENTER);
     noiseSeed = 0;
-    createCanvas(600, 600);
+    createCanvas(windowWidth, windowHeight - 80);
     attractor = createVector(width / 2, height / 2);
     flush = createButton('flush');;
-    flush.position(20, height + 20);
+    upload = createA('/', 'upload');
+    flush.class('toiletButton');
+    upload.class('toiletUpload');
+    flush.style("font-size", "15px");
+    upload.style("font-size", "15px");
+    //upload.class("submit-label");
+    flush.size(width / 2, 80)
+    //  upload.class('toiletButton')
+    upload.size(width / 2, 80)
+    flush.position(0, height);
+    upload.position(width / 2, height);
     flush.mousePressed(flushing);
     socket = io.connect('http://192.168.137.1:4000/projector')
     socketToLocal = io.connect('http://192.168.137.1:5000/')
@@ -27,6 +41,8 @@ function setup() {
     socket.on('flushOther', flushFromToilet);
     socketToLocal.on('flushFromToilet', flushFromOtherClient);
     socket.on('imageBuffer', loadBuffer);
+    // var ipAdress = createP('WIFI: MonkeySauce  => 192.168.137.1:4000').addClass('text');
+    // ipAdress.position(20, height + 50)
 
 }
 
@@ -70,22 +86,43 @@ function flushing() {
 }
 
 function draw() {
+    if (attractForce != 0) {
+        // imgPos[i].pos.z -= 0.1;
+        attractor.z -= 0.05
+        if (imgPos[0])
+            console.log(imgPos[0].pos.z)
+    }
+    if (attractForce === 0) {
+        // imgPos[i].pos.z -= 0.1;
+        attractor.z -= 0;
+
+    }
     if (img.length === 0) {
         attractForce = 0;
     }
     background(200);
+    fill(0)
+    ellipse(width / 2, height / 2, 50, 50);
     for (var i = 0; i < imgPos.length; i++) {
         var pos = imgPos[i].pos
         imgPos[i].update(attractForce);
+        // if (attractForce != 0) {
+        //     // imgPos[i].pos.z -= 0.1;
+        //         attractor.y
+        //     console.log(imgPos[i].pos.z)
+        // }
         image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, 200, 200);
-        if (pos.x > 280 && pos.x < 320 && pos.y > 280 && pos.y < 320) {
+        if (pos.x > width / 2 - hole / 2 && pos.x < width / 2 + hole / 2 && height / 2 - hole / 2 && height / 2 + hole / 2 && pos.z < -10) {
             imgPos.splice(i);
             img.splice(i);
         }
     }
+    attractor.x = width / 2 + 200 * cos(noiseSeed)
+    attractor.y = height / 2 + 200 * sin(noiseSeed)
+    //  ellipse(attractor.x, attractor.y, 50, 50);
     // for (var i = 0; i < img.length; i++) {
     //     image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, 200, 200);
     // }
     // console.log(attractForce)
-    noiseSeed += 0.0001;
+    noiseSeed += 0.1;
 }

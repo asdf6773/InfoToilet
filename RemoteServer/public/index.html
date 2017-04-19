@@ -22,20 +22,29 @@
     <script language="javascript" type="text/javascript" src="http://192.168.137.1:4000/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://192.168.137.1:4000/user')
+
+        function mySubmit(flag) {
+            if ($("#file").val() == "") {
+                alert("尚未选择图片")
+                return false;
+            } else {
+                true
+            }
+        }
     </script>
     <div class="form-div">
-        <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post">
+        <form id="frmUploader" enctype="multipart/form-data" action="api/Upload/" method="post" onsubmit="return mySubmit(true)">
             <label for="file" class="input-label">
             <i class="fa fa-file-image-o" aria-hidden="true"></i>
             <span id="label_span"> Select Image File </span>
             </label>
-            <input id="file" type="file" accept="image/gif,image/jpeg,image/png,image/jpg" name="imgUploader" />
+            <input id="file" type="file" name="imgUploader" />
+            <!-- accept="image/gif, image/jpeg, image/png, image/jpg" -->
             <label for="btnSubmit" class="submit-label">
             <span id="label_span">Upload</span>
             </label>
             <input type="submit" name="submit" id="btnSubmit" value="Upload" />
         </form>
-    </div>
     </div>
 </body>
 

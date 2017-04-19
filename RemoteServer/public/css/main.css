@@ -2,11 +2,32 @@
     display: none;
 }
 
-body {
-    font-family: 'Varela Round', sans-serif;
-    font-family: 16px;
+<!-- a:link {
+    text-decoration: none;
 }
 
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+-->body {
+    font-family: 'Varela Round', sans-serif;
+    font-family: 16px;
+    overflow: hidden;
+}
+button{
+
+border: none;
+
+}
 h1 {
     color: #3c4954;
     text-align: center;
@@ -42,6 +63,7 @@ footer {
     background: #aaaaaa;
     cursor: pointer;
 }
+
 .submit-label:hover {
     background: #aaeeaa;
     cursor: pointer;
@@ -50,6 +72,49 @@ footer {
 .submit-label {
     width: 100%;
     background: #aaeeaa;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.transit {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    background: #aaeeaa;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.toiletButton {
+    /*font-size：100px;*/
+     position: relative;
+    /*margin-top: 50px;*/
+    width: 100%;
+    background: #3c4954;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.toiletUpload{
+    /*font-size：100px;*/
+     position: relative;
+    /*margin-top: 50px;*/
+    width: 100%;
+    background: #74858e;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+
+.transitToToilet {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    background: #bbbbbb;
     color: #ffffff;
     padding: 30px;
     transition: 0.3s;

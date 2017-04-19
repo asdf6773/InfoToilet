@@ -3,7 +3,7 @@
 
 function Particle(attractor) {
   //  this.attractor = attractor_;
-    this.pos = createVector(random(width), random(height));
+    this.pos = createVector(random(50,width-50), random(50,height-50));
     this.vel = createVector();
     this.acc = createVector();
     this.lifespan = 255;
