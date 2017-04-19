@@ -6,7 +6,7 @@
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="http://192.168.137.1:4000/css/main.css">
+    <link rel="stylesheet" type="text/css" href="http://localhost:4000/css/main.css">
     <style>
         body {
             padding: 0;
@@ -16,17 +16,17 @@
 </head>
 
 <body>
-    <script language="javascript" type="text/javascript" src="http://192.168.137.1:4000/socket.io/socket.io.js"></script>
+    <script language="javascript" type="text/javascript" src="http://localhost:4000/socket.io/socket.io.js"></script>
     <script>
         // var socket = io.connect('http://127.0.0.1:4000/')
-        var socket = io.connect('http://192.168.137.1:4000/uploaded')
+        var socket = io.connect('http://localhost:4000/uploaded')
     </script>
     <h1>
     Success!</h1>
     <div class="form-div">
         <form id="frmUploader" enctype="multipart/form-data">
-            <a class="transitToToilet" id="upload" href="http://192.168.137.1:4000/display" class="button">Toilet</a>
-            <a class="transit" id="upload" href="http://192.168.137.1:4000/" class="button">Upload again</a>
+            <a class="transitToToilet" id="upload" href="http://localhost:4000/display" class="button">Toilet</a>
+            <a class="transit" id="upload" href="http://localhost:4000/" class="button">Upload again</a>
         </form>
     </div>
 </body>
