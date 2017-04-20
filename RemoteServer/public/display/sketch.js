@@ -52,10 +52,9 @@ function loadBuffer(buffer) {
         for (var i = 0; i < buffer.length; i++) {
             img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
-            console.log(bufferLoaded);
         }
         bufferLoaded = true;
-        console.log(bufferLoaded);
+        console.log(bufferLoaded+" "+ buffer.length);
     }
 }
 
@@ -72,7 +71,7 @@ function flushFromToilet(data) {
 }
 
 function addImage(data) {
-    var temp = loadImage("http://" + ip + "/images/" + data);
+    var temp = loadImage("http://" + ip + "/Images/" + data);
     console.log(data);
     imgPos.push(new Particle(attractor));
     img.push(temp);
