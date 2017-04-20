@@ -46,7 +46,7 @@ app.post("/api/Upload", function(req, res) {
     });
 });
 
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'))
 
 var dt = {
     x: 2,

@@ -17,9 +17,10 @@
 
 <body>
     <script language="javascript" type="text/javascript" src="./socket.io/socket.io.js"></script>
+        <script language="javascript" type="text/javascript" src="./display/ip.js"></script>
     <script>
         // var socket = io.connect('http://127.0.0.1:4000/')
-        var socket = io.connect('http://59.110.143.143:4000/uploaded')
+        var socket = io.connect('http://'+ip+'/uploaded')
     </script>
     <h1>
     Success!</h1>

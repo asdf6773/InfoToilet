@@ -33,23 +33,22 @@ function setup() {
     flush.position(0, height);
     upload.position(width / 2, height);
     flush.mousePressed(flushing);
-    socket = io.connect('http://59.110.143.143:4000/projector')
-    //    socketToLocal = io.connect('http://localhost:5000/')
+  //  socket = io.connect('http://59.110.143.143:4000/projector')
+    socket = io.connect('http://'+ip+'/projector')
+    // socketToLocal = io.connect('http://'+ipAddress+':5000/')
     // socket = io.connect('http://127.0.0.1:4000/')
     // socketToLocal = io.connect('http://127.0.0.1:5000/');
     socket.on('uploadName', addImage);
     socket.on('flushOther', flushFromToilet);
     //  socketToLocal.on('flushFromToilet', flushFromOtherClient);
     socket.on('imageBuffer', loadBuffer);
-    // var ipAdress = createP('WIFI: MonkeySauce  => localhost:4000').addClass('text');
-    // ipAdress.position(20, height + 50)
 
 }
 
 function loadBuffer(buffer) {
     if (!bufferLoaded) {
         for (var i = 0; i < buffer.length; i++) {
-            img.push(loadImage("http://59.110.143.143:4000/Images/" + buffer[i]));
+            img.push(loadImage("http://"+ip+"/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
         }
         bufferLoaded = true;

@@ -16,12 +16,12 @@
 <body>
     <h1>Info Toilet</h1>
     <p>Please upload any image as you want</p>
+    <script language="javascript" type="text/javascript" src="./display/ip.js"></script>
     <script language="javascript" type="text/javascript" src="./jquery-3.2.1.min.js"></script>
-    <script language="javascript" type="text/javascript" src="./app.js"></script>
-
     <script language="javascript" type="text/javascript" src="./socket.io/socket.io.js"></script>
+    <script language="javascript" type="text/javascript" src="./app.js"></script>
     <script>
-        var socket = io.connect('http://59.110.143.143:4000/user')
+        var socket = io.connect("http://" + ip + "/user")
 
         function mySubmit(flag) {
             if ($("#file").val() == "") {
