@@ -33,8 +33,8 @@ function setup() {
     flush.position(0, height);
     upload.position(width / 2, height);
     flush.mousePressed(flushing);
-  //  socket = io.connect('http://59.110.143.143:4000/projector')
-    socket = io.connect('http://'+ip+'/projector')
+    //  socket = io.connect('http://59.110.143.143:4000/projector')
+    socket = io.connect('http://' + ip + '/projector')
     // socketToLocal = io.connect('http://'+ipAddress+':5000/')
     // socket = io.connect('http://127.0.0.1:4000/')
     // socketToLocal = io.connect('http://127.0.0.1:5000/');
@@ -48,8 +48,17 @@ function setup() {
 function loadBuffer(buffer) {
     if (!bufferLoaded) {
         for (var i = 0; i < buffer.length; i++) {
-            img.push(loadImage("http://"+ip+"/Images/" + buffer[i]));
-            imgPos.push(new Particle(attractor));
+            function waitingForUpload() {
+                var tempI = i;
+                if (loadImage("http://" + ip + "/Images/" + buffer[tempI])) {
+                    img.push(loadImage("http://" + ip + "/Images/" + buffer[tempI]));
+                    imgPos.push(new Particle(attractor));
+                } else {
+                    setTimeout(waitingForUpload, 1000)
+                }
+            }
+            waitingForUpload();
+
         }
         bufferLoaded = true;
     }
@@ -57,7 +66,6 @@ function loadBuffer(buffer) {
 
 function flushFromOtherClient() {
     attractForce = 5;
-    //  socket.emit('flushFromToilet', attractForce);
     console.log("flushFromOther");
 }
 
@@ -77,9 +85,6 @@ function addImage(data) {
 
 function flushing() {
     attractForce = 5;
-    // setTimeout(function(){
-    //       attractForce =0;
-    // },2000)
     socket.emit('flushFromMobile', attractForce);
     console.log('flush away~')
 }
@@ -105,11 +110,6 @@ function draw() {
     for (var i = 0; i < imgPos.length; i++) {
         var pos = imgPos[i].pos
         imgPos[i].update(attractForce);
-        // if (attractForce != 0) {
-        //     // imgPos[i].pos.z -= 0.1;
-        //         attractor.y
-        //     console.log(imgPos[i].pos.z)
-        // }
         image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, 200, 200);
         if (pos.x > width / 2 - hole / 2 && pos.x < width / 2 + hole / 2 && height / 2 - hole / 2 && height / 2 + hole / 2 && pos.z < -10) {
             imgPos.splice(i);
@@ -118,10 +118,5 @@ function draw() {
     }
     attractor.x = width / 2 + 200 * cos(noiseSeed)
     attractor.y = height / 2 + 200 * sin(noiseSeed)
-    //  ellipse(attractor.x, attractor.y, 50, 50);
-    // for (var i = 0; i < img.length; i++) {
-    //     image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, 200, 200);
-    // }
-    // console.log(attractForce)
     noiseSeed += 0.1;
 }
