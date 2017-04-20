@@ -41,9 +41,8 @@ app.post("/api/Upload", function(req, res) {
             //  alert(failed);
             return res.end("Something went wrong!");
         }
-        setTimeout(function() {
-            io.of('/projector').emit('uploadName', uploadName)
-        }, 2000)
+
+        io.of('/projector').emit('uploadName', uploadName);
 
         return res.redirect("/uploadSuccess.html");
     });
