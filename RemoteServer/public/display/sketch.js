@@ -69,7 +69,7 @@ function flushFromToilet(data) {
 }
 
 function addImage(data) {
-    var temp = loadImage("./images/" + data);
+    var temp = loadImage("/images/" + data);
     console.log(data);
     imgPos.push(new Particle(attractor));
     img.push(temp);
