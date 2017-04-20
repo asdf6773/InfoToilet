@@ -42,8 +42,9 @@ function setup() {
     socket.on('flushOther', flushFromToilet);
     //  socketToLocal.on('flushFromToilet', flushFromOtherClient);
     socket.on('imageBuffer', loadBuffer);
-  //   var temp1 = loadImage("./images/1212ws.jpg");
-  // console.log(temp1);
+    //   var temp1 = loadImage("./images/1212ws.jpg");
+    // console.log(temp1);
+
 }
 
 function loadBuffer(buffer) {
@@ -51,8 +52,10 @@ function loadBuffer(buffer) {
         for (var i = 0; i < buffer.length; i++) {
             img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
+            console.log(bufferLoaded);
         }
         bufferLoaded = true;
+        console.log(bufferLoaded);
     }
 }
 
