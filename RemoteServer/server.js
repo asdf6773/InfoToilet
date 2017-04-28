@@ -128,7 +128,7 @@ io.of("/test").on('connection', function(socket) {
           var buffer = new Buffer('empty', 'base64');//?????????????????????????????????????
         }
         var newUpload = 'img_' + Date.now() + ".png"
-        fs.writeFile("public/images/"+newUpload, buffer, (err) => {
+        fs.writeFile("public/Images/"+newUpload, buffer, (err) => {
             if (err) {
                 io.of('/').emit('error');
                 throw err;
