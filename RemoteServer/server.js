@@ -1,6 +1,7 @@
 var express = require('express');
 // var serialport = require("serialport");
 // var portname = process.argv[2];
+var fs = require('fs');
 var app = express();
 var multer = require('multer');
 var bodyParser = require('body-parser');
@@ -32,8 +33,14 @@ var upload = multer({
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/index.html");
 });
+app.get("/test", function(req, res) {
+    res.sendFile(__dirname + "/public/closestool/test.html");
+});
 app.get("/display", function(req, res) {
     res.sendFile(__dirname + "/public/display/display.html");
+});
+app.get("/console", function(req, res) {
+    res.sendFile(__dirname + "/public/console/console.html");
 });
 app.post("/api/Upload", function(req, res) {
     upload(req, res, function(err) {
@@ -108,6 +115,35 @@ io.of("/projector").on('connection', function(socket) {
         }
     });
 });
+//new uploadMode
+io.of("/test").on('connection', function(socket) {
+    socket.on('imgData', saveImage);
+
+    function saveImage(data) {
+        var dataUrl = data;
+        // console.log(dataUrl)
+        if (dataUrl.split(",")) {
+            var buffer = new Buffer(dataUrl.split(",")[1], 'base64');
+        }else{
+          var buffer = new Buffer('empty', 'base64');//?????????????????????????????????????
+        }
+        var newUpload = 'img_' + Date.now() + ".png"
+        fs.writeFile("public/images/"+newUpload, buffer, (err) => {
+            if (err) {
+                io.of('/').emit('error');
+                throw err;
+            } else {
+                // io.of('/').emit('uploaded');
+                io.of('/projector').emit('uploadName', newUpload);
+                console.log(socket.id)
+                socket.emit('uploaded');
+            }
+        });
+        console.log('get');
+    }
+})
+
+
 
 // app.get('/', handle);
 //
