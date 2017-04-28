@@ -124,17 +124,18 @@ io.of("/test").on('connection', function(socket) {
         // console.log(dataUrl)
         if (dataUrl.split(",")) {
             var buffer = new Buffer(dataUrl.split(",")[1], 'base64');
-        }else{
-          var buffer = new Buffer('empty', 'base64');//?????????????????????????????????????
+        } else {
+            var buffer = new Buffer('empty', 'base64'); //?????????????????????????????????????
         }
         var newUpload = 'img_' + Date.now() + ".png"
-        fs.writeFile("public/Images/"+newUpload, buffer, (err) => {
+        fs.writeFile("public/Images/" + newUpload, buffer, (err) => {
             if (err) {
                 io.of('/').emit('error');
                 throw err;
             } else {
                 // io.of('/').emit('uploaded');
                 io.of('/projector').emit('uploadName', newUpload);
+                imageBuffer.push(newUpload);
                 console.log(socket.id)
                 socket.emit('uploaded');
             }
