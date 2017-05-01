@@ -167,7 +167,7 @@ io.of("/test").on('connection', function(socket) {
     function saveImage(data) {
         var dataUrl = data;
         // console.log(dataUrl)
-        if (dataUrl.split(",")) {
+        if (dataUrl.split(",")) {//bug
             var buffer = new Buffer(dataUrl.split(",")[1], 'base64');
         } else {
             var buffer = new Buffer('empty', 'base64'); //?????????????????????????????????????
