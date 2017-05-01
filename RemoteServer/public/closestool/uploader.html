@@ -16,13 +16,15 @@
             margin: 0;
         }
     </style>
+
 </head>
 
 <body ontouchmove="event.preventDefault()">
+
+    <label for="entrance" id="entry" class="entry">
+        <a id="entrance"></a>
     <div class="wrapper" id="wrapper" style="height:40px;">
-
-
-        <canvas id=canvasBG width=400 height=200></canvas>
+<canvas id=canvasBG width=400 height=200></canvas>
         <canvas id=canvas width=400 height=200></canvas>
     </div>
 
@@ -32,12 +34,12 @@
     </label>
     <input type="file" id="imgFile" multiple="multiple">
 
-    <label for="imgFile" id="img" class="divide">
+    <label  class="divide">
     <span id="label_span"><br/> </span>
     </label>
 
     <label for="submit" id="sub" class="submit-label">
-    <span id="label_span">丢 弃</span>
+    <span id="label_span">丢 入</span>
     </label>
     <input type="button" id="submit" value="submit">
 

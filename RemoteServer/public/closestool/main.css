@@ -5,6 +5,8 @@
 }
 
 body {
+    font-family: 'Varela Round', sans-serif;
+    font-family: 15px;
     overflow: hidden;
 }
 
@@ -49,12 +51,26 @@ input {
 }
 
 .divide {
-  width:1px;
+    width: 1px;
     padding-top: 20px;
     background: #B4CBD4;
     position: absolute;
+    bottom:10px;
     left: 50%;
-    z-index:999;
+    z-index: 999;
+}
+
+#entrance {
+    background: url(../lib/magnifying.png);
+
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    border-radius: 40px;
+    /*background: #E0EEE7;*/
+    /*color: #527283;*/
 }
 
 .input-label {
@@ -75,6 +91,10 @@ input {
 
 #imgFile {
     display: none;
+}
+
+a {
+    /*display: none;*/
 }
 
 #submit {

@@ -33,28 +33,33 @@ document.oncontextmenu = function() {
 }
 
 function setup() {
-    waterHeight = 1
 
+    waterHeight = 1
+     document.getElementById('back').href='http://' + ip + '/';
     hole = 50;
     bg = loadImage("http://" + ip + "/lib/toilet-display.png")
     layer = loadImage("http://" + ip + "/lib/toilet-layer.png")
     imageMode(CENTER);
     noiseSeed = 0;
-    createCanvas(windowWidth, windowHeight - 80);
+    createCanvas(windowWidth, windowHeight - 50);
     attractor = createVector(width / 2, 170); //
-    flush = createButton('flush');
-    upload = createA('/test', 'upload');
+    flush = createButton('冲水');
+    // upload = createA('/', '丢入');
+    divide = createA('/', '');
     flush.class('toiletButton');
     flush.id('flush');
-    upload.class('toiletUpload');
+    // upload.class('toiletUpload');
     flush.style("font-size", "15px");
-    upload.style("font-size", "15px");
+    // upload.style("font-size", "15px");
     //upload.class("submit-label");
-    flush.size(width / 2, 80)
+    flush.size(width , 80)
     //  upload.class('toiletButton')
-    upload.size(width / 2, 80)
-    flush.position(0, height);
-    upload.position(width / 2, height);
+    // upload.size(width / 2, 80)
+    flush.position(0, height - 30);
+    //   divide.class('divide');
+    // divide.size(1, 80)
+    // divide.position(width / 2, height - 30);
+    // upload.position(width / 2, height - 30);
     flush.mousePressed(flushing);
     //  socket = io.connect('http://59.110.143.143:4000/projector')
     socket = io.connect('http://' + ip + '/projector')
@@ -74,21 +79,49 @@ function setup() {
     //  }
     socket.on('isFlushingSetup', function(status) {
         console.log("Origial " + status)
+
         isFlushing = status;
+        if (isFlushing) {
+            flush.elt.innerHTML = "正在冲水"
+            document.getElementById('flush').style.background = "#BDD9E0";
+            document.getElementById('flush').style.color = "#AAAAAA";
+        } else {
+            flush.elt.innerHTML = "冲水"
+            document.getElementById('flush').style.background = "#E0EEE7";
+            document.getElementById('flush').style.color = "#527283";
+        }
         //    if(!isFlushing)addWater();
+    });
+    socket.on('limitFromServer', function(limitFromServer) {
+        limit = limitFromServer;
+        console.log(limit)
     });
     socket.on('isFlushing', function(status) {
 
         isFlushing = status;
+        if (isFlushing) {
+            flush.elt.innerHTML = "正在冲水"
+            document.getElementById('flush').style.background = "#BDD9E0";
+            document.getElementById('flush').style.color = "#AAAAAA";
+        } else {
+            flush.elt.innerHTML = "冲水"
+            document.getElementById('flush').style.background = "#E0EEE7";
+            document.getElementById('flush').style.color = "#527283";
+        }
         //    if(!isFlushing)addWater();
     });
     socket.on('imageScaleBuffer', function(imageScaleBuffer) {
         imageRandomBuffer = imageScaleBuffer;
-        for (var i = 0; i < imageScaleBuffer; i++) {
+        for (var i = 0; i < imageScaleBuffer.length; i++) {
 
-            imgPos[i].scale =  imageRandomBuffer[i];
+            imgPos[i].scale = imageRandomBuffer[i];
         }
     });
+    //    console.log(document.getElementById(flush));
+    console.log(flush)
+    console.log()
+    // // document.getElementById(flush).value = '正在冲水'
+
     //    flush.touchEnded(recover);
 }
 
@@ -121,6 +154,13 @@ function loadBuffer(buffer) {
         }
         bufferLoaded = true;
 
+    } else {
+        img.splice(0, img.length);
+        imgPos.splice(0, imgPos.length);
+        for (var i = 0; i < buffer.length; i++) {
+            img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
+            imgPos.push(new Particle(attractor));
+        }
     }
 }
 
@@ -188,7 +228,7 @@ function draw() {
         imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
         rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
         scale(imgPos[i].scale);
-        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 30), img[i].height / (constrain(width, 0, 400) / 30));
+        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 90), img[i].height / (constrain(width, 0, 400) / 90));
         pop();
 
     }
@@ -244,23 +284,26 @@ function draw() {
     }
     for (var i = 0; i < imgPos.length; i++) {
         if (imgPos[i].scale < 0.1 && limit > 0) {
-            // imgPos.splice(i, 1);
-            // img.splice(i, 1);
+            imgPos.splice(i, 1);
+            img.splice(i, 1);
             socket.emit('imgFlushed', i);
             limit -= 1
         }
+
     }
-    console.log(limit)
+
+    //  console.log(flush)
 }
 
 
 function addWater() {
 
-    limit = 2;
+    flush.elt.innerHTML = "正在冲水"
     if (flag) {
         flag = false;
         rising = true;
-        document.getElementById('flush').style.background = "#BDD9E0";
+        //    console.log(document.getElementById(flush))
+
         rise = setInterval(function() {
             if (waterHeight < 200) {
                 //console.log("addWater")
@@ -290,5 +333,5 @@ function recover() {
             waterHeight -= (200 - waterHeight) / 5;
         }
     }, 1000 / 25)
-    document.getElementById('flush').style.background = "#E0EEE7";
+    //document.getElementById('flush').style.background = "#E0EEE7";
 }

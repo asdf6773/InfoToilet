@@ -1,29 +1,11 @@
-function resizeCanvas() {
-    // if (window.innerWidth <= 320) {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight - 50;
-    // } else {
-    //     w = canvas.width = 320;
-    //     h = canvas.height = window.innerHeight - 50;
-    //
-    // }
-    //
-    // if (window.innerWidth <= 320) {
-    w = canvasBG.width = window.innerWidth;
-    h = canvasBG.height = window.innerHeight - 50;
-    // } else {
-    //     w = canvasBG.width = 320;
-    //     h = canvasBG.height = window.innerHeight - 50;
-    // }
-    var elem = document.getElementById('wrapper');
-    elem.style.height = canvasBG.height + "px"
-    var imgLabel = document.getElementById('img');
-    var subLabel = document.getElementById('sub');
-    //  imgLabel.style.padding = window.innerWidth/4-imgLabel.style.width/4
-}
+// $(window).on("orientationchange", function() {
+//     event.stopPropagation();
+// });
 
 
 window.onload = function() {
+
+    document.getElementById('entrance').href = 'http://' + ip + '/display';
     // $("#imgFile").on("change", function(e) {
     //     var files = $(this)[0].files;
     //     var fileName = e.target.value.split('\\').pop();
@@ -41,13 +23,18 @@ window.onload = function() {
     resizeCanvas();
     var cw = canvas.width;
     var ch = canvas.height;
-
+    ctx.font = "18px Courier New";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#527283";
     ctx.save();
     toilet.src = 'http://' + ip + '/lib/toilet.png'
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     toilet.onload = function() {
+      setInterval(function(){
         ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width * 16 / 9);
+      },100)
+
     };
     ctx.restore();
     var socket = io.connect('http://' + ip + '/test');
@@ -130,11 +117,40 @@ window.onload = function() {
     input.addEventListener('change', handleFiles);
     //callback
 
+    function resizeCanvas() {
+        // if (window.innerWidth <= 320) {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight ;
+        // } else {
+        //     w = canvas.width = 320;
+        //     h = canvas.height = window.innerHeight - 50;
+        //
+        // }
+        //
+        // if (window.innerWidth <= 320) {
+        w = canvasBG.width = window.innerWidth;
+        h = canvasBG.height = window.innerHeight ;
+        // } else {
+        //     w = canvasBG.width = 320;
+        //     h = canvasBG.height = window.innerHeight - 50;
+        // }
+        var elem = document.getElementById('wrapper');
+        elem.style.height = canvasBG.height + "px"
+        var imgLabel = document.getElementById('img');
+        var subLabel = document.getElementById('sub');
+        //  imgLabel.style.padding = window.innerWidth/4-imgLabel.style.width/4
+        // if (toilet.complete) {
+        //     ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width * 16 / 9);
+        // }
+    }
 
     function handleFiles(e) {
+
         img = []
         size = []
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        //      if((e.target.files[0])
+        ctx.fillText("压缩中", window.innerWidth / 2, window.innerHeight / 2);
         //ctx.drawImage(toilet, 0, 0, 320, 600);
         completed = 0;
         for (var i = 0; i < e.target.files.length; i++) {
@@ -166,12 +182,16 @@ window.onload = function() {
                     orien[i] = this.exifdata.Orientation;
                     //    ctx.clearRect(0, 0, canvas.width, canvas.height);
                     //ctx.drawImage(toilet, 0, 0, 320, 600);
-                    console.log(i + " " + this.exifdata.Orientation)
+                    //      console.log(i + " " + this.exifdata.Orientation)
                 });
                 // alert a value
                 //  };
                 img[i].onload = addSize
                 img[i].onerror = function() {
+                    if (i === e.target.files.length - 1) {
+                        console.log(e.target.files.length)
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
                     console.log(img[0].error)
                     img[i].error = true;
                     console.log(img[0])
@@ -182,19 +202,27 @@ window.onload = function() {
                 }
 
                 function addSize() {
+
+                    if (i === e.target.files.length - 1) {
+                        console.log(e.target.files.length)
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    }
                     img[i].error = false;
                     size[i].iw = img[i].width;
                     size[i].ih = img[i].height;
                     if (size[i].ih >= size[i].iw) {
-                        var hei = window.innerWidth;
+                        var hei = 200;
+                        // var hei = window.innerWidth;
                         var wid = size[i].iw * hei / size[i].ih
+
                         // var wid = ch * size[i].iw / size[i].ih;
                         // var hei = size[i].ih * wid / size[i].iw;
                         size[i].iw = wid;
                         size[i].ih = hei;
                     } else {
-                        var hei = cw * size[i].ih / size[i].iw;
-                        var wid = size[i].iw * hei / size[i].ih
+                        var wid = 200;
+                        var hei = size[i].ih * wid / size[i].iw
+                        //    var wid = size[i].iw * hei / size[i].ih
                         size[i].iw = wid;
                         size[i].ih = hei;
                     }
@@ -215,7 +243,8 @@ window.onload = function() {
             alert("没有东西可以丢")
         } else if (moving || uploading) {
             if (uploading)
-                alert("慢一点,别着急:)")
+                // ctx.fillText("请稍等", window.innerWidth / 2, window.innerHeight / 2);
+                alert("稍等,别着急:)")
         } else {
             socket.emit('imgData', data);
             uploading = true;
@@ -263,6 +292,7 @@ window.onload = function() {
         ctx.restore();
 
     }
+
     function checkOrientation(orient) {
 
         switch (orient) {

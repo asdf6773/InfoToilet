@@ -10,7 +10,7 @@ var server = app.listen(4000);
 var io = socket(server);
 var uploadName;
 var flush = true;
-var limit =2;
+
 app.use(bodyParser.json());
 console.log("running on 4000;")
 //upload
@@ -32,12 +32,14 @@ var upload = multer({
     storage: Storage
 }).array("imgUploader", 1);
 
+
+var ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
 //router
+// app.get("/", function(req, res) {
+//     res.sendFile(__dirname + "/public/index.html");
+// });
 app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/public/index.html");
-});
-app.get("/test", function(req, res) {
-    res.sendFile(__dirname + "/public/closestool/test.html");
+    res.sendFile(__dirname + "/public/closestool/uploader.html");
 });
 app.get("/display", function(req, res) {
     res.sendFile(__dirname + "/public/display/display.html");
@@ -92,6 +94,7 @@ io.of("/user").on('connection', function(socket) {
 });
 var numOfFlushOver = 0;
 io.of("/projector").on('connection', function(socket) {
+    socket.emit('limitFromServer', ServerLimit);
     socket.emit('isFlushingSetup', isFlushing);
     io.of('/projector').emit('imageBuffer', imageBuffer);
     io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
@@ -99,12 +102,14 @@ io.of("/projector").on('connection', function(socket) {
     console.log(socket.id + ' ' + projectors.length)
     //projectorId.push(socket.id);
     socket.on('imgFlushed', function(i) {
-        if (limit > 0) {
+        io.of('/projector').emit('imageBuffer', imageBuffer);
+        io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
+        if (ServerLimit > 0) {
             console.log(i)
             imageScaleBuffer.splice(i, 1);
             imageBuffer.splice(i, 1);
             io.of('/projector').emit('flushByOther');
-            limit-=1;
+            ServerLimit -= 1;
         }
     });
     // socket.on('flushOver', function() {
@@ -118,16 +123,23 @@ io.of("/projector").on('connection', function(socket) {
     //     }
     //
     // });
+    socket.on('requestNewLimit', function() {
+        socket.emit('limitFromServer', ServerLimit)
+    });
     socket.on('flushPressed', function() {
+        //
         // console.log(i)
         isFlushing = true;
+        ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+        console.log(ServerLimit)
+        io.of('/projector').emit('limitFromServer', ServerLimit);
         io.of('/projector').emit('isFlushing', isFlushing);
         io.of('/projector').emit('flushPressedFromServer');
         setTimeout(function() {
-          limit=2;
+            limit = 2;
             isFlushing = false;
             io.of('/projector').emit('isFlushing', isFlushing);
-        }, 7000) //新进来的Socket没有触发回调函数
+        }, 6500) //新进来的Socket没有触发回调函数
     });
     socket.on('disconnect', function() {
 

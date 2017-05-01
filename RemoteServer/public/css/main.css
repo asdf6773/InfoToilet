@@ -20,20 +20,20 @@ a:active {
 
 -->body {
     font-family: 'Varela Round', sans-serif;
-    font-family: 16px;
+    font-family: 15px;
     overflow: hidden;
     -webkit-touch-callout: none;
--webkit-user-select: none;
--khtml-user-select: none;
--moz-user-select: none;
--ms-user-select: none;
-user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
-button{
 
-border: none;
-
+button {
+    border: none;
 }
+
 h1 {
     color: #3c4954;
     text-align: center;
@@ -92,6 +92,8 @@ footer {
     padding: 30px;
     transition: 0.3s;
 }
+
+
 /*.toiletButton:hover {
     background: #aaaaaa;
     cursor: pointer;
@@ -101,20 +103,40 @@ footer {
     background: #aaeeaa;
     cursor: pointer;
 }*/
+
 .toiletButton {
     /*font-size：100px;*/
-     position: relative;
+    position: relative;
     /*margin-top: 50px;*/
     width: 100%;
     background: #E0EEE7;
     color: #527283;
-    padding: 30px;
-    transition: 0.3s;
+    padding: 20px;
+    transition: 0.9s;
 }
+#back {
+    background: url(../lib/back.png);
 
-.toiletUpload{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    border-radius: 40px;
+    /*background: #E0EEE7;*/
+    /*color: #527283;*/
+}
+.divide {
+    width: 1px;
+    padding-top: 20px;
+    background: #B4CBD4;
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+}
+.toiletUpload {
     /*font-size：100px;*/
-     position: relative;
+    position: relative;
     /*margin-top: 50px;*/
     width: 100%;
     /*z-index:999;*/
@@ -124,14 +146,13 @@ footer {
     transition: 0.3s;
 }
 
-
 .transitToToilet {
     position: relative;
     margin-top: 50px;
     width: 100%;
     background: #bbbbbb;
     color: #ffffff;
-    padding: 30px;
+    padding: 20px;
     transition: 0.3s;
 }
 
