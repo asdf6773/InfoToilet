@@ -18,7 +18,7 @@
     </style>
 </head>
 
-<body  >
+<body ontouchmove="event.preventDefault()">
     <div class="wrapper" id="wrapper" style="height:40px;">
 
 
@@ -28,13 +28,16 @@
 
 
     <label for="imgFile" id="img" class="input-label">
-    <span id="label_span"> 拾取 </span>
+    <span id="label_span"> 拾 取 </span>
     </label>
     <input type="file" id="imgFile" multiple="multiple">
 
+    <label for="imgFile" id="img" class="divide">
+    <span id="label_span"><br/> </span>
+    </label>
 
     <label for="submit" id="sub" class="submit-label">
-    <span id="label_span">丢弃</span>
+    <span id="label_span">丢 弃</span>
     </label>
     <input type="button" id="submit" value="submit">
 

@@ -10,10 +10,13 @@ var server = app.listen(4000);
 var io = socket(server);
 var uploadName;
 var flush = true;
+var limit =2;
 app.use(bodyParser.json());
 console.log("running on 4000;")
 //upload
+var isFlushing = false;
 var imageBuffer = [];
+var imageScaleBuffer = [];
 var Storage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, "./public/Images");
@@ -87,32 +90,62 @@ io.of("/user").on('connection', function(socket) {
         }
     });
 });
-
+var numOfFlushOver = 0;
 io.of("/projector").on('connection', function(socket) {
+    socket.emit('isFlushingSetup', isFlushing);
     io.of('/projector').emit('imageBuffer', imageBuffer);
+    io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
     projectors.push(socket.id);
     console.log(socket.id + ' ' + projectors.length)
     //projectorId.push(socket.id);
-    socket.on('flushFromToilet', function(data) {
-        console.log('flushing!');
-        socket.broadcast.emit('flushAll')
-        imageBuffer.splice(0, imageBuffer.length); //clear the imageBuffer
-        console.log("Now have " + imageBuffer.length + " images");
+    socket.on('imgFlushed', function(i) {
+        if (limit > 0) {
+            console.log(i)
+            imageScaleBuffer.splice(i, 1);
+            imageBuffer.splice(i, 1);
+            io.of('/projector').emit('flushByOther');
+            limit-=1;
+        }
     });
-    socket.on('flushFromMobile', function(data) {
-        console.log('flushing!');
-        io.of('/projector').emit('flushOther');
-        imageBuffer.splice(0, imageBuffer.length); //clear the imageBuffer
-        console.log("Now have " + imageBuffer.length + " images");
-
+    // socket.on('flushOver', function() {
+    //     //   console.log())
+    //     numOfFlushOver += 1;
+    //     console.log(numOfFlushOver + " " + projectors.length + " " + isFlushing);
+    //     if (numOfFlushOver == projectors.length) {
+    //         isFlushing = false;
+    //         numOfFlushOver = 0;
+    //         io.of('/projector').emit('isFlushing', isFlushing);
+    //     }
+    //
+    // });
+    socket.on('flushPressed', function() {
+        // console.log(i)
+        isFlushing = true;
+        io.of('/projector').emit('isFlushing', isFlushing);
+        io.of('/projector').emit('flushPressedFromServer');
+        setTimeout(function() {
+          limit=2;
+            isFlushing = false;
+            io.of('/projector').emit('isFlushing', isFlushing);
+        }, 7000) //新进来的Socket没有触发回调函数
     });
     socket.on('disconnect', function() {
+
         for (var i = 0; i < projectors.length; i++) {
             if (projectors[i] === socket.id) {
-                projectors.splice(i);
-                console.log(socket.id + ' ' + projectors.length)
+                projectors.splice(i, 1);
+                //            console.log(socket.id + ' ' + projectors.length+" "+isFlushing)
             }
         }
+        //  numOfFlushOver += 1;
+
+        // if (numOfFlushOver == projectors.length) {
+        //     isFlushing = false;
+        //     numOfFlushOver = 0;
+        //     io.of('/projector').emit('isFlushing', isFlushing);
+
+        // }
+
     });
 });
 //new uploadMode
@@ -136,6 +169,7 @@ io.of("/test").on('connection', function(socket) {
                 // io.of('/').emit('uploaded');
                 io.of('/projector').emit('uploadName', newUpload);
                 imageBuffer.push(newUpload);
+                imageScaleBuffer.push(1 + 0.5 * Math.random())
                 console.log(socket.id)
                 socket.emit('uploaded');
             }

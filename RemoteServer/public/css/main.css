@@ -22,6 +22,12 @@ a:active {
     font-family: 'Varela Round', sans-serif;
     font-family: 16px;
     overflow: hidden;
+    -webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
 }
 button{
 
@@ -86,14 +92,22 @@ footer {
     padding: 30px;
     transition: 0.3s;
 }
+/*.toiletButton:hover {
+    background: #aaaaaa;
+    cursor: pointer;
+}
 
+.toiletUpload:hover {
+    background: #aaeeaa;
+    cursor: pointer;
+}*/
 .toiletButton {
     /*font-size：100px;*/
      position: relative;
     /*margin-top: 50px;*/
     width: 100%;
-    background: #3c4954;
-    color: #ffffff;
+    background: #E0EEE7;
+    color: #527283;
     padding: 30px;
     transition: 0.3s;
 }
@@ -103,8 +117,9 @@ footer {
      position: relative;
     /*margin-top: 50px;*/
     width: 100%;
-    background: #74858e;
-    color: #ffffff;
+    /*z-index:999;*/
+    background: #E0EEE7;
+    color: #527283;
     padding: 30px;
     transition: 0.3s;
 }

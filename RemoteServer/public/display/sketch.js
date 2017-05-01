@@ -12,17 +12,40 @@ var attractor;
 var bufferLoaded = false;
 var upload;
 var hole;
+var bg;
+var layer;
+var waterHeight;
+var rise, fall;
+var flag = true;
+var addWater;
+var angle = 0;
+var imgAngle = 0;
+var IAstep = 0;
+var rising = 0;
+var riseIndex = 0.5;
+var fallActive = false;
+var limit = 2;
+var IAstepForEase = 1;
+var isFlushing;
+var imageRandomBuffer;
+document.oncontextmenu = function() {
+    return false;
+}
 
 function setup() {
-    hole = 50;
+    waterHeight = 1
 
+    hole = 50;
+    bg = loadImage("http://" + ip + "/lib/toilet-display.png")
+    layer = loadImage("http://" + ip + "/lib/toilet-layer.png")
     imageMode(CENTER);
     noiseSeed = 0;
     createCanvas(windowWidth, windowHeight - 80);
-    attractor = createVector(width / 2, height / 2);
-    flush = createButton('flush');;
-    upload = createA('/', 'upload');
+    attractor = createVector(width / 2, 170); //
+    flush = createButton('flush');
+    upload = createA('/test', 'upload');
     flush.class('toiletButton');
+    flush.id('flush');
     upload.class('toiletUpload');
     flush.style("font-size", "15px");
     upload.style("font-size", "15px");
@@ -42,8 +65,51 @@ function setup() {
     socket.on('flushOther', flushFromToilet);
     //  socketToLocal.on('flushFromToilet', flushFromOtherClient);
     socket.on('imageBuffer', loadBuffer);
-    //   var temp1 = loadImage("./images/1212ws.jpg");
-    // console.log(temp1);
+    socket.on('flushByOther', flushByOther);
+    socket.on('flushPressedFromServer', addWater);
+    //socket.on('flushPressd', addWater);
+    //flush.touchStarted(addWater);
+    //  if (isFlushing===false) {
+    flush.touchStarted(flushPressed);
+    //  }
+    socket.on('isFlushingSetup', function(status) {
+        console.log("Origial " + status)
+        isFlushing = status;
+        //    if(!isFlushing)addWater();
+    });
+    socket.on('isFlushing', function(status) {
+
+        isFlushing = status;
+        //    if(!isFlushing)addWater();
+    });
+    socket.on('imageScaleBuffer', function(imageScaleBuffer) {
+        imageRandomBuffer = imageScaleBuffer;
+        for (var i = 0; i < imageScaleBuffer; i++) {
+
+            imgPos[i].scale =  imageRandomBuffer[i];
+        }
+    });
+    //    flush.touchEnded(recover);
+}
+
+
+
+function flushPressed(i) {
+    if (isFlushing === false) //然后新用户就无法按了
+        socket.emit("flushPressed")
+    //addWater();
+}
+
+function flushByOther(i) {
+    img.splice(i, 1)
+    imgPos.splice(i, 1)
+}
+
+
+function animate() {
+    //  waterHeight += 1;
+    //flag = !flag;
+    //    attractForce = 5;
 
 }
 
@@ -54,83 +120,175 @@ function loadBuffer(buffer) {
             imgPos.push(new Particle(attractor));
         }
         bufferLoaded = true;
-        console.log(bufferLoaded+" "+ buffer.length);
+
     }
 }
 
 function flushFromOtherClient() {
-    attractForce = 5;
+    animate()
     //  socket.emit('flushFromToilet', attractForce);
-    console.log("flushFromOther");
+
 }
 
 function flushFromToilet(data) {
-    attractForce = 5;
+    animate()
     socket.emit('flushFromToilet', attractForce);
-    console.log(data);
+
 }
 
 function addImage(data) {
     var temp = loadImage("http://" + ip + "/Images/" + data);
-    console.log(data);
+
     imgPos.push(new Particle(attractor));
     img.push(temp);
-    console.log("added");
+
 }
 
 function flushing() {
-    attractForce = 5;
-
-    socket.emit('flushFromMobile', attractForce);
-    console.log('flush away~')
+    animate()
+    // socket.emit('flushFromMobile', attractForce); ///////////////////////////////remind
 }
+angl = 0;
 
 function draw() {
+    background(255);
+    // fill()
+    // rect(0,0,width,height)
     if (attractForce != 0) {
-        // imgPos[i].pos.z -= 0.1;
         attractor.z -= 0.05
-        if (imgPos[0])
-            console.log(imgPos[0].pos.z)
     }
     if (attractForce === 0) {
-        // imgPos[i].pos.z -= 0.1;
         attractor.z -= 0;
-
     }
     if (img.length === 0) {
         attractForce = 0;
     }
-    background(200);
-    fill(0)
-    ellipse(width / 2, height / 2, 50, 50);
+    //bg
+    imageMode(CORNER)
+    image(bg, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
+    imageMode(CENTER)
+    //------------bg
+
+    if (angle > 3) {
+        IAstep += 0.02;
+        imgAngle += constrain(IAstep, 0, 0.8);
+    }
+    if (rising && riseIndex > 0) {
+
+    } else if (fallActive && riseIndex > 0) {
+        riseIndex -= 0.008;
+    }
+
     for (var i = 0; i < imgPos.length; i++) {
+        //draw Image
         var pos = imgPos[i].pos
         imgPos[i].update(attractForce);
-        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, 200, 200);
-        if (pos.x > width / 2 - hole / 2 && pos.x < width / 2 + hole / 2 && height / 2 - hole / 2 && height / 2 + hole / 2 && pos.z < -10) {
-            imgPos.splice(i);
-            img.splice(i);
-        }
+        push();
+        translate(window.innerWidth / 2, window.innerWidth / 1.8);
+        imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
+        rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
+        scale(imgPos[i].scale);
+        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 30), img[i].height / (constrain(width, 0, 400) / 30));
+        pop();
+
     }
+    //------------------water
+    noStroke();
+    fill(204, 230, 237, map(waterHeight, 10, 200, 50, 100))
+    push();
+    translate(window.innerWidth / 2, window.innerWidth / 1.8);
+    rotate(angle)
+    ellipse(80, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 300);
+    ellipse(10, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 300);
+    rotate(1)
+    ellipse(20, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 300);
+    rotate(2 + (waterHeight + 10) / 100)
+    ellipse(20, 10, waterHeight / 1.11 * window.innerWidth / 300, waterHeight / 1.11 * window.innerWidth / 300);
+    ellipse(60, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 300);
+    fill(204, 230, 237, map(waterHeight, 10, 200, 80, 150))
+    ellipse(0, 0, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200);
+    pop();
+
     attractor.x = width / 2 + 200 * cos(noiseSeed)
     attractor.y = height / 2 + 200 * sin(noiseSeed)
     noiseSeed += 0.1;
+
+    //upper background
+    imageMode(CORNER);
+    image(layer, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
+    imageMode(CENTER)
+    //---------------------
+    fill(222);
+    imgAngle += 0.005;
+    if (waterHeight <= 0) {
+        rising = true;
+        clearInterval(fall)
+        clearInterval(rise)
+        waterHeight = 0;
+        angle = 0;
+        if (riseIndex < 0.5) {
+            riseIndex += 0.005177;
+            if (IAstepForEase > 0.005) {
+                IAstepForEase -= 0.01;
+                imgAngle += IAstepForEase;
+            } else
+                imgAngle += 0.005;
+        }
+        flag = true;
+        if (IAstep > 0) {
+            IAstep -= 0.025;
+        } else if (riseIndex >= 0.5) {
+            waterHeight = 1
+            socket.emit('flushOver', false)
+        }
+    }
+    for (var i = 0; i < imgPos.length; i++) {
+        if (imgPos[i].scale < 0.1 && limit > 0) {
+            // imgPos.splice(i, 1);
+            // img.splice(i, 1);
+            socket.emit('imgFlushed', i);
+            limit -= 1
+        }
+    }
+    console.log(limit)
 }
-// function loadBuffer(buffer) {
-//     if (!bufferLoaded) {
-//         for (var i = 0; i < buffer.length; i++) {
-//             function waitingForUpload() {
-//                 var tempI = i;
-//                 if (loadImage("http://" + ip + "/Images/" + buffer[tempI])) {
-//                     img.push(loadImage("http://" + ip + "/Images/" + buffer[tempI]));
-//                     imgPos.push(new Particle(attractor));
-//                 } else {
-//                     setTimeout(waitingForUpload, 1000)
-//                 }
-//             }
-//             waitingForUpload();
-//
-//         }
-//         bufferLoaded = true;
-//     }
-// }
+
+
+function addWater() {
+
+    limit = 2;
+    if (flag) {
+        flag = false;
+        rising = true;
+        document.getElementById('flush').style.background = "#BDD9E0";
+        rise = setInterval(function() {
+            if (waterHeight < 200) {
+                //console.log("addWater")
+                angle += (20 / (waterHeight + 10) + 0.144)
+                waterHeight += (200 - waterHeight) / 10;
+            }
+            if (waterHeight >= 200 - 1) {
+                //console.log("recover")
+                recover();
+            }
+        }, 1000 / 25)
+
+        clearInterval(fall)
+    }
+}
+
+function recover() {
+    IAstepForEase = 1;
+    if (waterHeight > 170)
+        rising = false;
+    fallActive = true;
+    clearInterval(rise)
+    fall = setInterval(function() {
+        if (waterHeight >= 0) {
+
+            angle += (20 / (waterHeight + 10) + 0.144)
+            waterHeight -= (200 - waterHeight) / 5;
+        }
+    }, 1000 / 25)
+    document.getElementById('flush').style.background = "#E0EEE7";
+}

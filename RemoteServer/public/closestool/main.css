@@ -6,7 +6,6 @@
 
 body {
     overflow: hidden;
-
 }
 
 canvas {
@@ -34,10 +33,12 @@ input {
 }
 
 .submit-label {
-  text-align:center;
+    border: 10px;
+    text-align: center;
     position: absolute;
     left: 50%;
-
+    border-color: #527283;
+    border-right: 1px;
     bottom: 0;
     width: 50%;
     background: #E0EEE7;
@@ -47,8 +48,18 @@ input {
     transition: 0.3s;
 }
 
+.divide {
+  width:1px;
+    padding-top: 20px;
+    background: #B4CBD4;
+    position: absolute;
+    left: 50%;
+    z-index:999;
+}
+
 .input-label {
-    text-align:center;
+    border: 10px;
+    text-align: center;
     position: absolute;
     bottom: 0;
     width: 50%;
@@ -56,6 +67,7 @@ input {
     color: #527283;
     padding-top: 20px;
     padding-bottom: 20px;
+    border-color: #527283;
     /*padding:  16px;*/
     /*padding-bottom: : 16px;*/
     transition: 0.3s;

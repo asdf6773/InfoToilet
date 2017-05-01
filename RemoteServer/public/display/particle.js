@@ -2,8 +2,13 @@
 // code for https://youtu.be/vqE8DMfOajk
 
 function Particle(attractor) {
-  //  this.attractor = attractor_;
-    this.pos = createVector(random(50,width-50), random(50,height-50));
+    //  this.attractor = attractor_;
+    this.scale =1;
+    this.scaleRandom =random(1,1.5);
+    this.dir = random(TWO_PI)
+    this.speed = random(PI,TWO_PI)
+    this.pos = createVector(random(80), random(80));
+
     this.vel = createVector();
     this.acc = createVector();
     this.lifespan = 255;
@@ -23,6 +28,6 @@ function Particle(attractor) {
         this.vel.limit(5);
         this.lifespan -= 1;
         fill(255);
-      //  ellipse(this.pos.x, this.pos.y, 10, 10);
+        //  ellipse(this.pos.x, this.pos.y, 10, 10);
     }
 }

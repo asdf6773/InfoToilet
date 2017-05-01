@@ -1,7 +1,7 @@
 function resizeCanvas() {
     // if (window.innerWidth <= 320) {
-        w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight - 50;
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight - 50;
     // } else {
     //     w = canvas.width = 320;
     //     h = canvas.height = window.innerHeight - 50;
@@ -9,8 +9,8 @@ function resizeCanvas() {
     // }
     //
     // if (window.innerWidth <= 320) {
-        w = canvasBG.width = window.innerWidth;
-        h = canvasBG.height = window.innerHeight - 50;
+    w = canvasBG.width = window.innerWidth;
+    h = canvasBG.height = window.innerHeight - 50;
     // } else {
     //     w = canvasBG.width = 320;
     //     h = canvasBG.height = window.innerHeight - 50;
@@ -31,15 +31,11 @@ window.onload = function() {
     // })
     var toilet = new Image();
 
-
+    var uploading = false;
     window.addEventListener("resize", resizeCanvas, false);
     var canvasBG = document.getElementById("canvasBG");
     var ctxBG = canvasBG.getContext('2d');
     var fps = 1000 / 25; //number of frames per sec
-    // 作者： Ming
-    // 链接： https: //www.zhihu.com/question/36458228/answer/86728454
-    //     来源： 知乎
-    // 著作权归作者所有。 商业转载请联系作者获得授权， 非商业转载请注明出处。
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext('2d');
     resizeCanvas();
@@ -51,7 +47,7 @@ window.onload = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     toilet.onload = function() {
-        ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width*16/9);
+        ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width * 16 / 9);
     };
     ctx.restore();
     var socket = io.connect('http://' + ip + '/test');
@@ -74,6 +70,7 @@ window.onload = function() {
     socket.on('uploaded', success);
 
     function success() {
+        uploading = false;
         var ran = Math.random();
         console.log('success')
         var fly = 0;
@@ -82,10 +79,7 @@ window.onload = function() {
         var anmi = setInterval(move, fps);
 
         function move() {
-            // var ran = Math.random();
             moving = true;
-
-            //    console.log('12')
             ctx.save(); //saves the state of canvas
 
             ctx.clearRect(0, 0, canvas.width, canvas.height); //clear the canvas
@@ -123,13 +117,11 @@ window.onload = function() {
                 data = canvas.toDataURL("image/png")
                 console.log(img.length + ' ' + size.length)
                 ctx.clearRect(0, 0, canvas.width, canvas.height); //clear the canv
-                //ctx.drawImage(toilet, 0, 0, 320, 600);
                 if (img.length > 0) {
                     idisplay(0);
                 }
                 console.log(img.length)
             }
-            //  console.log(canvas.height / 2 - fly);
         }
 
     }
@@ -140,21 +132,6 @@ window.onload = function() {
 
 
     function handleFiles(e) {
-        //ctx.drawImage(toilet, 0, 0, 320, 600);
-        // var file = e.target.files[0], // file
-        //     fr = new FileReader;
-        // fr.readAsBinaryString(file);
-        // fr.onloadend = function() {
-        //     // get EXIF data
-        //     EXIF.getData(file, function() {
-        //
-        //         ctx.save();
-        //         checkOrientation(this.exifdata.Orientation);
-        //     });
-        //
-        //     // alert a value
-        // };
-
         img = []
         size = []
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -236,10 +213,12 @@ window.onload = function() {
     $('#submit').click(function() {
         if (document.getElementById("imgFile").value == "" && img.length == 0) {
             alert("没有东西可以丢")
-        } else if (moving) {
-
+        } else if (moving || uploading) {
+            if (uploading)
+                alert("慢一点,别着急:)")
         } else {
             socket.emit('imgData', data);
+            uploading = true;
             document.getElementById("imgFile").value = "";
             console.log('sent')
         }
@@ -276,6 +255,7 @@ window.onload = function() {
         }
         //if (!isCanvasBlank(canvas))
         console.log(isCanvasBlank(canvas))
+
         data = canvas.toDataURL("image/png")
         // else {
 
@@ -283,8 +263,6 @@ window.onload = function() {
         ctx.restore();
 
     }
-
-
     function checkOrientation(orient) {
 
         switch (orient) {
@@ -325,12 +303,6 @@ window.onload = function() {
                 ctx.rotate(-0.5 * Math.PI);
                 //          ctx.translate(-canvas.width, 0);
                 break;
-
         }
-        //  ctx.restore();
     }
-
-
-
-
 }
