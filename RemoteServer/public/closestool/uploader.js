@@ -31,9 +31,9 @@ window.onload = function() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     toilet.onload = function() {
-      // setInterval(function(){
+       setInterval(function(){
         ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width * 16 / 9);
-      // },100)
+       },100)
 
     };
     ctx.restore();
