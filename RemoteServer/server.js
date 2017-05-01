@@ -6,13 +6,13 @@ var app = express();
 var multer = require('multer');
 var bodyParser = require('body-parser');
 var socket = require("socket.io")
-var server = app.listen(4000);
+var server = app.listen(80);
 var io = socket(server);
 var uploadName;
 var flush = true;
 
 app.use(bodyParser.json());
-console.log("running on 4000;")
+console.log("running on 80;")
 //upload
 var isFlushing = false;
 var imageBuffer = [];
