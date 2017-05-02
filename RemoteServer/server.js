@@ -25,6 +25,10 @@ var imageScaleBuffer = [];
 var consoleData = JSON.parse(fs.readFileSync('./public/lib/record.json', 'utf8'));
 // console.log(temp)
 
+consoleData.onlineUser = 0;
+consoleData.onlineProjector = 0;
+consoleData.currentImage = 0;
+consoleData.isFlushing = false;
 
 console.log(consoleData)
 setInterval(function() {
@@ -33,7 +37,7 @@ setInterval(function() {
     });
 
 
-},1000)
+}, 1000)
 
 
 
