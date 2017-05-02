@@ -31,6 +31,7 @@ var consoleData = {
     maxImage: 0,
     maxOnlineUser: 0,
     maxOnlineProjector: 0
+
 }
 // setInterval(function() {
 //     console.log(consoleData)
