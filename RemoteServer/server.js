@@ -6,6 +6,9 @@ var app = express();
 var multer = require('multer');
 var bodyParser = require('body-parser');
 var socket = require("socket.io")
+// var record = require("./public/lib/record.json")
+
+
 var server = app.listen(80);
 var io = socket(server);
 var uploadName;
@@ -14,25 +17,27 @@ var Console = [];
 app.use(bodyParser.json());
 console.log("running on 80;")
 //upload
-
+// var record="d:\\0.json";
 var imageBuffer = [];
 var imageScaleBuffer = [];
 //  isFlushing: false;
 //consoleData
-var consoleData = {
-    isFlushing: false,
-    totalUser: 0,
-    onlineUser: 0,
-    totalProjector: 0,
-    onlineProjector: 0,
-    totalImage: 0,
-    currentImage: 0,
-    totalFlush: 0,
-    maxImage: 0,
-    maxOnlineUser: 0,
-    maxOnlineProjector: 0
+var consoleData = JSON.parse(fs.readFileSync('./public/lib/record.json', 'utf8'));
+// console.log(temp)
 
-}
+
+console.log(consoleData)
+setInterval(function() {
+    fs.writeFile('./public/lib/record.json', JSON.stringify(consoleData), function(err) {
+
+    });
+
+
+},1000)
+
+
+
+
 // setInterval(function() {
 //     console.log(consoleData)
 // }, 1000)
@@ -131,15 +136,15 @@ io.of("/console").on('connection', function(socket) {
         if (Console[i].id === socket.id) {
             Console[i].interval = setInterval(function() {
                 socket.emit("consoleData", consoleData)
-                console.log("I come from" + socket.id)
+                // console.log("I come from" + socket.id)
             }, 1000)
         }
     }
     socket.on('disconnect', function() {
         for (var i = 0; i < Console.length; i++) {
-          console.log(Console[i].id + " " + socket.id)
+            console.log(Console[i].id + " " + socket.id)
             if (Console[i].id === socket.id) {
-                console.log("disconnect" + socket.id)
+                // console.log("disconnect" + socket.id)
                 clearInterval(Console[i].interval)
                 Console.splice(i, 1);
                 //            //console.log(socket.id + ' ' + projectors.length+" "+isFlushing)
