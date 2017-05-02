@@ -12,11 +12,14 @@ window.onload = function() {
     //     $("#label_span").text("");
     // })
     var toilet = new Image();
+    var toilet_layer = new Image();
 
     var uploading = false;
     window.addEventListener("resize", resizeCanvas, false);
     var canvasBG = document.getElementById("canvasBG");
+    var canvasBG2 = document.getElementById("canvasBG2");
     var ctxBG = canvasBG.getContext('2d');
+    var ctxBG2 = canvasBG2.getContext('2d');
     var fps = 1000 / 25; //number of frames per sec
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext('2d');
@@ -28,12 +31,13 @@ window.onload = function() {
     ctx.fillStyle = "#527283";
     ctx.save();
     toilet.src = 'http://' + ip + '/lib/toilet.png'
+    toilet_layer.src = 'http://' + ip + '/lib/toilet-uplayer.png'
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     toilet.onload = function() {
-       setInterval(function(){
-        ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width * 16 / 9);
-       },100)
+        setInterval(function() {
+            ctxBG.drawImage(toilet, 0, 0, canvas.width, canvas.width * 16 / 9);
+        }, 100)
 
     };
     ctx.restore();
@@ -109,6 +113,7 @@ window.onload = function() {
                 }
                 console.log(img.length)
             }
+            ctxBG2.drawImage(toilet_layer, 0, 0, canvas.width, canvas.width * 16 / 9);
         }
 
     }
@@ -120,7 +125,7 @@ window.onload = function() {
     function resizeCanvas() {
         // if (window.innerWidth <= 320) {
         w = canvas.width = window.innerWidth;
-        h = canvas.height = window.innerHeight ;
+        h = canvas.height = window.innerHeight;
         // } else {
         //     w = canvas.width = 320;
         //     h = canvas.height = window.innerHeight - 50;
@@ -129,7 +134,9 @@ window.onload = function() {
         //
         // if (window.innerWidth <= 320) {
         w = canvasBG.width = window.innerWidth;
-        h = canvasBG.height = window.innerHeight ;
+        h = canvasBG.height = window.innerHeight;
+        w = canvasBG2.width = window.innerWidth;
+        h = canvasBG2.height = window.innerHeight;
         // } else {
         //     w = canvasBG.width = 320;
         //     h = canvasBG.height = window.innerHeight - 50;
@@ -149,8 +156,8 @@ window.onload = function() {
         img = []
         size = []
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //      if((e.target.files[0])
-        ctx.fillText("压缩中", window.innerWidth / 2, window.innerHeight / 2);
+        if (e.target.files.length > 0)
+            ctx.fillText("压缩中", window.innerWidth / 2, window.innerHeight / 2);
         //ctx.drawImage(toilet, 0, 0, 320, 600);
         completed = 0;
         for (var i = 0; i < e.target.files.length; i++) {
@@ -191,6 +198,7 @@ window.onload = function() {
                     if (i === e.target.files.length - 1) {
                         console.log(e.target.files.length)
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        ctx.fillText("只能丢图", window.innerWidth / 2, window.innerHeight / 2);
                     }
                     console.log(img[0].error)
                     img[i].error = true;
@@ -206,6 +214,7 @@ window.onload = function() {
                     if (i === e.target.files.length - 1) {
                         console.log(e.target.files.length)
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        //
                     }
                     img[i].error = false;
                     size[i].iw = img[i].width;
