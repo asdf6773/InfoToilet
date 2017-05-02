@@ -10,7 +10,7 @@ var server = app.listen(80);
 var io = socket(server);
 var uploadName;
 var flush = true;
-
+var Console = [];
 app.use(bodyParser.json());
 console.log("running on 80;")
 //upload
@@ -118,10 +118,37 @@ io.of("/user").on('connection', function(socket) {
 });
 io.of("/console").on('connection', function(socket) {
     socket.emit("consoleData", consoleData)
-    setInterval(function() {
-        socket.emit("consoleData", consoleData)
-    }, 1000)
+    var id = socket.id
+    var interval;
+    Console.push({
+        interval,
+        id
+    });
+
+    for (var i = 0; i < Console.length; i++) {
+        // console.log("I come from" + socket.id)
+        // console.log(Console[i].id + " " + socket.id)
+        if (Console[i].id === socket.id) {
+            Console[i].interval = setInterval(function() {
+                socket.emit("consoleData", consoleData)
+                console.log("I come from" + socket.id)
+            }, 1000)
+        }
+    }
+    socket.on('disconnect', function() {
+        for (var i = 0; i < Console.length; i++) {
+          console.log(Console[i].id + " " + socket.id)
+            if (Console[i].id === socket.id) {
+                console.log("disconnect" + socket.id)
+                clearInterval(Console[i].interval)
+                Console.splice(i, 1);
+                //            //console.log(socket.id + ' ' + projectors.length+" "+isFlushing)
+            }
+        }
+    })
+
 });
+
 var numOfFlushOver = 0;
 io.of("/projector").on('connection', function(socket) {
     socket.emit('limitFromServer', ServerLimit);
@@ -185,12 +212,10 @@ io.of("/projector").on('connection', function(socket) {
         }
         consoleData.onlineProjector = projectors.length;
         //  numOfFlushOver += 1;
-
         // if (numOfFlushOver == projectors.length) {
         //     isFlushing = false;
         //     numOfFlushOver = 0;
         //     io.of('/projector').emit('isFlushing', isFlushing);
-
         // }
 
     });
