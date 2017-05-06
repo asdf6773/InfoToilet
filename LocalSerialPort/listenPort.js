@@ -6,6 +6,7 @@ var io = socket(server);
 var serialport = require("serialport");
 var flush = false;
 var lastFlush = false;
+var fs = require('fs');
 var events = require("events");
 var myEmitter = new events.EventEmitter();
 //var SerialPort = serialport.SerialPort;
@@ -18,6 +19,14 @@ var portname = process.argv[2];
 //     });
 // });
 var send = false;
+
+
+var preload = JSON.parse(fs.readFileSync('./ip.json', 'utf8'));
+var ip = preload.ip
+console.log(ip)
+
+
+
 app.get('/', function(req, res) {
     res.sendFile(__dirname + "/public/uploadSuccess.html")
 })
@@ -34,6 +43,7 @@ io.sockets.on('connection', function(socket) {
     }, 200);
 
 });
+var socket = require('socket.io-client')('http://'+ip+'/serialPort');
 
 function triggerButton() {
     socket.broadcast.emit('flush', flush);
@@ -56,8 +66,16 @@ myPort.on('error', function() {
 })
 
 myPort.on('data', function(data) {
-    if (data > 70) {
+    // console.log(data)
+    if (data >= 500) {
         flush = true;
+        socket.emit("switchOn", flush)
+        console.log(data)
+    }
+    if (data< 500) {
+        flush = true;
+        socket.emit("switchOff", flush)
+        console.log(data)
     }
     // else {
     //     flush = false;
@@ -71,6 +89,17 @@ myPort.on('data', function(data) {
         }
         // flag=false;
     }, 200);
-      console.log(flush + " " + send)
+    // console.log(flush + " " + send)
 
 })
+// socket.emit('connect', function() {
+//     // var lastStatus = false;
+//     // var status = false;
+//     // setInterval(function() {
+//     //     status = flush
+//     //     if (lastStatus != status) {
+//     //
+//     //     }
+//     // }, 200)
+//
+// });

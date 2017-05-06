@@ -73,6 +73,9 @@ app.get("/", function(req, res) {
 app.get("/display", function(req, res) {
     res.sendFile(__dirname + "/public/display/display.html");
 });
+app.get("/handDryer", function(req, res) {
+    res.sendFile(__dirname + "/public/handDryer/index.html");
+});
 app.get("/console", function(req, res) {
     res.sendFile(__dirname + "/public/console/console.html");
 });
@@ -107,7 +110,27 @@ io.of("/uploaded").on('connection', function(socket) {
     //console.log("upload Success!  " + uploadNum + " imges have been upload");
     // io.of('/projector').emit('uploadName', uploadName);
 });
-
+io.of("/serialPort").on('connection', function(socket) {
+    socket.on("switchOn", function(data) {
+        io.of('/handDryer').emit('on');
+        console.log("on");
+    })
+    socket.on("switchOff", function() {
+        io.of('/handDryer').emit('off');
+        console.log("off");
+    })
+    console.log("serialPort Connected")
+});
+// io.of("/handDryer").on('connection', function(socket) {
+//     if (0) {
+//
+//         socket.emit('on')
+//     }
+//     if (0) {
+//         socket.emit('on')
+//     }
+//     console.log("handDryer Connected")
+// });
 io.of("/user").on('connection', function(socket) {
     user.push(socket.id);
     //console.log("New user connected" + ' ' + "Online User: " + user.length)
@@ -146,7 +169,7 @@ io.of("/console").on('connection', function(socket) {
     }
     socket.on('disconnect', function() {
         for (var i = 0; i < Console.length; i++) {
-            console.log(Console[i].id + " " + socket.id)
+            //  console.log(Console[i].id + " " + socket.id)
             if (Console[i].id === socket.id) {
                 // console.log("disconnect" + socket.id)
                 clearInterval(Console[i].interval)
