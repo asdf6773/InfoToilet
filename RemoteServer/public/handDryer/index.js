@@ -1,4 +1,5 @@
 //var camera = new THREE.OrthographicCamera(innerWidth / -2, innerWidth, innerHeight / 2, innerHeight / -2,1,1000) ////1
+// const THREE = require('three');
 var createApp = require('./app')
 var createLoop = require('raf-loop')
 var app = createApp({
