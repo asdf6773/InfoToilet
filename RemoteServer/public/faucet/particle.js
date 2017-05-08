@@ -7,7 +7,7 @@ function Particle() {
     this.scaleRandom = random(10, 100);
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(random(width / 2) + width / 4, random(width / 2) + height / 2 - width / 4 -70, 0);
+    this.pos = createVector(random(width / 4) + width / 2/1.5, random(width / 4) + height / 4 - width / 8, 0);
 
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
@@ -35,14 +35,14 @@ function Particle() {
 
             this.vel.mult(this.scale*0.00155);
 
-            this.pos.add(this.vel.mult(1));
+            this.pos.add(this.vel.mult(1.2));
             this.vel.limit(5);
         // }else{
         //
         //
         // }
         this.lifespan -= 2;
-        fill(120, 255, 255, this.lifespan);
+        fill(120, 255, 255, this.lifespan/4);
         ellipse(this.pos.x, this.pos.y, this.scale, this.scale);
     }
 }
