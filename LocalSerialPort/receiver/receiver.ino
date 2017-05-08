@@ -28,12 +28,14 @@ void loop() {
       }
       handDryerInt = atoi(handDryer);
       if ( handDryerInt < 500 && lastHandDryerInt >= 500) {
-        Serial.print("hand");
-        Serial.println(handDryerInt);
+ 
+        
+    //    Serial.print("hand");
+        Serial.println(data);
       }
       if ( handDryerInt > 500 && lastHandDryerInt <= 500) {
-        Serial.print("hand");
-        Serial.println(handDryerInt);
+     //   Serial.print("hand");
+        Serial.println(data);
       }
     }
     lastHandDryerInt = handDryerInt;
@@ -45,18 +47,18 @@ void loop() {
       }
       tapInt = atoi(tap);
       if ( tapInt < 500 && lastTapInt >= 500) {
-        Serial.print("tap");
-        Serial.println(tapInt);
+     //   Serial.print("tap");
+        Serial.println(data);
       }
       if ( tapInt > 500 && lastTapInt <= 500) {
-        Serial.print("tap");
-        Serial.println(tapInt);
+    //    Serial.print("tap");
+        Serial.println(data);
       }
 //       lastTapInt = tapInt;
     }
     lastTapInt = tapInt;
-
-
+//Serial.println(sizeof(data));
+//Serial.println(data);
 
   }
 }

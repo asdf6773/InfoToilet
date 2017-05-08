@@ -43,7 +43,7 @@ io.sockets.on('connection', function(socket) {
     }, 200);
 
 });
-var socket = require('socket.io-client')('http://'+ip+'/serialPort');
+var socket = require('socket.io-client')('http://' + ip + '/serialPort');
 
 function triggerButton() {
     socket.broadcast.emit('flush', flush);
@@ -66,20 +66,60 @@ myPort.on('error', function() {
 })
 
 myPort.on('data', function(data) {
-    // console.log(data)
-    if (data >= 500) {
-        flush = true;
-        socket.emit("switchOn", flush)
-        console.log(data)
+    if (data.charAt(0) == 'h') {//handDryer
+        // console.log(data)
+        data = data.substr(1);
+        var value = parseInt(data);
+        if (value >= 500) {
+            // flush = true;
+            socket.emit("switchOn", flush)
+            console.log("h"+value)
+        }
+        if (value < 500) {
+            // flush = true;
+            socket.emit("switchOff", flush)
+            console.log("h"+value)
+        }
+        // else {
+        //     flush = false;
+        // }
     }
-    if (data< 500) {
-        flush = true;
-        socket.emit("switchOff", flush)
-        console.log(data)
+    if (data.charAt(0) == 't') {//tap
+        // console.log(data)
+        data = data.substr(1);
+        var value = parseInt(data);
+        if (value >= 500) {
+            // flush = true;
+            // socket.emit("switchOn", flush)
+            console.log("t"+value)
+        }
+        if (value < 500) {
+            // flush = true;
+            // socket.emit("switchOff", flush)
+            console.log("t"+value)
+        }
+        // else {
+        //     flush = false;
+        // }
     }
-    // else {
-    //     flush = false;
-    // }
+    if (data.charAt(0) == 'm') {//matong
+        // console.log(data)
+        data = data.substr(1);
+        var value = parseInt(data);
+        if (value >= 500) {
+            flush = true;
+            // socket.emit("switchOn", flush)
+            console.log("t"+value)
+        }
+        if (value < 500) {
+            flush = true;
+            // socket.emit("switchOff", flush)
+            console.log("t"+value)
+        }
+        // else {
+        //     flush = false;
+        // }
+    }
     setTimeout(function() {
 
         if (data <= 70) {

@@ -76,6 +76,9 @@ app.get("/display", function(req, res) {
 app.get("/handDryer", function(req, res) {
     res.sendFile(__dirname + "/public/handDryer/index.html");
 });
+app.get("/faucet", function(req, res) {
+    res.sendFile(__dirname + "/public/faucet/index.html");
+});
 app.get("/console", function(req, res) {
     res.sendFile(__dirname + "/public/console/console.html");
 });

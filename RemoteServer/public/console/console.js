@@ -20,7 +20,6 @@ $(document).ready(function() {
     current.getElementsByTagName("li")[2].innerHTML = "当前图片剩余：" + totalImage;
     current.getElementsByTagName("li")[3].innerHTML = "马桶冲水状态：" + isFlushing;
 
-
     max.getElementsByTagName("li")[0].innerHTML = "最多在线人数：" + totalUser;
     max.getElementsByTagName("li")[1].innerHTML = "最多观察人数：" + onlineProjector;
     max.getElementsByTagName("li")[2].innerHTML = "最多图片剩余：" + totalImage;

@@ -7,13 +7,14 @@ String head = "t";
 RF24 radio(7, 8); // CNS, CE
 const byte address[6] = "00001";
 void setup() {
+  Serial.begin(9600);
   radio.begin();
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
 }
 void loop() {
-  
+
   int val  = analogRead(0);
   //  if ( lastVal < 500 && val >= 500) {
   //    byte data = 1;
@@ -21,13 +22,13 @@ void loop() {
   //  }
   //  if ( lastVal > 500 && val <= 500) {
   //    byte data = 0;
-  String myString = head+String(val);
+  String myString = head + String(val);
   char buf[5];
-  myString.toCharArray(buf,myString.length()+1);
-  radio.write(&buf, myString.length()+1);
+  myString.toCharArray(buf, myString.length() + 1);
+  radio.write(&buf, 5);
   //  }
   //  lastVal = val;
-
-//delete char;
+  Serial.println(myString);
+  //delete char;
   delay(50);
 }
