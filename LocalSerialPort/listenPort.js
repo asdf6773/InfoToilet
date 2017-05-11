@@ -44,6 +44,9 @@ io.sockets.on('connection', function(socket) {
 
 });
 var socket = require('socket.io-client')('http://' + ip + '/serialPort');
+socket.on("flushIsOver", function() {
+    console.log("flushIsOver")
+})
 
 function triggerButton() {
     socket.broadcast.emit('flush', flush);
@@ -66,55 +69,55 @@ myPort.on('error', function() {
 })
 
 myPort.on('data', function(data) {
-    if (data.charAt(0) == 'h') {//handDryer
+    if (data.charAt(0) == 'h') { //handDryer
         // console.log(data)
         data = data.substr(1);
         var value = parseInt(data);
         if (value >= 500) {
             // flush = true;
             socket.emit("switchOn", flush)
-            console.log("h"+value)
+            console.log("h" + value)
         }
         if (value < 500) {
             // flush = true;
             socket.emit("switchOff", flush)
-            console.log("h"+value)
+            console.log("h" + value)
         }
         // else {
         //     flush = false;
         // }
     }
-    if (data.charAt(0) == 't') {//tap
+    if (data.charAt(0) == 't') { //toilet
         // console.log(data)
         data = data.substr(1);
         var value = parseInt(data);
         if (value >= 500) {
             // flush = true;
-            // socket.emit("switchOn", flush)
-            console.log("t"+value)
+            socket.emit("flushPressedFrombutton")
+            console.log("t" + value)
         }
         if (value < 500) {
             // flush = true;
             // socket.emit("switchOff", flush)
-            console.log("t"+value)
+            console.log("t" + value)
         }
         // else {
         //     flush = false;
         // }
     }
-    if (data.charAt(0) == 'm') {//matong
+    if (data.charAt(0) == 'f') { //faucet
         // console.log(data)
         data = data.substr(1);
         var value = parseInt(data);
         if (value >= 500) {
             flush = true;
             // socket.emit("switchOn", flush)
-            console.log("t"+value)
+            console.log("t" + value)
         }
         if (value < 500) {
             flush = true;
             // socket.emit("switchOff", flush)
-            console.log("t"+value)
+            console.log("t" + value)
         }
         // else {
         //     flush = false;

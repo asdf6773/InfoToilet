@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var socket = require("socket.io")
 // var record = require("./public/lib/record.json")
 
-
+var request = require('request');
 var server = app.listen(80);
 var io = socket(server);
 var uploadName;
@@ -38,14 +38,9 @@ setInterval(function() {
 
 
 }, 1000)
-
-
-
-
 // setInterval(function() {
 //     console.log(consoleData)
 // }, 1000)
-
 var Storage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, "./public/Images");
@@ -60,8 +55,6 @@ var Storage = multer.diskStorage({
 var upload = multer({
     storage: Storage
 }).array("imgUploader", 1);
-
-
 var ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
 //router
 // app.get("/", function(req, res) {
@@ -107,6 +100,58 @@ var dt = {
 var projectors = [];
 var user = [];
 var uploadNum = 0;
+
+
+
+
+
+
+
+
+
+var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
+
+
+
+
+
+
+
+io.of("/faucet").on('connection', function(socket) {
+    request(pullData, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            var obj = JSON.parse(body);
+            console.log('getcha');
+            socket.emit("weiboData", obj)
+
+        }
+    })
+
+});
+io.of("/toilet").on('connection', function(socket) {
+    socket.on('flushPressedFromButton', function() {
+        consoleData.totalFlush += 1;
+        // //console.log(i)
+        consoleData.isFlushing = true;
+        ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+        //console.log(ServerLimit)
+        io.of('/projector').emit('limitFromServer', ServerLimit);
+        io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+        io.of('/projector').emit('flushPressedFromServer');
+        setTimeout(function() {
+            limit = 2;
+            consoleData.isFlushing = false;
+            io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+        }, 6500) //新进来的Socket没有触发回调函数
+    });
+
+});
+
+
+
+
+
+//socket
 io.of("/uploaded").on('connection', function(socket) {
     consoleData.totalImage += 1;
     uploadNum += 1;
@@ -122,18 +167,30 @@ io.of("/serialPort").on('connection', function(socket) {
         io.of('/handDryer').emit('off');
         console.log("off");
     })
+
+
+    socket.on("flushPressedFrombutton", function() {
+      consoleData.totalFlush += 1;
+      // //console.log(i)
+      consoleData.isFlushing = true;
+      ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+      //console.log(ServerLimit)
+      io.of('/projector').emit('limitFromServer', ServerLimit);
+      io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+      io.of('/projector').emit('flushPressedFromServer');
+      setTimeout(function() {
+          limit = 2;
+          consoleData.isFlushing = false;
+          io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+          io.of('/serialPort').emit('flushIsOver');
+      }, 6500) //新进来的Socket没有触发回调函数
+        console.log("flushPressedFrombutton");
+    })
+
+    // socket.on("")
+
     console.log("serialPort Connected")
 });
-// io.of("/handDryer").on('connection', function(socket) {
-//     if (0) {
-//
-//         socket.emit('on')
-//     }
-//     if (0) {
-//         socket.emit('on')
-//     }
-//     console.log("handDryer Connected")
-// });
 io.of("/user").on('connection', function(socket) {
     user.push(socket.id);
     //console.log("New user connected" + ' ' + "Online User: " + user.length)
@@ -208,17 +265,7 @@ io.of("/projector").on('connection', function(socket) {
         }
         consoleData.currentImage = imageBuffer.length;
     });
-    // socket.on('flushOver', function() {
-    //     //   //console.log())
-    //     numOfFlushOver += 1;
-    //     //console.log(numOfFlushOver + " " + projectors.length + " " + isFlushing);
-    //     if (numOfFlushOver == projectors.length) {
-    //         isFlushing = false;
-    //         numOfFlushOver = 0;
-    //         io.of('/projector').emit('isFlushing', isFlushing);
-    //     }
-    //
-    // });
+
     socket.on('requestNewLimit', function() {
         socket.emit('limitFromServer', ServerLimit)
     });
@@ -235,6 +282,7 @@ io.of("/projector").on('connection', function(socket) {
             limit = 2;
             consoleData.isFlushing = false;
             io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+            io.of('/serialPort').emit('flushIsOver');
         }, 6500) //新进来的Socket没有触发回调函数
     });
     socket.on('disconnect', function() {
@@ -302,40 +350,3 @@ io.of("/test").on('connection', function(socket) {
         //console.log('get');
     }
 })
-
-
-
-// app.get('/', handle);
-//
-// function handle(req, res) {
-//     res.writeHead(200, {'Content-Type': 'text/plain'});
-//     res.write('hahahah');
-//     res.end();
-// }
-//---------Serial Port
-// var myPort = new serialport(portname, {
-//     baudRate: 9600,
-//     options: false,
-//     parser: serialport.parsers.readline("\r\n")
-// });
-//
-// myPort.on('open', function() {
-//     //console.log('port is open')
-// });
-// myPort.on('close', function() {
-//     //console.log('port is closed')
-// });
-//
-// myPort.on('error', function() {
-//     //console.log('error')
-// })
-//
-// myPort.on('data', function(data) {
-//     if(data>70){
-//       flush = true;
-//
-//     }else{
-//       flush = false;
-//     }
-//
-// })

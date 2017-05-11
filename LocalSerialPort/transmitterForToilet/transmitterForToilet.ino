@@ -10,7 +10,10 @@
 
 SoftwareSerial mySerial(9, 10);
 int val;
+int val1;
+int busy;
 int lastVal;
+int lastVal1;
 String head = "t";
 RF24 radio(7, 8); // CNS, CE
 const byte address[6] = "00001";
@@ -25,23 +28,30 @@ void setup() {
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
+  byte Command    = 6;
+  byte Parameter1 = 0;
+  byte Parameter2 = 0x20;
+  execute_CMD(Command, Parameter1, Parameter2);
 }
 void loop() {
 
 
-
-  int val  = analogRead(0);
+  busy = digitalRead(2);
+  int val  = map(analogRead(A0), 0, 736, 0, 1023);
+  int val1  = map(analogRead(A1), 0, 736, 0, 1023);
   //  if ( lastVal < 500 && val >= 500) {
   //    byte data = 1;
   //    radio.write(&val, sizeof(val));
   //  }
   //  if ( lastVal > 500 && val <= 500) {
   //    byte data = 0;
-  String myString = head + String(val);
+  String myString = head + String(max(val, val1));
   char buf[5];
   myString.toCharArray(buf, myString.length() + 1);
-  radio.write(&buf, 5);
-  if (val > 500 && lastVal <= 500) {
+  if (busy == 1) {
+    radio.write(&buf, 5);
+  }
+  if (((val > 500 && lastVal <= 500) || (val1 > 500 && lastVal1 <= 500)) && busy == 1) {
 
 
     // Input Serial monitor: Command and the two parameters in DECIMAL numbers (NOT HEX)
@@ -51,12 +61,12 @@ void loop() {
     byte Parameter2 = 1;
 
     // Write your input at the screen
-    Serial.print("Command : 0x"); if (Command < 16) Serial.print("0"); Serial.print(Command, HEX);
-    Serial.print("("); Serial.print(Command, DEC);
-    Serial.print("); Parameter: 0x"); if (Parameter1 < 16) Serial.print("0"); Serial.print(Parameter1, HEX);
-    Serial.print("("); Serial.print(Parameter1, DEC);
-    Serial.print("), 0x"); if (Parameter2 < 16) Serial.print("0"); Serial.print(Parameter2, HEX);
-    Serial.print("("); Serial.print(Parameter2, DEC); Serial.println(")");
+    //    Serial.print("Command : 0x"); if (Command < 16) Serial.print("0"); Serial.print(Command, HEX);
+    //    Serial.print("("); Serial.print(Command, DEC);
+    //    Serial.print("); Parameter: 0x"); if (Parameter1 < 16) Serial.print("0"); Serial.print(Parameter1, HEX);
+    //    Serial.print("("); Serial.print(Parameter1, DEC);
+    //    Serial.print("), 0x"); if (Parameter2 < 16) Serial.print("0"); Serial.print(Parameter2, HEX);
+    //    Serial.print("("); Serial.print(Parameter2, DEC); Serial.println(")");
 
     // Excecute the entered command and parameters
     execute_CMD(Command, Parameter1, Parameter2);
@@ -65,7 +75,12 @@ void loop() {
   }
   //  }
   lastVal = val;
-  //  Serial.println(myString);
+  lastVal1 = val1;
+  Serial.print(busy);
+  Serial.print(" ");
+  Serial.print(val);
+  Serial.print(" ");
+  Serial.println(val1);
   //delete char;
   delay(50);
 }

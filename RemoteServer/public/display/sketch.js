@@ -34,7 +34,6 @@ document.oncontextmenu = function() {
 var waitForFlush = false;
 
 function setup() {
-
     waterHeight = 1
     document.getElementById('back').href = 'http://' + ip + '/';
     hole = 50;
