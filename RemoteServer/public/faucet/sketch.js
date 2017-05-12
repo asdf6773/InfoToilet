@@ -40,7 +40,8 @@ var num = 0;
 
 function flow(num) {
     $("#box").append("<p class='split' id='test" + String(num) + "'></p>");
-    $("#test" + String(num)).html(json.statuses[num].text)
+    if (json.statuses[num])
+        $("#test" + String(num)).html(json.statuses[num].text)
     var text = $("#test" + String(num));
     //
     var split = new SplitText(text);
@@ -78,8 +79,9 @@ function flow(num) {
 
 
 function handleData(obj) {
-    for (var i = 0; i < obj.statuses.length; i++)
-        console.log(obj.statuses[i].text)
+    for (var i = 0; i < 10; i++)
+        if (obj.statuses[i])
+            console.log(obj.statuses[i].text)
     json = obj;
     for (var i = 0; i < 1; i++) {
 
