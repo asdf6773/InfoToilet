@@ -80,7 +80,7 @@ function setup() {
     socket.on('isFlushingSetup', function(status) {
         console.log("Origial " + status)
 
-        isFlushing = status;//test！！！！！！！！！！！！！！！！！！！！！！！！
+        isFlushing = status; //test！！！！！！！！！！！！！！！！！！！！！！！！
         if (isFlushing) {
             flush.elt.innerHTML = "正在冲水"
             document.getElementById('flush').style.background = "#BDD9E0";
@@ -98,7 +98,7 @@ function setup() {
     });
     socket.on('isFlushing', function(status) {
 
-        isFlushing = status;//tese。。。。。。。。。。。。。。。。。。。。。。。。。。。。！！！！！！
+        isFlushing = status; //tese。。。。。。。。。。。。。。。。。。。。。。。。。。。。！！！！！！
         if (isFlushing) {
             flush.elt.innerHTML = "正在冲水"
             document.getElementById('flush').style.background = "#BDD9E0";
@@ -129,10 +129,10 @@ function setup() {
 
 function flushPressed(i) {
     waitForFlush = true;
-    if (isFlushing === false) { //然后新用户就无法按了
+    // if (isFlushing === false) { //然后新用户就无法按了
         socket.emit("flushPressed")
 
-    }
+    // }
 
     if (waitForFlush) {
         addWater()
@@ -306,11 +306,11 @@ function draw() {
 function addWater() {
     // if ((!isFlushing)||(waitForFlush&&(!isFlushing))) {
     waitForFlush = false;
-
+    fallActive = false;
     waterHeight = 1
     angle = 0;
-      IAstep =0
-      // flag=true;
+    IAstep = 0
+    // flag=true;
     rising = true;
     flush.elt.innerHTML = "正在冲水"
     if (flag) {
@@ -339,8 +339,10 @@ function addWater() {
 
 function recover() {
     IAstepForEase = 1;
-    if (waterHeight > 170)
+    if (waterHeight > 170) {
         rising = false;
+        console.log("rising altered")
+    }
     fallActive = true;
     clearInterval(rise)
     fall = setInterval(function() {
