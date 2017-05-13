@@ -11,9 +11,9 @@
 SoftwareSerial mySerial(9, 10);
 int val;
 int lastVal;
-String head = "t";
+String head = "f";
 RF24 radio(7, 8); // CNS, CE
-const byte address[6] = "00001";
+const byte address[6] = "00001        ";
 void setup() {
   Serial.begin(9600);
   mySerial.begin (9600);
@@ -25,6 +25,10 @@ void setup() {
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
+  byte Command    = 6;
+  byte Parameter1 = 0;
+  byte Parameter2 = 0x20;
+  execute_CMD(Command, Parameter1, Parameter2);
 }
 void loop() {
 
@@ -51,12 +55,6 @@ void loop() {
     byte Parameter2 = 1;
 
     // Write your input at the screen
-    Serial.print("Command : 0x"); if (Command < 16) Serial.print("0"); Serial.print(Command, HEX);
-    Serial.print("("); Serial.print(Command, DEC);
-    Serial.print("); Parameter: 0x"); if (Parameter1 < 16) Serial.print("0"); Serial.print(Parameter1, HEX);
-    Serial.print("("); Serial.print(Parameter1, DEC);
-    Serial.print("), 0x"); if (Parameter2 < 16) Serial.print("0"); Serial.print(Parameter2, HEX);
-    Serial.print("("); Serial.print(Parameter2, DEC); Serial.println(")");
 
     // Excecute the entered command and parameters
     execute_CMD(Command, Parameter1, Parameter2);
@@ -67,7 +65,7 @@ void loop() {
   lastVal = val;
   //  Serial.println(myString);
   //delete char;
-  delay(50);
+  delay(10);
 }
 
 

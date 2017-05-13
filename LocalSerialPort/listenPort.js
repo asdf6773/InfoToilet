@@ -44,9 +44,9 @@ io.sockets.on('connection', function(socket) {
 
 });
 var socket = require('socket.io-client')('http://' + ip + '/serialPort');
-socket.on("flushIsOver", function() {
-    console.log("flushIsOver")
-})
+// socket.on("flushIsOver", function() {
+//     console.log("flushIsOver")
+// })
 
 function triggerButton() {
     socket.broadcast.emit('flush', flush);
@@ -67,7 +67,16 @@ myPort.on('close', function() {
 myPort.on('error', function() {
     console.log('error')
 })
+socket.on("flushIsOver", function() {
+    console.log("flushIsOver")
+    myPort.write("O", function(err) {
+        if (err) {
+            return console.log('Error on write: ', err.message);
+        }
+        console.log('message written');
+    })
 
+})
 myPort.on('data', function(data) {
     if (data.charAt(0) == 'h') { //handDryer
         // console.log(data)
@@ -96,6 +105,7 @@ myPort.on('data', function(data) {
             socket.emit("flushPressedFrombutton")
             console.log("t" + value)
         }
+
         if (value < 500) {
             // flush = true;
             // socket.emit("switchOff", flush)
