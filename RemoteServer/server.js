@@ -170,7 +170,7 @@ io.of("/serialPort").on('connection', function(socket) {
 
 
     socket.on("flushPressedFrombutton", function() {
-        if (!consoleData.isFlushing) {
+        // if (!consoleData.isFlushing) {
             consoleData.totalFlush += 1;
             // //console.log(i)
             consoleData.isFlushing = true;
@@ -186,7 +186,7 @@ io.of("/serialPort").on('connection', function(socket) {
                 io.of('/serialPort').emit('flushIsOver');
             }, 6500) //新进来的Socket没有触发回调函数
             console.log("flushPressedFrombutton");
-        }
+        // }
     })
 
     // socket.on("")
