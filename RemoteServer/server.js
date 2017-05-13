@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 console.log("running on 80;")
 //upload
 // var record="d:\\0.json";
+// var textBuffer = [];
 var imageBuffer = [];
 var imageScaleBuffer = [];
 //  isFlushing: false;
@@ -55,7 +56,8 @@ var Storage = multer.diskStorage({
 var upload = multer({
     storage: Storage
 }).array("imgUploader", 1);
-var ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+// var ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+var ServerLimit = 200000;
 //router
 // app.get("/", function(req, res) {
 //     res.sendFile(__dirname + "/public/index.html");
@@ -133,13 +135,13 @@ io.of("/toilet").on('connection', function(socket) {
         consoleData.totalFlush += 1;
         // //console.log(i)
         consoleData.isFlushing = true;
-        ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+        ServerLimit = 100000;
         //console.log(ServerLimit)
         io.of('/projector').emit('limitFromServer', ServerLimit);
         io.of('/projector').emit('isFlushing', consoleData.isFlushing);
         io.of('/projector').emit('flushPressedFromServer');
         setTimeout(function() {
-            limit = 2;
+            limit = 200000;
             consoleData.isFlushing = false;
             io.of('/projector').emit('isFlushing', consoleData.isFlushing);
         }, 6500) //新进来的Socket没有触发回调函数
@@ -171,21 +173,22 @@ io.of("/serialPort").on('connection', function(socket) {
 
     socket.on("flushPressedFrombutton", function() {
         // if (!consoleData.isFlushing) {
-            consoleData.totalFlush += 1;
-            // //console.log(i)
-            consoleData.isFlushing = true;
-            ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
-            //console.log(ServerLimit)
-            io.of('/projector').emit('limitFromServer', ServerLimit);
+        consoleData.totalFlush += 1;
+        // //console.log(i)
+        consoleData.isFlushing = true;
+        // ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+        ServerLimit = 200000;
+        //console.log(ServerLimit)
+        io.of('/projector').emit('limitFromServer', ServerLimit);
+        io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+        io.of('/projector').emit('flushPressedFromServer');
+        setTimeout(function() {
+            limit = 200000;
+            consoleData.isFlushing = false;
             io.of('/projector').emit('isFlushing', consoleData.isFlushing);
-            io.of('/projector').emit('flushPressedFromServer');
-            setTimeout(function() {
-                limit = 2;
-                consoleData.isFlushing = false;
-                io.of('/projector').emit('isFlushing', consoleData.isFlushing);
-                io.of('/serialPort').emit('flushIsOver');
-            }, 6500) //新进来的Socket没有触发回调函数
-            console.log("flushPressedFrombutton");
+            io.of('/serialPort').emit('flushIsOver');
+        }, 6500) //新进来的Socket没有触发回调函数
+        console.log("flushPressedFrombutton");
         // }
     })
 
@@ -249,12 +252,19 @@ io.of("/projector").on('connection', function(socket) {
     socket.emit('isFlushingSetup', consoleData.isFlushing);
     io.of('/projector').emit('imageBuffer', imageBuffer);
     io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
+    // io.of('/projector').emit('textBuffer', textBuffer);
     projectors.push(socket.id);
     consoleData.totalProjector += 1;
     consoleData.onlineProjector = projectors.length;
     consoleData.maxOnlineProjector = consoleData.onlineProjector > consoleData.maxOnlineProjector ? consoleData.onlineProjector : consoleData.maxOnlineProjector;
     //console.log(socket.id + ' ' + projectors.length)
     //projectorId.push(socket.id);
+    socket.on("typed", function(key) {
+        io.of('/projector').emit('newText', key);
+        // textBuffer.push("a");
+        // imageBuffer.push();
+    });
+
     socket.on('imgFlushed', function(i) {
         io.of('/projector').emit('imageBuffer', imageBuffer);
         io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
@@ -275,13 +285,14 @@ io.of("/projector").on('connection', function(socket) {
         consoleData.totalFlush += 1;
         // //console.log(i)
         consoleData.isFlushing = true;
-        ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+        ServerLimit =200000;
+        // ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
         //console.log(ServerLimit)
         io.of('/projector').emit('limitFromServer', ServerLimit);
         io.of('/projector').emit('isFlushing', consoleData.isFlushing);
         io.of('/projector').emit('flushPressedFromServer');
         setTimeout(function() {
-            limit = 2;
+            limit = 200000;
             consoleData.isFlushing = false;
             io.of('/projector').emit('isFlushing', consoleData.isFlushing);
             io.of('/serialPort').emit('flushIsOver');

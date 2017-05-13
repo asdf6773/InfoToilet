@@ -9,6 +9,7 @@ var flush;
 var attractForce = 0;
 var imgPos = [];
 var attractor;
+var textBufferLoaded = false;
 var bufferLoaded = false;
 var upload;
 var hole;
@@ -24,7 +25,7 @@ var IAstep = 0;
 var rising = 0;
 var riseIndex = 0.5;
 var fallActive = false;
-var limit = 2;
+var limit = 200000;
 var IAstepForEase = 1;
 var isFlushing;
 var imageRandomBuffer;
@@ -69,7 +70,8 @@ function setup() {
     socket.on('uploadName', addImage);
     socket.on('flushOther', flushFromToilet);
     //  socketToLocal.on('flushFromToilet', flushFromOtherClient);
-    socket.on('imageBuffer', loadBuffer);
+    socket.on('imageBuffer', loadImageBuffer);
+    // socket.on('TextBuffer', loadTextBuffer);
     socket.on('flushByOther', flushByOther);
     socket.on('flushPressedFromServer', addWater);
     //socket.on('flushPressd', addWater);
@@ -117,12 +119,14 @@ function setup() {
             imgPos[i].scale = imageRandomBuffer[i];
         }
     });
-    //    console.log(document.getElementById(flush));
+    socket.on("newText", function(key) {
+        var temp = loadImage("http://" + ip + "/lib/text/A.png");
 
-    // console.log(flush)
-    // console.log()
-    // // document.getElementById(flush).value = '正在冲水'
+        imgPos.push(new Particle(attractor));
+        img.push(temp);
 
+
+    })
     //    flush.touchEnded(recover);
 }
 
@@ -154,7 +158,25 @@ function animate() {
 
 }
 
-function loadBuffer(buffer) {
+// function loadTextBuffer(buffer) {
+//     if (!textBufferLoaded) {
+//         for (var i = 0; i < buffer.length; i++) {
+//             img.push(loadImage("http://" + ip + "/lib/text/A.png"));
+//             imgPos.push(new Particle(attractor));
+//         }
+//         textBufferLoaded = true;
+//
+//     } else {
+//         img.splice(0, img.length);
+//         imgPos.splice(0, imgPos.length);
+//         for (var i = 0; i < buffer.length; i++) {
+//             img.push(loadImage("http://" + ip + "/lib/text/A.png"));
+//             imgPos.push(new Particle(attractor));
+//         }
+//     }
+// }
+
+function loadImageBuffer(buffer) {
     if (!bufferLoaded) {
         for (var i = 0; i < buffer.length; i++) {
             img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
@@ -269,7 +291,7 @@ function draw() {
 
 
     // if (imgPos[2])
-  //     console.log(imgPos[2].scale + " " + imgPos[2].scaleRandom)
+    //     console.log(imgPos[2].scale + " " + imgPos[2].scaleRandom)
     //upper background
     imageMode(CORNER);
     image(layer, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
@@ -308,10 +330,20 @@ function draw() {
         }
 
     }
-
+    // text(key, 33,65);
     //  console.log(flush)
 }
 
+function keyTyped() {
+
+    keyTriggered(key);
+
+}
+
+function addFont(key) {
+    console.log(key)
+    socket.emit("typed", key)
+}
 
 function addWater() {
     // if ((!isFlushing)||(waitForFlush&&(!isFlushing))) {
