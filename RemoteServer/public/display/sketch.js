@@ -78,7 +78,7 @@ function setup() {
     flush.touchStarted(flushPressed);
     //  }
     socket.on('isFlushingSetup', function(status) {
-        console.log("Origial " + status)
+        // console.log("Origial " + status)
 
         isFlushing = status; //test！！！！！！！！！！！！！！！！！！！！！！！！
         if (isFlushing) {
@@ -94,7 +94,7 @@ function setup() {
     });
     socket.on('limitFromServer', function(limitFromServer) {
         limit = limitFromServer;
-        console.log(limit)
+        // console.log(limit)
     });
     socket.on('isFlushing', function(status) {
 
@@ -113,13 +113,14 @@ function setup() {
     socket.on('imageScaleBuffer', function(imageScaleBuffer) {
         imageRandomBuffer = imageScaleBuffer;
         for (var i = 0; i < imageScaleBuffer.length; i++) {
-
+            // console.log('triggered?')
             imgPos[i].scale = imageRandomBuffer[i];
         }
     });
     //    console.log(document.getElementById(flush));
-    console.log(flush)
-    console.log()
+
+    // console.log(flush)
+    // console.log()
     // // document.getElementById(flush).value = '正在冲水'
 
     //    flush.touchEnded(recover);
@@ -130,7 +131,7 @@ function setup() {
 function flushPressed(i) {
     waitForFlush = true;
     // if (isFlushing === false) { //然后新用户就无法按了
-        socket.emit("flushPressed")
+    socket.emit("flushPressed")
 
     // }
 
@@ -198,6 +199,7 @@ function flushing() {
 angl = 0;
 
 function draw() {
+    for (var i = 0; i < imgPos.length; i++) {}
     background(255);
     // fill()
     // rect(0,0,width,height)
@@ -232,7 +234,12 @@ function draw() {
         imgPos[i].update(attractForce);
         push();
         translate(window.innerWidth / 2, window.innerWidth / 1.8);
-        imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
+
+
+        if (imageRandomBuffer[i])
+            imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
+        else
+            imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
         rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
         scale(imgPos[i].scale);
         image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 90), img[i].height / (constrain(width, 0, 400) / 90));
@@ -260,6 +267,9 @@ function draw() {
     attractor.y = height / 2 + 200 * sin(noiseSeed)
     noiseSeed += 0.1;
 
+
+    // if (imgPos[2])
+  //     console.log(imgPos[2].scale + " " + imgPos[2].scaleRandom)
     //upper background
     imageMode(CORNER);
     image(layer, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
@@ -305,6 +315,8 @@ function draw() {
 
 function addWater() {
     // if ((!isFlushing)||(waitForFlush&&(!isFlushing))) {
+    riseIndex = 0.5;
+
     waitForFlush = false;
     fallActive = false;
     waterHeight = 1
@@ -341,7 +353,7 @@ function recover() {
     IAstepForEase = 1;
     if (waterHeight > 170) {
         rising = false;
-        console.log("rising altered")
+        // console.log("rising altered")
     }
     fallActive = true;
     clearInterval(rise)

@@ -3,18 +3,19 @@
 
 function Particle(attractor) {
     //  this.attractor = attractor_;
-    this.scale =1;
-    this.scaleRandom =random(1,1.5);
+    this.scale = 1;
+    this.scaleRandom = 0.5 * Math.random() + 1;
     this.dir = random(TWO_PI)
-    this.speed = random(PI,TWO_PI)
+    this.speed = random(PI, TWO_PI)
     this.pos = createVector(random(80), random(80));
-
+    console.log(this.scale + ' ' + this.scaleRandom)
     this.vel = createVector();
     this.acc = createVector();
     this.lifespan = 255;
     this.maxforce = random(0.5, 1);
     this.maxspeed = random(0.1, 0.2);
     this.update = function(rotate) {
+          this.scale = 1;
         //add attraction
         var dir = p5.Vector.sub(attractor, this.pos);
         dir.normalize();

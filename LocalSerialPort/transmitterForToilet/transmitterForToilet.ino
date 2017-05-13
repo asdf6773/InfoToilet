@@ -18,7 +18,7 @@ int lastVal1;
 String head = "t";
 RF24 radio(7, 8); // CNS, CE
 const byte address[6] = "00001";
-const byte flushStatus[6] = "00002";
+//const byte flushStatus[6] = "00002";
 void setup() {
   flushStatus = false;
   Serial.begin(9600);
