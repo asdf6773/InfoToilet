@@ -71,7 +71,7 @@ function setup() {
     //  socketToLocal.on('flushFromToilet', flushFromOtherClient);
     socket.on('imageBuffer', loadBuffer);
     socket.on('flushByOther', flushByOther);
-     socket.on('flushPressedFromServer', addWater);
+    socket.on('flushPressedFromServer', addWater);
     //socket.on('flushPressd', addWater);
     //flush.touchStarted(addWater);
     //  if (isFlushing===false) {
@@ -80,7 +80,7 @@ function setup() {
     socket.on('isFlushingSetup', function(status) {
         console.log("Origial " + status)
 
-        isFlushing = status;
+        isFlushing = status;//test！！！！！！！！！！！！！！！！！！！！！！！！
         if (isFlushing) {
             flush.elt.innerHTML = "正在冲水"
             document.getElementById('flush').style.background = "#BDD9E0";
@@ -98,7 +98,7 @@ function setup() {
     });
     socket.on('isFlushing', function(status) {
 
-        isFlushing = status;
+        isFlushing = status;//tese。。。。。。。。。。。。。。。。。。。。。。。。。。。。！！！！！！
         if (isFlushing) {
             flush.elt.innerHTML = "正在冲水"
             document.getElementById('flush').style.background = "#BDD9E0";
@@ -128,14 +128,14 @@ function setup() {
 
 
 function flushPressed(i) {
-          waitForFlush = true;
+    waitForFlush = true;
     if (isFlushing === false) { //然后新用户就无法按了
         socket.emit("flushPressed")
 
     }
 
-    if(waitForFlush){
-      addWater()
+    if (waitForFlush) {
+        addWater()
     }
     addWater();
 }
@@ -306,8 +306,16 @@ function draw() {
 function addWater() {
     // if ((!isFlushing)||(waitForFlush&&(!isFlushing))) {
     waitForFlush = false;
+
+    waterHeight = 1
+    angle = 0;
+      IAstep =0
+      // flag=true;
+    rising = true;
     flush.elt.innerHTML = "正在冲水"
     if (flag) {
+
+
         flag = false;
         rising = true;
         //    console.log(document.getElementById(flush))
