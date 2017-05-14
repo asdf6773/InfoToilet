@@ -65,6 +65,12 @@ var ServerLimit = 200000;
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/closestool/uploader.html");
 });
+app.get("/graduateProject", function(req, res) {
+    res.sendFile(__dirname + "/public/catalog/index.html");
+});
+app.get("/author", function(req, res) {
+    res.sendFile(__dirname + "/public/author/index.html");
+});
 app.get("/projector", function(req, res) {
     res.sendFile(__dirname + "/public/display/projector.html");
 });
@@ -82,16 +88,12 @@ app.get("/console", function(req, res) {
 });
 app.post("/api/Upload", function(req, res) {
     upload(req, res, function(err) {
-        if (err) {
-            //  alert(failed);
+        if (err) {            //  alert(failed);
             return res.end("Something went wrong!");
         }
-
         io.of('/projector').emit('uploadName', uploadName);
-
         return res.redirect("/uploadSuccess.html");
     });
-
 });
 
 app.use(express.static(__dirname + '/public'))
@@ -127,11 +129,9 @@ io.of("/faucet").on('connection', function(socket) {
         if (!error && response.statusCode == 200) {
             var obj = JSON.parse(body);
             console.log('getcha');
-            socket.emit("weiboData", obj)
-
+            socket.emit("weiboData", obj);
         }
     })
-
 });
 io.of("/toilet").on('connection', function(socket) {
     socket.on('flushPressedFromButton', function() {
@@ -151,11 +151,6 @@ io.of("/toilet").on('connection', function(socket) {
     });
 
 });
-
-
-
-
-
 //socket
 io.of("/uploaded").on('connection', function(socket) {
     consoleData.totalImage += 1;
@@ -194,9 +189,7 @@ io.of("/serialPort").on('connection', function(socket) {
         console.log("flushPressedFrombutton");
         // }
     })
-
     // socket.on("")
-
     console.log("serialPort Connected")
 });
 io.of("/user").on('connection', function(socket) {
