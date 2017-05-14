@@ -51,6 +51,10 @@ function setup() {
     flush.id('flush');
     // upload.class('toiletUpload');
     flush.style("font-size", "15px");
+    if (projector) {
+        flush.style("display", "none");
+        document.getElementById("back").style.display = "none";
+    }
     // upload.style("font-size", "15px");
     //upload.class("submit-label");
     flush.size(width, 80)
@@ -222,7 +226,11 @@ angl = 0;
 
 function draw() {
     for (var i = 0; i < imgPos.length; i++) {}
-    background(255);
+    if (!projector) {
+        background(255);
+    } else {
+        background(0);
+    }
     // fill()
     // rect(0,0,width,height)
     if (attractForce != 0) {
@@ -236,7 +244,8 @@ function draw() {
     }
     //bg
     imageMode(CORNER)
-    image(bg, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
+    if (!projector)
+        image(bg, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
     imageMode(CENTER)
     //------------bg
 
@@ -294,7 +303,8 @@ function draw() {
     //     console.log(imgPos[2].scale + " " + imgPos[2].scaleRandom)
     //upper background
     imageMode(CORNER);
-    image(layer, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
+    if (!projector)
+        image(layer, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
     imageMode(CENTER)
     //---------------------
     fill(222);

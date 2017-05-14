@@ -65,6 +65,9 @@ var ServerLimit = 200000;
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/closestool/uploader.html");
 });
+app.get("/projector", function(req, res) {
+    res.sendFile(__dirname + "/public/display/projector.html");
+});
 app.get("/display", function(req, res) {
     res.sendFile(__dirname + "/public/display/display.html");
 });
@@ -285,7 +288,7 @@ io.of("/projector").on('connection', function(socket) {
         consoleData.totalFlush += 1;
         // //console.log(i)
         consoleData.isFlushing = true;
-        ServerLimit =200000;
+        ServerLimit = 200000;
         // ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
         //console.log(ServerLimit)
         io.of('/projector').emit('limitFromServer', ServerLimit);
