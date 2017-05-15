@@ -68,6 +68,12 @@ app.get("/", function(req, res) {
 app.get("/graduateProject", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");
 });
+app.get("/catalog", function(req, res) {
+    res.sendFile(__dirname + "/public/catalog/index.html");
+});
+app.get("/dryer", function(req, res) {
+    res.sendFile(__dirname + "/public/dryer/index.html");
+});
 app.get("/author", function(req, res) {
     res.sendFile(__dirname + "/public/author/index.html");
 });
@@ -88,7 +94,7 @@ app.get("/console", function(req, res) {
 });
 app.post("/api/Upload", function(req, res) {
     upload(req, res, function(err) {
-        if (err) {            //  alert(failed);
+        if (err) { //  alert(failed);
             return res.end("Something went wrong!");
         }
         io.of('/projector').emit('uploadName', uploadName);
@@ -119,19 +125,27 @@ var uploadNum = 0;
 var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
 
 
-
-
-
-
-
+var weiboData;
+request(pullData, function(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        var obj = JSON.parse(body);
+        // console.log('getcha');
+        // socket.emit("weiboData", obj);
+        weiboData = obj;
+    }
+})
 io.of("/faucet").on('connection', function(socket) {
     request(pullData, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             var obj = JSON.parse(body);
-            console.log('getcha');
+            // console.log('getcha');
             socket.emit("weiboData", obj);
+            // weiboData = obj;
         }
     })
+});
+io.of("/dryer").on('connection', function(socket) {
+    socket.emit("weiboData", weiboData);
 });
 io.of("/toilet").on('connection', function(socket) {
     socket.on('flushPressedFromButton', function() {

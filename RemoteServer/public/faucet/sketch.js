@@ -1,7 +1,4 @@
-//
-// document.oncontextmenu = function() {
-//     return false;
-// }
+
 var particles = [];
 var accelerationX = 0;
 var accelerationY = 0;
@@ -13,15 +10,7 @@ var waitForFlush = false;
 var acc = document.getElementById("acc");
 var socket;
 var json;
-// acc.getElementsByTagName("li")[0].innerHTML = "X";
-// acc.getElementsByTagName("li")[1].innerHTML = "Y";
-// acc.getElementsByTagName("li")[2].innerHTML = "Z";
-// acc.getElementsByTagName("li")[0].innerHTML = "rX";
-// acc.getElementsByTagName("li")[1].innerHTML = "rY";
-// acc.getElementsByTagName("li")[2].innerHTML = "rZ";
-// console.log(
-//     $("#text>g>text>textPath")[0].innerHTML
-// )
+
 
 function setup() {
     ellipseMode(CENTER);
@@ -59,17 +48,13 @@ function flow(num) {
             scale: .5,
             delay: 0,
             yoyo: true,
-            // repeat: -1,
             repeatDelay: 10
         });
     });
 
     num += 1
     if (num < 10) {
-
-
         setTimeout(flow, 1000, num)
-
         num += 1
 
     }

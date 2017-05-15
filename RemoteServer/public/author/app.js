@@ -1,4 +1,4 @@
-window.onload = function() {
-document.getElementById("portrait").style.left = 0 ;
-
-}
+// window.onload = function() {
+// document.getElementById("portrait").style.left = 0 ;
+//
+// }
