@@ -73,7 +73,7 @@ input {
     /*color: #527283;*/
 }
 #back {
-    background: url(../lib/back.png);
+    /*background: url(../lib/magnifying.png);*/
 
     position: absolute;
     width: 40px;

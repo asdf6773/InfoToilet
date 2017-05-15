@@ -4,8 +4,8 @@
 
 
 window.onload = function() {
-
     document.getElementById('entrance').href = 'http://' + ip + '/display';
+    document.getElementById('back').href = 'http://' + ip + '/graduateProject';
     // $("#imgFile").on("change", function(e) {
     //     var files = $(this)[0].files;
     //     var fileName = e.target.value.split('\\').pop();

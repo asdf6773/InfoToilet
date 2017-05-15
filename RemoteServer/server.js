@@ -63,6 +63,9 @@ var ServerLimit = 200000;
 //     res.sendFile(__dirname + "/public/index.html");
 // });
 app.get("/", function(req, res) {
+    res.sendFile(__dirname + "/public/catalog/index.html");
+});
+app.get("/toilet", function(req, res) {
     res.sendFile(__dirname + "/public/closestool/uploader.html");
 });
 app.get("/graduateProject", function(req, res) {

@@ -36,7 +36,7 @@ var waitForFlush = false;
 
 function setup() {
     waterHeight = 1
-    document.getElementById('back').href = 'http://' + ip + '/';
+    document.getElementById('back').href = 'http://' + ip + '/toilet';
     hole = 50;
     bg = loadImage("http://" + ip + "/lib/toilet-display.png")
     layer = loadImage("http://" + ip + "/lib/toilet-layer.png")

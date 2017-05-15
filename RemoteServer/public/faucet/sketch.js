@@ -1,4 +1,3 @@
-
 var particles = [];
 var accelerationX = 0;
 var accelerationY = 0;
@@ -11,6 +10,7 @@ var acc = document.getElementById("acc");
 var socket;
 var json;
 
+document.getElementById('back').href = 'http://' + ip + '/graduateProject';
 
 function setup() {
     ellipseMode(CENTER);

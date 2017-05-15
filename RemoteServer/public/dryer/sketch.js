@@ -15,7 +15,7 @@ var X_AXIS = 2;
 var dryer;
 var dryPosY;
 var MAX_NUM = 100;
-
+document.getElementById('back').href = 'http://' + ip + '/graduateProject';
 function setup() {
     dryPosY = 70;
     dryer = loadImage("lib/dryer.png");

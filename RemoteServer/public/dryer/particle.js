@@ -15,7 +15,7 @@ function Particle() {
     this.acc = createVector(0, 0);
     this.lifespan = 255;
     this.maxforce = random(0.005, 0.001);
-    this.maxspeed = random(0.005, 0.001);
+    this.maxspeed = 0.1;
     this.update = function() {
         // if () {
         // if (this.scale < this.scaleRandom * 2) {
