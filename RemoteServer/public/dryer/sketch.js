@@ -31,28 +31,24 @@ function setup() {
     socket = io.connect('http://' + ip + '/dryer')
     console.log(windowWidth)
     socket.on('weiboData', function(data) {
-
         for (var i = 0; i < data.statuses.length; i++)
             if (data.statuses[i]) {
                 // console.log(data.statuses[i].text)
-
                 str += data.statuses[i].text;
             }
         console.log(str)
-
     })
     imageMode(CENTER);
-    button = createButton('blow');
-    button.position(19, 19);
-    button.mousePressed(changeStatus);
-    button.mouseReleased(changeStatus);
+    // button = createButton('blow');
+    // button.position(19, 19);
+    // button.mousePressed(changeStatus);
+    // button.mouseReleased(changeStatus);
     for (var i = 0; i < MAX_NUM; i++) {
         particles.push(new Particle())
     }
 }
 
 function changeStatus() {
-
     dryerFlag = !dryerFlag;
     // console.log(dryerFlag)
 }
