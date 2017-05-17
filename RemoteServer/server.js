@@ -68,6 +68,9 @@ app.get("/", function(req, res) {
 app.get("/author", function(req, res) {
     res.sendFile(__dirname + "/public/author/index.html");
 });
+app.get("/me", function(req, res) {
+    res.sendFile(__dirname + "/public/author/index.html");
+});
 app.get("/toilet", function(req, res) {
     res.sendFile(__dirname + "/public/closestool/uploader.html");
 });
