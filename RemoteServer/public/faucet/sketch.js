@@ -15,6 +15,7 @@ var X_AXIS = 2;
 document.getElementById('back').href = 'http://' + ip + '/graduateProject';
 
 function setup() {
+  $(".box p div div div").css("width","40px")
   //BG
   b2 = color(214, 227, 233);
   b1 = color(222);
@@ -46,8 +47,8 @@ function flow(num) {
     $(split.chars).each(function(i) {
         TweenMax.to($(this), 30, {
             opacity: 0,
-            x: random(-20, 20),
-            y: random(800, 820),
+            x: random(-40, 40),
+            y: random(800, 850),
             z: random(-0, 20),
             scale: .5,
             delay: 0,
