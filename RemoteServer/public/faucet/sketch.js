@@ -74,25 +74,25 @@ function handleData(obj) {
 
     flow(num)
 }
-window.ondevicemotion = function(event) {
-    for (var i = 0; i < particles.length; i++) {
-        particles[i].acc.x = event.accelerationIncludingGravity.x;
-        particles[i].acc.y = event.accelerationIncludingGravity.y;
-    }
-    accelerationX = event.accelerationIncludingGravity.x;
-    accelerationY = event.accelerationIncludingGravity.y;
-    accelerationZ = event.accelerationIncludingGravity.z;
-    rX = event.rotationRate.alpha;
-    rY = event.rotationRate.beta;
-    rZ = event.rotationRate.gamma;
-}
+// window.ondevicemotion = function(event) {
+//     for (var i = 0; i < particles.length; i++) {
+//         particles[i].acc.x = event.accelerationIncludingGravity.x;
+//         particles[i].acc.y = event.accelerationIncludingGravity.y;
+//     }
+//     accelerationX = event.accelerationIncludingGravity.x;
+//     accelerationY = event.accelerationIncludingGravity.y;
+//     accelerationZ = event.accelerationIncludingGravity.z;
+//     rX = event.rotationRate.alpha;
+//     rY = event.rotationRate.beta;
+//     rZ = event.rotationRate.gamma;
+// }
 var myP
 var pos = 25;
 
 function draw() {
 
     background(255)
-    // setGradient(0, 0, width, height, b1, b2, Y_AXIS);
+    setGradient(0, 0, width, height, b1, b2, Y_AXIS);
     fill(0, 100)
     for (var i = 0; i < 10; i++) {
         if (content[i]) {
