@@ -92,7 +92,7 @@ var pos = 25;
 function draw() {
 
     background(255)
-    setGradient(0, 0, width, height, b1, b2, Y_AXIS);
+    // setGradient(0, 0, width, height, b1, b2, Y_AXIS);
     fill(0, 100)
     for (var i = 0; i < 10; i++) {
         if (content[i]) {
