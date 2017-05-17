@@ -15,7 +15,19 @@ canvas {
     top: 0;
     left: 0;
 }
-
+html {
+    /*height: 200px;*/
+    /*background-attachment:fixed;*/
+    background: -webkit-linear-gradient(#D6E3E9, #DEDEDE);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#D6E3E9, #DEDEDE);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#D6E3E9, #DEDEDE);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#D6E3E9, #DEDEDE);
+    /* 标准的语法（必须放在最后） */
+    background-attachment: fixed;
+}
 .wrapper {
     position: relative;
     width: 320;

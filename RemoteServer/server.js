@@ -68,6 +68,12 @@ app.get("/", function(req, res) {
 app.get("/toilet", function(req, res) {
     res.sendFile(__dirname + "/public/closestool/uploader.html");
 });
+app.get("/mirror", function(req, res) {
+    res.sendFile(__dirname + "/public/mirror/index.html");
+});
+app.get("/mirror", function(req, res) {
+    res.sendFile(__dirname + "/public/mirror/index.html");
+});
 app.get("/graduateProject", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");
 });
@@ -77,9 +83,7 @@ app.get("/catalog", function(req, res) {
 app.get("/dryer", function(req, res) {
     res.sendFile(__dirname + "/public/dryer/index.html");
 });
-app.get("/author", function(req, res) {
-    res.sendFile(__dirname + "/public/author/index.html");
-});
+
 app.get("/projector", function(req, res) {
     res.sendFile(__dirname + "/public/display/projector.html");
 });
@@ -123,9 +127,10 @@ var uploadNum = 0;
 
 
 
+var pullData = "https://api.weibo.com/2/statuses/public_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ"
 
+// var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
 
-var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
 
 
 var weiboData;
