@@ -83,7 +83,9 @@ app.get("/catalog", function(req, res) {
 app.get("/dryer", function(req, res) {
     res.sendFile(__dirname + "/public/dryer/index.html");
 });
-
+app.get("/author", function(req, res) {
+    res.sendFile(__dirname + "/public/author/index.html");
+});
 app.get("/projector", function(req, res) {
     res.sendFile(__dirname + "/public/display/projector.html");
 });
