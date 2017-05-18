@@ -20,6 +20,7 @@ var likes;
 var heart;
 
 function setup() {
+
     likes = 0;
     dryPosY = 70;
     dryer = loadImage("lib/dryer.png");
