@@ -136,30 +136,35 @@ var likes = 0;
 
 
 
-// var pullData = "https://api.weibo.com/2/statuses/public_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ"
+var pullData = "https://api.weibo.com/2/statuses/public_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ"
 
-var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
+// var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
 
 
 
-var weiboData;
-request(pullData, function(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        var obj = JSON.parse(body);
-        // console.log('getcha');
-        // socket.emit("weiboData", obj);
-        weiboData = obj;
-    }
-})
-io.of("/faucet").on('connection', function(socket) {
+var weiboData = JSON.parse(fs.readFileSync('./public/lib/weibo.json', 'utf8'));;
+var timer = 60*60*1000;
+setInterval(function() {
     request(pullData, function(error, response, body) {
         if (!error && response.statusCode == 200) {
             var obj = JSON.parse(body);
-            // console.log('getcha');
-            socket.emit("weiboData", obj);
-            // weiboData = obj;
+
+            console.log('refresh weiboData');
+            // socket.emit("weiboData", obj);
+            weiboData = obj;
+            fs.writeFile('./public/lib/weibo.json', JSON.stringify(weiboData), function(err) {
+
+            });
         }
     })
+}, timer);
+//3600000
+io.of("/faucet").on('connection', function(socket) {
+
+
+    socket.emit("weiboData", weiboData);
+
+
 });
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
@@ -167,8 +172,8 @@ io.of("/mirror").on('connection', function(socket) {
 });
 io.of("/mirrorClient").on('connection', function(socket) {
     socket.on("sendLike", function(type) {
-        io.of("/mirror").emit("like",type);
-        likes+=1;
+        io.of("/mirror").emit("like", type);
+        likes += 1;
     });
 });
 
