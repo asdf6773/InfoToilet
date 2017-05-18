@@ -124,7 +124,15 @@ function setup() {
         }
     });
     socket.on("newText", function(key) {
-        var temp = loadImage("http://" + ip + "/lib/text/A.png");
+        var temp = loadImage("http://" + ip + "/lib/text/" + key + key + ".png");
+
+        imgPos.push(new Particle(attractor));
+        img.push(temp);
+
+
+    })
+    socket.on("Cfont", function(key) {
+        var temp = loadImage("http://" + ip + "/lib/text/" + key  + ".png");
 
         imgPos.push(new Particle(attractor));
         img.push(temp);
@@ -353,6 +361,10 @@ function keyTyped() {
 function addFont(key) {
     console.log(key)
     socket.emit("typed", key)
+}
+function addCFont(key) {
+    console.log(key)
+    socket.emit("Cfont", key)
 }
 
 function addWater() {

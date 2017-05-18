@@ -1,7 +1,9 @@
 #catalog1 {
     /*background-image: url(../lib/catalog/catalog-1.png);*/
 }
-
+.item{
+  margin-bottom: 1px;
+}
 a {
     width: 100px;
     height: 100%;

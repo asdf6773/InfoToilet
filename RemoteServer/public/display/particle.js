@@ -192,6 +192,88 @@ function keyTriggered(key) {
         case 'Z':
             addFont(key);
             break;
+        case 'a':
+            addCFont(key);
+            break;
+        case 'b':
+            addCFont(key);
+            break;
+        case 'c':
+            addCFont(key);
+            break;
+        case 'd':
+            addCFont(key);
+            break;
+        case 'e':
+            addCFont(key);
+            break;
+        case 'f':
+            addCFont(key);
+            break;
+        case 'g':
+            addCFont(key);
+            break;
+        case 'h':
+            addCFont(key);
+            break;
+        case 'h':
+            addCFont(key);
+            break;
+        case 'i':
+            addCFont(key);
+            break;
+        case 'j':
+            addCFont(key);
+            break;
+        case 'k':
+            addCFont(key);
+            break;
+        case 'l':
+            addCFont(key);
+            break;
+        case 'm':
+            addCFont(key);
+            break;
+        case 'n':
+            addCFont(key);
+            break;
+        case 'o':
+            addCFont(key);
+            break;
+        case 'p':
+            addCFont(key);
+            break;
+        case 'q':
+            addCFont(key);
+            break;
+        case 'r':
+            addCFont(key);
+            break;
+        case 's':
+            addCFont(key);
+            break;
+        case 't':
+            addCFont(key);
+            break;
+        case 'u':
+            addCFont(key);
+            break;
+        case 'v':
+            addCFont(key);
+            break;
+        case 'w':
+            addCFont(key);
+            break;
+        case 'x':
+            addCFont(key);
+            break;
+        case 'y':
+            addCFont(key);
+            break;
+        case 'z':
+            addCFont(key);
+            break;
+
         default:
 
 

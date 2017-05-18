@@ -302,6 +302,12 @@ io.of("/projector").on('connection', function(socket) {
         // textBuffer.push("a");
         // imageBuffer.push();
     });
+    socket.on("Cfont", function(key) {
+        io.of('/projector').emit('Cfont', key);
+        // textBuffer.push("a");
+        // imageBuffer.push();
+    });
+
 
     socket.on('imgFlushed', function(i) {
         io.of('/projector').emit('imageBuffer', imageBuffer);
