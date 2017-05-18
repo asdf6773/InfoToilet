@@ -7,8 +7,8 @@ function FlowField(){
        for (var y = 0; y < yvec+1; y++) {
               var xNoise = 0;
               for (var x = 0; x < xvec+1; x++) {
-                     var vecDirect = noise(xNoise, yNoise, time) * 2*(TWO_PI);
-                     var dir = p5.Vector.fromAngle(vecDirect);
+                     var vecDirect = noise(xNoise, yNoise,time) * 2*(TWO_PI);
+                     var dir = createVector(map(Math.cos(vecDirect),-1,1,-1,0.6),-1);
                      var index = x + y * xvec;
                      flowfield[index] = dir;
                      dir.setMag(3);

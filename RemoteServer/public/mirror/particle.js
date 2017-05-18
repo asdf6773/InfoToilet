@@ -10,12 +10,12 @@ function Particle() {
     this.scaleRandom = random(10, 20);
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(random(width), random(height));
+    this.pos = createVector(random(width-300,width-200), random(height-100,height-50));
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
     this.lifespan = 255;
     this.maxforce = random(0.005, 0.001);
-    this.maxspeed = 0.1;
+    this.maxspeed = 10;
     this.update = function() {
         // if () {
         // if (this.scale < this.scaleRandom * 2) {
@@ -28,11 +28,11 @@ function Particle() {
         this.acc.mult(0);
         this.vel.limit(windSpeed);
         if (dryerFlag) {
-            if (this.maxspeed < 1) {
+            if (this.maxspeed < 10) {
                 this.maxspeed +=   0.031/this.maxspeed;
             }
         } else {
-            if (this.maxspeed > 0.1) {
+            if (this.maxspeed > 10) {
                 this.maxspeed -=0.04*this.maxspeed;
             }
         }

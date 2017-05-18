@@ -1,0 +1,28 @@
+.submit-label {
+    position:relative;
+    top: 100px;
+    margin:0 auto;
+    width: 100px;
+    height: 100px;
+    background: #aaeeaa;
+    color: #ffffff;
+    padding: 20px;
+    transition: 0.3s;
+    border-radius: 100px;
+    display:block;
+}
+
+
+.submit-label:hover {
+    background: #aaeeaa;
+    cursor: pointer;
+}
+
+#like {
+    display: none;
+}
+
+#box {
+
+    text-align: center;
+}

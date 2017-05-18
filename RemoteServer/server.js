@@ -65,6 +65,9 @@ var ServerLimit = 200000;
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");
 });
+app.get("/mirrorClient", function(req, res) {
+    res.sendFile(__dirname + "/public/mirror/client.html");
+});
 app.get("/author", function(req, res) {
     res.sendFile(__dirname + "/public/author/index.html");
 });
@@ -128,7 +131,7 @@ var user = [];
 var uploadNum = 0;
 
 
-
+var likes = 0;
 
 
 
@@ -158,6 +161,17 @@ io.of("/faucet").on('connection', function(socket) {
         }
     })
 });
+//mirrir
+io.of("/mirror").on('connection', function(socket) {
+    socket.emit("initLikes", likes);
+});
+io.of("/mirrorClient").on('connection', function(socket) {
+    socket.on("sendLike", function(type) {
+        io.of("/mirror").emit("like",type);
+        likes+=1;
+    });
+});
+
 io.of("/dryer").on('connection', function(socket) {
     socket.emit("weiboData", weiboData);
 });
