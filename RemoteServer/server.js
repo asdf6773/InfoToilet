@@ -136,13 +136,14 @@ setInterval(function() {
 
 
 
-//socket
-io.of("/faucet").on('connection', function(socket) {
-    // socket.emit("weiboData", weiboData);
-});
+
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
     socket.emit("initLikes", likes);
+});
+//socket
+io.of("/faucet").on('connection', function(socket) {
+    // socket.emit("weiboData", weiboData);
 });
 io.of("/mirrorClient").on('connection', function(socket) {
     socket.on("sendLike", function(type) {
