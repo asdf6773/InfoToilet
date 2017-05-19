@@ -13,12 +13,15 @@ var content = [];
 var Y_AXIS = 1;
 var X_AXIS = 2;
 document.getElementById('back').href = 'http://' + ip + '/graduateProject';
+var times = 0;
+var num;
 
 function setup() {
-  $(".box p div div div").css("width","40px")
-  //BG
-  b2 = color(214, 227, 233);
-  b1 = color(222);
+    num = 0;
+    $(".box p div div div").css("width", "40px")
+    //BG
+    b2 = color(214, 227, 233);
+    b1 = color(222);
     ellipseMode(CENTER);
     createCanvas(windowWidth, windowHeight);
     noStroke();
@@ -26,12 +29,13 @@ function setup() {
     console.log(windowWidth)
     socket.on('weiboData', handleData)
 }
-var num = 0;
 
-function flow(num) {
+
+
+function flow() {
     $("#box").append("<p class='split' id='test" + String(num) + "'></p>");
-    if (json.statuses[num])
-        $("#test" + String(num)).html(json.statuses[num].text.replace(/http+.+/, ''))
+    if (content[num])
+        $("#test" + String(num)).html(content[num].replace(/http+.+/, ''))
     var text = $("#test" + String(num));
     //
     var split = new SplitText(text);
@@ -39,11 +43,7 @@ function flow(num) {
     function random(min, max) {
         return (Math.random() * (max - min)) + min;
     }
-    var div = $("#box").find("p").eq(num).find("div").find("div");
-    // console.log(div);
-    for (var i = 1; i < div.length - 1; i++) {
-        // console.log(div[i].innerHTML)
-    }
+
     $(split.chars).each(function(i) {
         TweenMax.to($(this), 30, {
             opacity: 0,
@@ -56,24 +56,27 @@ function flow(num) {
             repeatDelay: 10
         });
     });
-    num += 1
-    if (num < 10) {
-        setTimeout(flow, 1000, num)
+    // num += 1
+    // if (num < 10 * times) {
+        setTimeout(flow, 1000)
         num += 1
-    }
+    // }
+
 }
 
 function handleData(obj) {
+    // num+=10;
     for (var i = 0; i < obj.statuses.length; i++) {
         if (obj.statuses[i]) {
-            console.log(obj.statuses[i].text)
+            // console.log(obj.statuses[i].text)
             content.push(obj.statuses[i].text.replace(/http+.+/, ''))
             // console.log(obj.statuses[i].text.replace(/http+.+/ , ''));
         }
     }
     json = obj;
+    times += 1;
 
-    flow(num)
+    flow()
 }
 // window.ondevicemotion = function(event) {
 //     for (var i = 0; i < particles.length; i++) {
@@ -91,18 +94,18 @@ var myP
 var pos = 25;
 
 function draw() {
-
+    // print(num + " " + content.length + " " + times)
     background(255)
     setGradient(0, 0, width, height, b1, b2, Y_AXIS);
     fill(0, 100)
-    for (var i = 0; i < 10; i++) {
-        if (content[i]) {
-            for (var j = 0; j < content[i].length; j++) {
-                if (content[i].charAt[j])
-                    text(content[i].charAt[j], j * 10, i * 20, 0, width)
-            }
-        }
-    }
+    // for (var i = 0; i < 10; i++) {
+    //     if (content[i]) {
+    //         for (var j = 0; j < content[i].length; j++) {
+    //             if (content[i].charAt[j])
+    //                 text(content[i].charAt[j], j * 10, i * 20, 0, width)
+    //         }
+    //     }
+    // }
     // ellipse(width / 2, height / 2, 20, 20)
 
 }
