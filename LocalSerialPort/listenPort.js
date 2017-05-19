@@ -121,7 +121,7 @@ myPort.on('data', function(data) {
         var value = parseInt(data);
         if (value >= 500) {
             flush = true;
-            // socket.emit("switchOn", flush)
+             socket.emit("faucetOn")
             console.log("t" + value)
         }
         if (value < 500) {

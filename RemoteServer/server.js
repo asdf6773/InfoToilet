@@ -1,13 +1,9 @@
 var express = require('express');
-// var serialport = require("serialport");
-// var portname = process.argv[2];
 var fs = require('fs');
 var app = express();
 var multer = require('multer');
 var bodyParser = require('body-parser');
 var socket = require("socket.io")
-// var record = require("./public/lib/record.json")
-
 var request = require('request');
 var server = app.listen(80);
 var io = socket(server);
@@ -16,32 +12,24 @@ var flush = true;
 var Console = [];
 app.use(bodyParser.json());
 console.log("running on 80;")
-//upload
-// var record="d:\\0.json";
-// var textBuffer = [];
 var imageBuffer = [];
 var imageScaleBuffer = [];
-//  isFlushing: false;
-//consoleData
 var consoleData = JSON.parse(fs.readFileSync('./public/lib/record.json', 'utf8'));
-// console.log(temp)
-
+//toiletData
 consoleData.onlineUser = 0;
 consoleData.onlineProjector = 0;
 consoleData.currentImage = 0;
 consoleData.isFlushing = false;
-
+//others
+consoleData.faucetOnline = 0;
+consoleData.mirrorOnline = 0;
+consoleData.dryerOnline = 0;
 console.log(consoleData)
 setInterval(function() {
     fs.writeFile('./public/lib/record.json', JSON.stringify(consoleData), function(err) {
-
     });
-
-
 }, 1000)
-// setInterval(function() {
-//     console.log(consoleData)
-// }, 1000)
+
 var Storage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, "./public/Images");
@@ -58,10 +46,11 @@ var upload = multer({
 }).array("imgUploader", 1);
 // var ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
 var ServerLimit = 200000;
+
+
+
+
 //router
-// app.get("/", function(req, res) {
-//     res.sendFile(__dirname + "/public/index.html");
-// });
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");
 });
@@ -92,7 +81,6 @@ app.get("/catalog", function(req, res) {
 app.get("/dryer", function(req, res) {
     res.sendFile(__dirname + "/public/dryer/index.html");
 });
-
 app.get("/projector", function(req, res) {
     res.sendFile(__dirname + "/public/display/projector.html");
 });
@@ -117,33 +105,18 @@ app.post("/api/Upload", function(req, res) {
         return res.redirect("/uploadSuccess.html");
     });
 });
-
 app.use(express.static(__dirname + '/public'))
 
-var dt = {
-    x: 2,
-    y: 10
-}
 
 //Websocket
 var projectors = [];
 var user = [];
 var uploadNum = 0;
-
-
 var likes = 0;
-
-
-
-
 var pullData = "https://api.weibo.com/2/statuses/public_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ"
-
 // var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
-
-
-
 var weiboData = JSON.parse(fs.readFileSync('./public/lib/weibo.json', 'utf8'));;
-var timer = 60*60*1000;
+var timer = 60 * 60 * 1000;
 setInterval(function() {
     request(pullData, function(error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -159,12 +132,13 @@ setInterval(function() {
     })
 }, timer);
 //3600000
+
+
+
+
+//socket
 io.of("/faucet").on('connection', function(socket) {
-
-
-    socket.emit("weiboData", weiboData);
-
-
+    // socket.emit("weiboData", weiboData);
 });
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
@@ -198,7 +172,7 @@ io.of("/toilet").on('connection', function(socket) {
     });
 
 });
-//socket
+
 io.of("/uploaded").on('connection', function(socket) {
     consoleData.totalImage += 1;
     uploadNum += 1;
@@ -206,6 +180,7 @@ io.of("/uploaded").on('connection', function(socket) {
     // io.of('/projector').emit('uploadName', uploadName);
 });
 io.of("/serialPort").on('connection', function(socket) {
+    //handDryer
     socket.on("switchOn", function(data) {
         io.of('/handDryer').emit('on');
         console.log("on");
@@ -214,7 +189,10 @@ io.of("/serialPort").on('connection', function(socket) {
         io.of('/handDryer').emit('off');
         console.log("off");
     })
-
+    //faucet
+    socket.on("faucetOn", function() {
+        io.of("/faucet").emit('weiboData', weiboData);
+    })
 
     socket.on("flushPressedFrombutton", function() {
         // if (!consoleData.isFlushing) {
