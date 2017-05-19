@@ -142,7 +142,7 @@ io.of("/mirror").on('connection', function(socket) {
 });
 //socket
 io.of("/faucet").on('connection', function(socket) {
-    socket.on("test",function() {
+    socket.on("test", function() {
         socket.emit("weiboData", weiboData);
     })
 });
@@ -392,3 +392,12 @@ io.of("/test").on('connection', function(socket) {
         //console.log('get');
     }
 })
+
+io.of("/setup").on('connection', function(socket) {
+    socket.on("check", function() {
+        socket.emit("connected");
+    })
+    socket.on('disconnect', function() {
+        //text me
+    });
+});
