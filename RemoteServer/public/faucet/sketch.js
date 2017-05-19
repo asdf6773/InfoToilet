@@ -17,6 +17,7 @@ var times = 0;
 var num;
 
 function setup() {
+
     num = 0;
     $(".box p div div div").css("width", "40px")
     //BG
@@ -28,7 +29,14 @@ function setup() {
     socket = io.connect('http://' + ip + '/faucet')
     console.log(windowWidth)
     socket.on('weiboData', handleData)
+
+    button = createButton('test');
+    button.position(width - 50, 19);
+    button.mouseReleased(function() {
+        socket.emit('test')
+    });
 }
+
 
 
 
@@ -56,13 +64,19 @@ function flow() {
             repeatDelay: 10
         });
     });
+
+
+
+    // console.log($p)
     // num += 1
-    // if (num < 10 * times) {
+    if (num < 10 * times) {
         setTimeout(flow, 1000)
         num += 1
-    // }
+    }
 
 }
+var a = new Array;
+var i = 0;
 
 function handleData(obj) {
     // num+=10;
@@ -92,8 +106,26 @@ function handleData(obj) {
 // }
 var myP
 var pos = 25;
+var $p
+var threshold = 0.1;
 
 function draw() {
+    $p = $('div')
+    console.log($p.length)
+    if ($p.length > 700) {
+        threshold = $p.length / 1500
+    } else {
+        threshold = 0.2;
+    }
+    $p.each(
+        function() {
+            if ($(this).css("opacity") <= threshold) {
+                $(this).remove();
+                // console.log("remove")
+            }
+            // console.log($(this).css("opacity"))
+        }
+    );
     // print(num + " " + content.length + " " + times)
     background(255)
     setGradient(0, 0, width, height, b1, b2, Y_AXIS);

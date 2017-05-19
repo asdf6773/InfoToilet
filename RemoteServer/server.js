@@ -26,8 +26,7 @@ consoleData.mirrorOnline = 0;
 consoleData.dryerOnline = 0;
 console.log(consoleData)
 setInterval(function() {
-    fs.writeFile('./public/lib/record.json', JSON.stringify(consoleData), function(err) {
-    });
+    fs.writeFile('./public/lib/record.json', JSON.stringify(consoleData), function(err) {});
 }, 1000)
 
 var Storage = multer.diskStorage({
@@ -143,7 +142,9 @@ io.of("/mirror").on('connection', function(socket) {
 });
 //socket
 io.of("/faucet").on('connection', function(socket) {
-    // socket.emit("weiboData", weiboData);
+    socket.on("test",function() {
+        socket.emit("weiboData", weiboData);
+    })
 });
 io.of("/mirrorClient").on('connection', function(socket) {
     socket.on("sendLike", function(type) {
