@@ -392,12 +392,3 @@ io.of("/test").on('connection', function(socket) {
         //console.log('get');
     }
 })
-
-io.of("/setup").on('connection', function(socket) {
-    socket.on("check", function() {
-        socket.emit("connected");
-    })
-    socket.on('disconnect', function() {
-        //text me
-    });
-});
