@@ -29,12 +29,20 @@ var limit = 200000;
 var IAstepForEase = 1;
 var isFlushing;
 var imageRandomBuffer;
+var dropSound = [];
 document.oncontextmenu = function() {
     return false;
 }
 var waitForFlush = false;
 
+function preload() {
+    dropSound.push(loadSound('lib/drop.wav'))
+    dropSound.push(loadSound('lib/drop2.mp3'))
+}
+
 function setup() {
+    // mySound.setVolume(0.5);
+
     waterHeight = 1
     document.getElementById('back').href = 'http://' + ip + '/toilet';
     hole = 50;
@@ -124,16 +132,20 @@ function setup() {
         }
     });
     socket.on("newText", function(key) {
+        var num = floor(random(0, 2));
         var temp = loadImage("http://" + ip + "/lib/text/" + key + key + ".png");
-
+        dropSound[num].setVolume(random(0.3, 0.8));
+        dropSound[num].play();
         imgPos.push(new Particle(attractor));
         img.push(temp);
 
 
     })
     socket.on("Cfont", function(key) {
-        var temp = loadImage("http://" + ip + "/lib/text/" + key  + ".png");
-
+        var num = floor(random(0, 2));
+        var temp = loadImage("http://" + ip + "/lib/text/" + key + ".png");
+        dropSound[num].setVolume(random(0.3, 0.8));
+        dropSound[num].play();
         imgPos.push(new Particle(attractor));
         img.push(temp);
 
@@ -220,7 +232,8 @@ function flushFromToilet(data) {
 
 function addImage(data) {
     var temp = loadImage("http://" + ip + "/Images/" + data);
-
+    dropSound[1].setVolume(0.8);
+    dropSound[1].play();
     imgPos.push(new Particle(attractor));
     img.push(temp);
 
@@ -362,6 +375,7 @@ function addFont(key) {
     console.log(key)
     socket.emit("typed", key)
 }
+
 function addCFont(key) {
     console.log(key)
     socket.emit("Cfont", key)
