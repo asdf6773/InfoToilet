@@ -39,10 +39,10 @@ function setup() {
         console.log(str)
     })
     imageMode(CENTER);
-    // button = createButton('blow');
-    // button.position(19, 19);
-    // button.mousePressed(changeStatus);
-    // button.mouseReleased(changeStatus);
+    button = createButton('blow');
+    button.position(width-50, 19);
+    button.mousePressed(changeStatus);
+    button.mouseReleased(changeStatus);
     for (var i = 0; i < MAX_NUM; i++) {
         particles.push(new Particle())
     }
@@ -76,13 +76,14 @@ function setGradient(x, y, w, h, c1, c2, axis) {
 
 
 function draw() {
+  // console.log(dryPosY)
     var rand = Math.random()
     if (dryerFlag) {
-        if (dryPosY > -100)
-            dryPosY -= dryPosY / 10;
+        if (dryPosY > 0)
+            dryPosY -= dryPosY / 20;
 
     } else {
-        if (dryPosY < 70)
+        if (dryPosY < 80)
             dryPosY += dryPosY / 10 + 1;
     }
 
@@ -100,7 +101,7 @@ function draw() {
             text(str.charAt(i), 0, 0);
         pop()
     }
-    image(dryer, width / 2, dryPosY, dryer.width, dryer.height)
+    image(dryer, width / 2, (dryPosY-50)*2, dryer.width, dryer.height)
     FlowField();
     // console.log(txt）
     for (var i = 0; i < particles.length; i++) {

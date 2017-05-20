@@ -28,8 +28,8 @@ function Particle() {
         this.acc.mult(0);
         this.vel.limit(windSpeed);
         if (dryerFlag) {
-            if (this.maxspeed < 100) {
-                this.maxspeed +=   0.051/this.maxspeed;
+            if (this.maxspeed < 150) {
+                this.maxspeed +=   0.51/this.maxspeed;
             }
         } else {
             if (this.maxspeed > 0.1) {
