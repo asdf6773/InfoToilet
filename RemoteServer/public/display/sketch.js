@@ -294,7 +294,7 @@ function draw() {
             imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
         rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
         scale(imgPos[i].scale);
-        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 90), img[i].height / (constrain(width, 0, 400) / 90));
+        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
         pop();
 
     }

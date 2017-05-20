@@ -7,7 +7,7 @@ function Particle(attractor) {
     this.scaleRandom = 0.5 * Math.random() + 1;
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(random(80), random(80));
+    this.pos = createVector(random(width/3), random(width/3));
     // console.log(this.scale + ' ' + this.scaleRandom)
     this.vel = createVector();
     this.acc = createVector();
