@@ -14,7 +14,12 @@ WiFiControl.init({
     debug: true
 });
 var ifaceState = WiFiControl.getIfaceState();
-console.log(ifaceState.ssid === undefined)
+if (ifaceState) {
+    console.log("wifi is connect")
+} else {
+    console.log("wifi is not connect")
+}
+// console.log(ifaceState.ssid === undefined)
 
 if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {
     var _ap = {
@@ -29,7 +34,7 @@ if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {
 } else {
     login()
 }
-listenPort.setup("COM16")
+listenPort.setup("COM8")
 // Initialize wifi module
 // Absolutely necessary even to set interface to null
 
@@ -61,7 +66,7 @@ setInterval(function() {
         });
     } else {
 
-        console.log("status " + socket.connected)
+        console.log("network status " + socket.connected)
         if (!socket.connected) {
             login();
         }
@@ -93,6 +98,9 @@ function setup() {
     childProcess.exec("taskkill /IM chrome.exe");
     setTimeout(function() {
         childProcess.exec('start chrome --kiosk artisticode.net/mirror --window-position=1920,0 --kiosk --user-data-dir=c:/monitor1');
-        childProcess.exec('start chrome --kiosk artisticode.net/projector --window-position=0,0 --kiosk --user-data-dir=c:/monitor2')
+        setTimeout(function() {
+            childProcess.exec('start chrome --kiosk artisticode.net/projector --window-position=0,0 --kiosk --user-data-dir=c:/monitor2');
+        }, 1000)
+
     }, 5000)
 }

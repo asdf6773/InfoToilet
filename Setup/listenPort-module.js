@@ -18,7 +18,7 @@ var ip = preload.ip
 
 
 var setup = function(portname) {
-    console.log(ip)
+    console.log("ServerAddress: "+ip)
     openPort(portname);
 
 }
