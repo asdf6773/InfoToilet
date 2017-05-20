@@ -36,6 +36,7 @@ function setup() {
     noStroke();
     socket = io.connect('http://' + ip + '/mirror')
     console.log(windowWidth)
+    textAlign(RIGHT);
     socket.on("initLikes", function(num) {
         likes = num;
     })
@@ -98,8 +99,8 @@ function draw() {
     // ellipse(width / 2, height / 2, 200, 200);
     // rect(0, 0, width, height)
     noStroke();
-    textSize(30)
-    text(likes, width - 100, height - 100);
+    textSize(50)
+    text(likes, width - 170, height - 80);
     // print(particles[0].pos)
     // fill(255);
     // for (var i = 0; i < particles.length; i++) {

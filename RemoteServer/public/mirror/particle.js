@@ -10,7 +10,7 @@ function Particle() {
     this.scaleRandom = random(10, 20);
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(random(width-300,width-200), random(height-100,height-50));
+    this.pos = createVector(width-100, height-100);
     this.vel = createVector(0, 0);
     this.acc = createVector(0, 0);
     this.lifespan = 255;
