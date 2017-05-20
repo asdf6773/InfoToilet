@@ -114,165 +114,89 @@ function keyTriggered(key) {
         case 'z':
             addFont(key);
             break;
+
+
+
+
         case 'A':
-            addFont(key);
+            addCFont(key);
             break;
         case 'B':
-            addFont(key);
+            addCFont(key);
             break;
         case 'C':
-            addFont(key);
+            addCFont(key);
             break;
         case 'D':
-            addFont(key);
+            addCFont(key);
             break;
         case 'E':
-            addFont(key);
+            addCFont(key);
             break;
         case 'F':
-            addFont(key);
+            addCFont(key);
             break;
         case 'G':
-            addFont(key);
+            addCFont(key);
             break;
         case 'H':
-            addFont(key);
+            addCFont(key);
             break;
         case 'I':
-            addFont(key);
+            addCFont(key);
             break;
         case 'J':
-            addFont(key);
+            addCFont(key);
             break;
         case 'K':
-            addFont(key);
+            addCFont(key);
             break;
         case 'L':
-            addFont(key);
+            addCFont(key);
             break;
         case 'M':
-            addFont(key);
+            addCFont(key);
             break;
         case 'N':
-            addFont(key);
+            addCFont(key);
             break;
         case 'O':
-            addFont(key);
+            addCFont(key);
             break;
         case 'P':
-            addFont(key);
+            addCFont(key);
             break;
         case 'Q':
-            addFont(key);
+            addCFont(key);
             break;
         case 'R':
-            addFont(key);
+            addCFont(key);
             break;
         case 'S':
-            addFont(key);
+            addCFont(key);
             break;
         case 'T':
-            addFont(key);
+            addCFont(key);
             break;
         case 'U':
-            addFont(key);
+            addCFont(key);
             break;
         case 'V':
-            addFont(key);
+            addCFont(key);
             break;
         case 'W':
-            addFont(key);
+            addCFont(key);
             break;
         case 'X':
-            addFont(key);
+            addCFont(key);
             break;
         case 'Y':
-            addFont(key);
+            addCFont(key);
             break;
         case 'Z':
-            addFont(key);
-            break;
-        case 'a':
             addCFont(key);
             break;
-        case 'b':
-            addCFont(key);
-            break;
-        case 'c':
-            addCFont(key);
-            break;
-        case 'd':
-            addCFont(key);
-            break;
-        case 'e':
-            addCFont(key);
-            break;
-        case 'f':
-            addCFont(key);
-            break;
-        case 'g':
-            addCFont(key);
-            break;
-        case 'h':
-            addCFont(key);
-            break;
-        case 'h':
-            addCFont(key);
-            break;
-        case 'i':
-            addCFont(key);
-            break;
-        case 'j':
-            addCFont(key);
-            break;
-        case 'k':
-            addCFont(key);
-            break;
-        case 'l':
-            addCFont(key);
-            break;
-        case 'm':
-            addCFont(key);
-            break;
-        case 'n':
-            addCFont(key);
-            break;
-        case 'o':
-            addCFont(key);
-            break;
-        case 'p':
-            addCFont(key);
-            break;
-        case 'q':
-            addCFont(key);
-            break;
-        case 'r':
-            addCFont(key);
-            break;
-        case 's':
-            addCFont(key);
-            break;
-        case 't':
-            addCFont(key);
-            break;
-        case 'u':
-            addCFont(key);
-            break;
-        case 'v':
-            addCFont(key);
-            break;
-        case 'w':
-            addCFont(key);
-            break;
-        case 'x':
-            addCFont(key);
-            break;
-        case 'y':
-            addCFont(key);
-            break;
-        case 'z':
-            addCFont(key);
-            break;
+
 
         default:
 
