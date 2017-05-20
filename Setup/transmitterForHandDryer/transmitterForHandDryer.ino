@@ -26,7 +26,7 @@ void setup() {
   execute_CMD(0x06, 0x00, 0x05);
   radio.begin();
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_MAX);
   radio.stopListening();
   byte Command    = 6;
   byte Parameter1 = 0;

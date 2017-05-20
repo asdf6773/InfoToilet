@@ -2,7 +2,7 @@ var express = require('express');
 var fs = require('fs');
 var events = require("events");
 var serialport = require("serialport");
-var socket = require('socket.io-client')('http://' + ip + '/serialPort');
+
 var app = express();
 var server = app.listen(5000);
 
@@ -12,6 +12,8 @@ var myEmitter = new events.EventEmitter();
 var send = false;
 var preload = JSON.parse(fs.readFileSync('./ip.json', 'utf8'));
 var ip = preload.ip
+var socket = require('socket.io-client')('http://' + ip + '/serialPort');
+// var ip = preload.ip
 
 
 
@@ -105,14 +107,14 @@ function openPort(portname) {
             data = data.substr(1);
             var value = parseInt(data);
             if (value >= 500) {
-                flush = true;
+                // flush = true;
                 socket.emit("faucetOn")
-                console.log("t" + value)
+                console.log("f" + value)
             }
             if (value < 500) {
-                flush = true;
+                // flush = true;
                 // socket.emit("switchOff", flush)
-                console.log("t" + value)
+                console.log("f" + value)
             }
 
         }

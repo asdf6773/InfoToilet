@@ -7,7 +7,7 @@
 # define Command_Length 0x06
 # define End_Byte       0xEF
 # define Acknowledge    0x00        //Returns info with command 0x41 [0x01: info, 0x00: no info] 
-
+int count;
 SoftwareSerial mySerial(9, 10);
 int val;
 int lastVal;
@@ -15,6 +15,7 @@ String head = "f";
 RF24 radio(7, 8); // CNS, CE
 const byte address[6] = "00001        ";
 void setup() {
+  count = 0;
   Serial.begin(9600);
   mySerial.begin (9600);
   execute_CMD(0x3F, 0x00, 0x00);   // Send request for initialization parameters
@@ -23,7 +24,7 @@ void setup() {
   execute_CMD(0x06, 0x00, 0x05);
   radio.begin();
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_MAX);
   radio.stopListening();
   byte Command    = 6;
   byte Parameter1 = 0;
@@ -35,6 +36,9 @@ void loop() {
 
 
   int val  = analogRead(0);
+  Serial.print(count);
+  Serial.print(" ");
+  Serial.println(val);
   //  if ( lastVal < 500 && val >= 500) {
   //    byte data = 1;
   //    radio.write(&val, sizeof(val));
@@ -42,12 +46,20 @@ void loop() {
   //  if ( lastVal > 500 && val <= 500) {
   //    byte data = 0;
   String myString = head + String(val);
+  String high = head + String(1000);
   char buf[5];
+  char buf2[5];
   myString.toCharArray(buf, myString.length() + 1);
-  radio.write(&buf, 5);
+  high.toCharArray(buf2, high.length() + 1);
+  if (count == 0)
+    radio.write(&buf, 5);
+  if (count > 0) {
+    radio.write(&buf2, 5);
+    count -= 1;
+  }
   if (val > 500 && lastVal <= 500) {
-
-
+    count = 30;
+    //    radio.write(&buf, 5);
     // Input Serial monitor: Command and the two parameters in DECIMAL numbers (NOT HEX)
     // E.g. 3,0,1 (or 3 0 1 or 3;0;1) will play first track on the TF-card
     byte Command    = 3;

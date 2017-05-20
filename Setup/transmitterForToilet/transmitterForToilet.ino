@@ -30,7 +30,7 @@ void setup() {
   radio.begin();
 //    radio.openReadingPipe(0, flushStatus);//waiting
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_MAX);
   radio.stopListening();
   byte Command    = 6;
   byte Parameter1 = 0;
@@ -45,11 +45,14 @@ void loop() {
 //
 //  }
 //  Serial.print(Serial.available());
-//  Serial.print(' ');
+
 //  Serial.println(flushStatus);
   busy = digitalRead(2);
   int val  = map(analogRead(A0), 0, 736, 0, 1023);
   int val1  = map(analogRead(A1), 0, 736, 0, 1023);
+//    Serial.print(val);
+//        Serial.print(" ");
+//             Serial.println(val1);
   //  if ( lastVal < 500 && val >= 500) {
   //    byte data = 1;
   //    radio.write(&val, sizeof(val));

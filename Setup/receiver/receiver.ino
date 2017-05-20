@@ -20,7 +20,7 @@ void setup() {
   
 //  radio.openWritingPipe(flushStatus);//waiting
   radio.openReadingPipe(0, address);
-  radio.setPALevel(RF24_PA_MIN);
+  radio.setPALevel(RF24_PA_MAX);
   radio.startListening();
 }
 void loop() {
@@ -51,7 +51,9 @@ void loop() {
       }
     }
     lastHandDryerInt = handDryerInt;
+    
     if (data[0] == 'f') {
+//        Serial.println(data);
       // int val = data.toInt();
       char tap[4];
       for (int i = 0; i < 4; i++) {

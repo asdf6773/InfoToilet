@@ -78,7 +78,7 @@ function setGradient(x, y, w, h, c1, c2, axis) {
 function draw() {
     var rand = Math.random()
     if (dryerFlag) {
-        if (dryPosY > -50)
+        if (dryPosY > -100)
             dryPosY -= dryPosY / 10;
 
     } else {
