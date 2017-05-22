@@ -30,11 +30,11 @@ function setup() {
     console.log(windowWidth)
     socket.on('weiboData', handleData)
 
-    button = createButton('test');
-    button.position(width - 50, 19);
-    button.mouseReleased(function() {
-        socket.emit('test')
-    });
+    // button = createButton('test');
+    // button.position(width - 50, 19);
+    // button.mouseReleased(function() {
+    //     socket.emit('test')
+    // });
 }
 
 

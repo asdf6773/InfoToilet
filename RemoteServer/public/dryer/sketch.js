@@ -40,9 +40,9 @@ function setup() {
     })
     imageMode(CENTER);
     button = createButton('blow');
-    button.position(width-50, 19);
-    button.mousePressed(changeStatus);
-    button.mouseReleased(changeStatus);
+    // button.position(width-50, 19);
+    // button.mousePressed(changeStatus);
+    // button.mouseReleased(changeStatus);
     for (var i = 0; i < MAX_NUM; i++) {
         particles.push(new Particle())
     }
