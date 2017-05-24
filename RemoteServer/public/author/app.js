@@ -1,5 +1,4 @@
 // window.onload = function() {
-// document.getElementById("portrait").style.left = 0 ;
-//
+//           console.log($("#aContent").html())
 // }
 document.getElementById('back').href = 'http://' + ip + '/graduateProject';

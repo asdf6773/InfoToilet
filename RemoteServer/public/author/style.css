@@ -1,17 +1,29 @@
 #catalog1 {
     /*background-image: url(../lib/catalog/catalog-1.png);*/
 }
+
+#anonymous {
+    height: 80px
+}
+
+#anon {
+    position: relative;
+    bottom: 0px;
+}
+
 #back {
     background: url(../lib/back.png);
-    position: absolute;
+    position: fixed;
     width: 40px;
     height: 40px;
     top: 10px;
     left: 10px;
     border-radius: 40px;
+    z-index: 999;
     /*background: #E0EEE7;*/
     /*color: #527283;*/
 }
+
 .item {
     /*width: 100vw;*/
     /*height:25%;*/
@@ -63,8 +75,8 @@ html {
     z-index: 101;
     /*font-size: :30px;*/
 }
-.name_ {
 
+.name_ {
     font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
     line-height: 0;
     position: relative;
@@ -143,12 +155,14 @@ textarea {
 }
 
 #send {
+    -webkit-appearance: none;
+    border: none;
     margin: 0 auto;
     width: 90px;
-line-height:30px;
-color: #527283;
+    line-height: 30px;
+    color: #527283;
     height: 30;
-    background-color: #E0EEE7;
+    background: #E0EEE7;
     border-radius: 100px;
     margin-bottom: 100px;
 }

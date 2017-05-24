@@ -1,4 +1,4 @@
- <html>
+<html>
 
 <head>
     <meta charset="UTF-8">
@@ -16,10 +16,10 @@
 </head>
 
 <body>
-  <label for="back" id="backLabel" class="entry"></label>
-      <a id="back"></a>
+    <label for="back" id="backLabel" class="entry" style="position:abolute"></label>
+    <a id="back"></a>
     <script language="javascript" type="text/javascript" src="./display/ip.js"></script>
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script language="javascript" type="text/javascript" src="./socket.io/socket.io.js"></script>
 
     <script language="javascript" type="text/javascript" src="./author/app.js"></script>
@@ -27,37 +27,96 @@
         <div class="name ">张阳</div>
         <div class="name name_ titlex`x">互动设计师/开发者</div>
         <div id="pdiv">
-        <div id="pdiv">
-            <image id="portrait" src="../lib/portait.jpg" style="display: inline-block;" />
-        </div>
-
-        <div class="info title" id="uni">清华大学美术学院
-            <div class="info word" id="dep">信息艺术设计系</div>
-        </div>
-
-        <div class="info title" id="tu">指导老师
-            <div class="info word" id="tuN">师丹青</div>
-        </div>
-
-        <div class="info title" id="intro">作品简介
-            <div class="info content">我会一直让你肆无忌惮地宣泄和张狂。
-                <div class="info insc">——马桶</div>
+            <div id="pdiv">
+                <image id="portrait" src="../lib/portait.jpg" style="display: inline-block;" />
             </div>
 
-            <div class="info content">你从未感激过的这些水，它们最终都将会被抛弃和遗忘。
-                <div class="info insc">——水龙头</div>
+            <div class="info title" id="uni">清华大学美术学院
+                <div class="info word" id="dep">信息艺术设计系</div>
             </div>
-            <div class="info content">我帮你清除掉那些纠缠不放的累赘。
-                <div class="info insc">——干手器</div>
-            </div>
-            <div class="info content">一个巨大的下水循环系统。每家每户的厕所就是人们接入这个系统的终端。 人们在里面宣泄、获取、放松、消遣。这一切都成为如今网络世界的强烈缩影。
-                <div class="info insc">——作者</div>
-            </div>
-        </div>
 
-      <textarea id="text" style="width:80%;height:80px;">这里写内容</textarea>
-      <div id ="send">留言</div>
-    </div>
+            <div class="info title" id="tu">指导老师
+                <div class="info word" id="tuN">师丹青</div>
+            </div>
+
+            <div class="info title" id="intro">作品简介
+                <div class="info content">我会一直让你肆无忌惮地宣泄和张狂。
+                    <div class="info insc">——马桶</div>
+                </div>
+                <div class="info content">你从未感激过的这些水，它们最终都将会被抛弃和遗忘。
+                    <div class="info insc">——水龙头</div>
+                </div>
+                <div class="info content">我帮你清除掉那些纠缠不放的累赘。
+                    <div class="info insc">——吹风机</div>
+                </div>
+                <div class="info content">一个巨大的下水循环系统。每家每户的厕所就是人们接入这个系统的终端。 人们在里面宣泄、获取、放松、消遣。这一切都成为如今网络世界的强烈缩影。
+                    <div class="info insc">——作者</div>
+                </div>
+                <div class="info content" id="anonymous">
+                    <div id="aContent"></div>
+                    <div class="info insc" id="anon">——匿名</div>
+                </div>
+            </div>
+            <form id="message">
+                <textarea id="text" name="text" style="width:80%;height:80px;"></textarea>
+                <input type="submit" value="留言" id="send"></input>
+            </form>
+        </div>
+        <script>
+            $.ajax({
+                type: 'GET',
+                url: "/comments",
+                data: 0,
+                success: function(data) {
+                    console.log(data);
+                    comments = data;
+                    $("#aContent").html(data.comments[data.comments.length - 1].comment);
+                    console.log($("#aContent").html())
+                },
+                // dataType: 'text',
+            });
+            var comments;
+            var form = document.getElementById("message");
+            form.onsubmit = function(e) {
+                if (document.getElementById("text").value == "") {
+                    alert("请输入内容")
+                    return mySubmit(false);
+                } else {
+                    e.preventDefault();
+                    var result = {
+                        text: form.text.value
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: "/comments",
+                        data: result,
+                        success: function(data) {
+                            console.log(data);
+                            comments = data;
+                            $("#aContent").html(data.comments[data.comments.length - 1].comment);
+                            console.log($("#aContent").html())
+                        },
+                        // dataType: 'text',
+                    });
+
+                    form.reset()
+                }
+            }
+
+            console.log(document.getElementById("text").innerHTML)
+            // $("#aContent").submit(function() {
+            //     if (document.getElementById("text").value == "") {
+            //         alert("null")
+            //         return mySubmit(false);
+            //     } else {
+            //         return mySubmit(true);
+            //     }
+            // });
+
+            function mySubmit(flag) {
+                return flag;
+            }
+        </script>
 </body>
 
 </html>

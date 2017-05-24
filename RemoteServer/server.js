@@ -10,7 +10,9 @@ var io = socket(server);
 var uploadName;
 var flush = true;
 var Console = [];
-app.use(bodyParser.json());
+var comments = JSON.parse(fs.readFileSync('./public/lib/comments.json', 'utf8'));
+
+
 console.log("running on 80;")
 var imageBuffer = [];
 var imageScaleBuffer = [];
@@ -95,15 +97,41 @@ app.get("/faucet", function(req, res) {
 app.get("/console", function(req, res) {
     res.sendFile(__dirname + "/public/console/console.html");
 });
-app.post("/api/Upload", function(req, res) {
-    upload(req, res, function(err) {
-        if (err) { //  alert(failed);
-            return res.end("Something went wrong!");
-        }
-        io.of('/projector').emit('uploadName', uploadName);
-        return res.redirect("/uploadSuccess.html");
+var urlencodedParser = bodyParser.urlencoded({
+    extended: false
+})
+app.post("/comments", urlencodedParser, function(req, res) {
+    var id = comments.comments.length
+    var txt = req.body.text;
+    comments.comments.push({
+        id: id + 1,
+        comment: txt
     });
+    fs.writeFile('./public/lib/comments.json', JSON.stringify(comments), function(err) {});
+    res.send(comments)
+    console.log(txt)
 });
+app.get("/comments", urlencodedParser, function(req, res) {
+    var id = comments.comments.length
+    var txt = req.body.text;
+    res.send(comments)
+    console.log(txt)
+});
+//
+//
+// app.post("/api/Upload", function(req, res) {
+//     upload(req, res, function(err) {
+//         if (err) { //  alert(failed);
+//             return res.end("Something went wrong!");
+//         }
+//         io.of('/projector').emit('uploadName', uploadName);
+//         return res.redirect("/uploadSuccess.html");
+//     });
+// });
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ //此项必须在 bodyParser.json 下面,为参数编码
+    extended: false
+}));
 app.use(express.static(__dirname + '/public'))
 
 
@@ -367,7 +395,7 @@ io.of("/test").on('connection', function(socket) {
     function saveImage(data) {
         var dataUrl = data;
         // //console.log(dataUrl)
-        if (dataUrl.split(",")) { //bug
+        if (dataUrl.includes(",")) { //bug
             var buffer = new Buffer(dataUrl.split(",")[1], 'base64');
         } else {
             var buffer = new Buffer('empty', 'base64'); //?????????????????????????????????????
