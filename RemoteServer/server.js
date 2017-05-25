@@ -167,6 +167,9 @@ setInterval(function() {
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
     socket.emit("initLikes", likes);
+    socket.on("disconnect", function() {
+        io.of("/checkStatus").emit("restart")
+    })
 });
 //socket
 io.of("/faucet").on('connection', function(socket) {
