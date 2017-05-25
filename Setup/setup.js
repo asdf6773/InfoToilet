@@ -7,6 +7,7 @@ var socket2 = require('socket.io-client')('http://59.110.143.143/checkStatus');
 var childProcess = require('child_process');
 var WiFiControl = require('wifi-control');
 var isSetup = false;
+var isSetting = false;
 var options = {
     name: 'y-zhang-13',
     pwd: '89154055qQ'
@@ -57,8 +58,10 @@ function checkInternet(cb) {
 
 //1. check whether it is Tsinghua WIFI
 setInterval(function() {
+  console.log("isSetup？："+isSetup)
     ifaceState = WiFiControl.getIfaceState();
-    if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
+    if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {//如果没连接校园网，则自动连接
+         isSetup = false;
         var _ap = {
             ssid: "Tsinghua",
             password: ""
@@ -90,7 +93,9 @@ socket.on("connected", function() {
     console.log("server connected ")
 })
 socket2.on("restart", function() {
-    setup();
+    if (!isSetting) {
+        setup()
+    }
 })
 //---------------------------------------------------
 
@@ -100,12 +105,13 @@ function login() {
     setTimeout(function() {
         tunet.login(options.name, options.pwd, function() {
             setup();
-              isSetup = true;
+            isSetup = true;
         });
     }, 5000);
 }
 
 function setup() {
+    isSetting = true;
     childProcess.exec("taskkill /IM chrome.exe");
     // isSetup = false;
     setTimeout(function() {
@@ -115,6 +121,6 @@ function setup() {
             childProcess.exec('start chrome --kiosk artisticode.net/projector --window-position=0,0 --kiosk --user-data-dir=c:/monitor2');
 
         }, 1000)
-
+        isSetting = false;
     }, 5000)
 }
