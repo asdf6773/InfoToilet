@@ -209,6 +209,9 @@ io.of("/uploaded").on('connection', function(socket) {
     //console.log("upload Success!  " + uploadNum + " imges have been upload");
     // io.of('/projector').emit('uploadName', uploadName);
 });
+io.of("/checkStatus").on("connection", function(socket) {
+
+})
 io.of("/serialPort").on('connection', function(socket) {
     //handDryer
     socket.on("switchOn", function(data) {
@@ -356,7 +359,6 @@ io.of("/projector").on('connection', function(socket) {
         }, 6500) //新进来的Socket没有触发回调函数
     });
     socket.on('disconnect', function() {
-
         for (var i = 0; i < projectors.length; i++) {
             if (projectors[i] === socket.id) {
                 projectors.splice(i, 1);
@@ -364,13 +366,13 @@ io.of("/projector").on('connection', function(socket) {
             }
         }
         consoleData.onlineProjector = projectors.length;
+        io.of('/checkStatus').emit('restart');
         //  numOfFlushOver += 1;
         // if (numOfFlushOver == projectors.length) {
         //     isFlushing = false;
         //     numOfFlushOver = 0;
         //     io.of('/projector').emit('isFlushing', isFlushing);
         // }
-
     });
 });
 //new uploadMode
