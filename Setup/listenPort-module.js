@@ -73,12 +73,12 @@ function openPort(portname) {
             // console.log(data)
             data = data.substr(1);
             var value = parseInt(data);
-            if (value >= 500) {
+            if (value <= 500) {
                 // flush = true;
                 socket.emit("switchOn", flush)
                 console.log("h" + value)
             }
-            if (value < 500) {
+            if (value > 500) {
                 // flush = true;
                 socket.emit("switchOff", flush)
                 console.log("h" + value)

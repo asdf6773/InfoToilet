@@ -19,12 +19,14 @@ void setup() {
   Serial.begin(9600);
   mySerial.begin (9600);
   execute_CMD(0x3F, 0x00, 0x00);   // Send request for initialization parameters
-  while (mySerial.available() < 10) // Wait until initialization parameters are received (10 bytes)
+  while (mySerial.available() < 10) { // Wait until initialization parameters are received (10 bytes)
     delay(30);
+//    Serial.println("ww");
+  }
   execute_CMD(0x06, 0x00, 0x05);
   radio.begin();
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MAX);
+  radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
   byte Command    = 6;
   byte Parameter1 = 0;
@@ -32,7 +34,7 @@ void setup() {
   execute_CMD(Command, Parameter1, Parameter2);
 }
 void loop() {
-
+//   Serial.println("ll");
 
 
   int val  = analogRead(0);
