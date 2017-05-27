@@ -4,10 +4,14 @@
 function Particle(attractor) {
     //  this.attractor = attractor_;
     this.scale = 1;
+    this.des = createVector(random(width / 3), random(width / 3));
     this.scaleRandom = 0.5 * Math.random() + 1;
+    // this.dir = random(TWO_PI)
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(random(width/3), random(width/3));
+    this.pos = createVector(width/2,height);
+    // createVector(random(30, width - 30), random(height - 300, height - 100));
+    // this.pos = createVector(random(width / 3), random(width / 3));
     // console.log(this.scale + ' ' + this.scaleRandom)
     this.vel = createVector();
     this.acc = createVector();
@@ -15,6 +19,13 @@ function Particle(attractor) {
     this.maxforce = random(0.5, 1);
     this.maxspeed = random(0.1, 0.2);
     this.update = function(rotate) {
+
+        // var distance = this.pos.dist(this.des)
+        var temp = p5.Vector.sub(this.des, this.pos)
+        if (this.pos.dist(this.des) > 1)
+            this.pos.add(temp.mult(0.09));
+
+
         this.scale = 1;
         //add attraction
         var dir = p5.Vector.sub(attractor, this.pos);
@@ -32,7 +43,6 @@ function Particle(attractor) {
         //  ellipse(this.pos.x, this.pos.y, 10, 10);
     }
 }
-
 
 function keyTriggered(key) {
     switch (key) {
@@ -196,6 +206,113 @@ function keyTriggered(key) {
         case 'Z':
             addCFont(key);
             break;
+
+
+        case '1':
+            addCFont(key);
+            break;
+        case '2':
+            addCFont(key);
+            break;
+        case '3':
+            addCFont(key);
+            break;
+        case '4':
+            addCFont(key);
+            break;
+        case '5':
+            addCFont(key);
+            break;
+        case '6':
+            addCFont(key);
+            break;
+        case '7':
+            addCFont(key);
+            break;
+        case '8':
+            addCFont(key);
+            break;
+        case '9':
+            addCFont(key);
+            break;
+        case '0':
+            addCFont(key);
+            break;
+        case '!':
+            addCFont(key);
+            break;
+        case '~':
+            addCFont(key);
+            break;
+        case '`':
+            addCFont(key);
+            break;
+        case '@':
+            addCFont(key);
+            break;
+        case '#':
+            addCFont(key);
+            break;
+        case '%':
+            addCFont(key);
+            break;
+        case '^':
+            addCFont(key);
+            break;
+        case '&':
+            addCFont(key);
+            break;
+        case '*':
+            addCFont(key);
+            break;
+        case '(':
+            addCFont(key);
+            break;
+        case ')':
+            addCFont(key);
+            break;
+        case '-':
+            addCFont(key);
+            break;
+        case '_':
+            addCFont(key);
+            break;
+        case '+':
+            addCFont(key);
+            break;
+        case '=':
+            addCFont(key);
+            break;
+        case '{':
+            addCFont(key);
+            break;
+        case "|":
+            addCFont(key);
+            break;
+        case '"':
+            addCFont(key);
+            break;
+        case '?':
+            addCFont(key);
+            break;
+        case '<':
+            addCFont(key);
+            break;
+        case '>':
+            addCFont(key);
+            break;
+        case '.':
+            addCFont(key);
+            break;
+        case ',':
+            addCFont(key);
+            break;
+        case '/':
+            addCFont(key);
+            break;
+
+
+
 
 
         default:

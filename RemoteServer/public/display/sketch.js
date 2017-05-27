@@ -137,8 +137,8 @@ function setup() {
         dropSound[num].setVolume(random(0.3, 0.8));
         dropSound[num].play();
         imgPos.push(new Particle(attractor));
-        img.push(temp);
 
+        img.push(temp);
 
     })
     socket.on("Cfont", function(key) {
@@ -148,13 +148,24 @@ function setup() {
         dropSound[num].play();
         imgPos.push(new Particle(attractor));
         img.push(temp);
+    })
+    socket.on("return", function(key) {
+        var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        var n = 5,
+            s = "";
+        for (var i = 0; i < n; i++) {
+            var rand = Math.floor(Math.random() * str.length);
+            s = str.charAt(rand);
+        }
+        var temp = loadImage("http://" + ip + "/lib/text/" + s + ".png");
 
-
+        imgPos.push(new Particle(attractor));
+        imgPos[imgPos.length - 1].pos = createVector(0,0);
+        // imgPos[imgPos.length - 1].pos = createVector(0,0);
+        img.push(temp);
     })
     //    flush.touchEnded(recover);
 }
-
-
 
 function flushPressed(i) {
     waitForFlush = true;
@@ -179,9 +190,7 @@ function animate() {
     //  waterHeight += 1;
     //flag = !flag;
     //    attractForce = 5;
-
 }
-
 // function loadTextBuffer(buffer) {
 //     if (!textBufferLoaded) {
 //         for (var i = 0; i < buffer.length; i++) {
@@ -201,6 +210,7 @@ function animate() {
 // }
 
 function loadImageBuffer(buffer) {
+
     if (!bufferLoaded) {
         for (var i = 0; i < buffer.length; i++) {
             img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
@@ -209,12 +219,34 @@ function loadImageBuffer(buffer) {
         bufferLoaded = true;
 
     } else {
+        console.log("loadbuffer")
         img.splice(0, img.length);
+        var cachePos = [];
+        var cacheDes = [];
+        var cacheDir = [];
+        var cacheSpd = [];
+        var cacheScl = [];
+        for (var i = 0; i < imgPos.length; i++) {
+            cachePos.push(imgPos[i].pos);
+            cacheDes.push(imgPos[i].des);
+            cacheDir.push(imgPos[i].dir);
+            cacheSpd.push(imgPos[i].speed);
+            cacheScl.push(imgPos[i].scaleRandom);
+        }
         imgPos.splice(0, imgPos.length);
         for (var i = 0; i < buffer.length; i++) {
             img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
+            imgPos[i].pos = cachePos[i];
+            imgPos[i].des = cacheDes[i];
+            imgPos[i].dir = cacheDir[i];
+            imgPos[i].speed = cacheSpd[i];
+            imgPos[i].scaleRandom = cacheScl[i];
         }
+        // for (var i = 0; i < imgPos.length; i++) {
+        //
+        //     // cachePos.push(imgPos[i].pos);
+        // }
     }
 }
 
@@ -231,6 +263,7 @@ function flushFromToilet(data) {
 }
 
 function addImage(data) {
+    // console.log("addImage")
     var temp = loadImage("http://" + ip + "/Images/" + data);
     dropSound[1].setVolume(0.8);
     dropSound[1].play();
@@ -246,6 +279,8 @@ function flushing() {
 angl = 0;
 
 function draw() {
+    // if (imgPos[0])
+    //     console.log(imgAngle)
     for (var i = 0; i < imgPos.length; i++) {}
     if (!projector) {
         background(255);
@@ -389,17 +424,14 @@ function addWater() {
     fallActive = false;
     waterHeight = 1
     angle = 0;
-    IAstep = 0
+    IAstep = 0;
     // flag=true;
     rising = true;
     flush.elt.innerHTML = "正在冲水"
     if (flag) {
-
-
         flag = false;
         rising = true;
         //    console.log(document.getElementById(flush))
-
         rise = setInterval(function() {
             if (waterHeight < 200) {
                 //console.log("addWater")
@@ -411,7 +443,6 @@ function addWater() {
                 recover();
             }
         }, 1000 / 25)
-
         clearInterval(fall)
     }
     // }
