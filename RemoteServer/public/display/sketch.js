@@ -160,7 +160,7 @@ function setup() {
         var temp = loadImage("http://" + ip + "/lib/text/" + s + ".png");
 
         imgPos.push(new Particle(attractor));
-        imgPos[imgPos.length - 1].pos = createVector(0,0);
+        imgPos[imgPos.length - 1].pos = createVector(0, 0);
         // imgPos[imgPos.length - 1].pos = createVector(0,0);
         img.push(temp);
     })
@@ -318,7 +318,9 @@ function draw() {
     for (var i = 0; i < imgPos.length; i++) {
         //draw Image
         var pos = imgPos[i].pos
-        imgPos[i].update(attractForce);
+        if (imgPos[i].pos) {
+            imgPos[i].update(attractForce);
+        }
         push();
         translate(window.innerWidth / 2, window.innerWidth / 1.8);
 
