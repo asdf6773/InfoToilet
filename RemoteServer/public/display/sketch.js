@@ -1,5 +1,6 @@
 var particles = [];
 var socket;
+var socketToProjector;
 var socketToLocal;
 var img = [];
 var img2;
@@ -77,7 +78,7 @@ function setup() {
     //  socket = io.connect('http://59.110.143.143:4000/projector')
     socket = io.connect('http://' + ip + '/projector')
     if(projector){
-        socket = io.connect('http://' + ip + '/projectorStatus')
+        socketToProjector = io.connect('http://' + ip + '/projectorStatus')
     }
     // socketToLocal = io.connect('http://'+ipAddress+':5000/')
     // socket = io.connect('http://127.0.0.1:4000/')
