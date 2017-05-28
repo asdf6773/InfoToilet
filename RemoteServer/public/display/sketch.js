@@ -327,10 +327,10 @@ function draw() {
     }
 
     for (var i = 0; i < imgPos.length; i++) {
-        if (imgPos[i].pos)
+        if (imgPos[i])
             //draw Image
             var pos = imgPos[i].pos
-        if (imgPos[i].pos)
+        if (imgPos[i])
             imgPos[i].update(attractForce);
 
         push();
@@ -344,11 +344,13 @@ function draw() {
             if (imgPos[i].pos)
                 imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
         }
-        if (imgPos[i].pos)
+        // if (imgPos[i])
+        //     tint(255,imgPos[i].opacity)
+        if (imgPos[i])
             rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
-        if (imgPos[i].pos)
+        if (imgPos[i])
             scale(imgPos[i].scale);
-        if (imgPos[i].pos)
+        if (imgPos[i])
             image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
         pop();
 
@@ -418,8 +420,17 @@ function draw() {
             }
 
     }
+    if (imgPos.length > 300) {
+
+        imgPos.splice(1, 1);
+        img.splice(1, 1);
+    }
     // text(key, 33,65);
     //  console.log(flush)
+    // for (var i = 0; i < imgPos.length; i++) {
+    //     if (imgPos[i])
+    //         imgPos[i].opacity = 255 - i * 2;
+    // }
 }
 
 function keyTyped() {

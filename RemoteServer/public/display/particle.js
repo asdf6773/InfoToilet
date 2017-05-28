@@ -18,6 +18,7 @@ function Particle(attractor) {
     this.lifespan = 255;
     this.maxforce = random(0.5, 1);
     this.maxspeed = random(0.1, 0.2);
+    this.opacity = 255;
     this.update = function(rotate) {
 
         // var distance = this.pos.dist(this.des)
