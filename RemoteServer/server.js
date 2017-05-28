@@ -325,6 +325,8 @@
       socket.emit('isFlushingSetup', consoleData.isFlushing);
       io.of('/projector').emit('imageBuffer', imageBuffer);
       io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
+      io.of('/display').emit('imageBuffer', imageBuffer);
+      io.of('/display').emit('imageScaleBuffer', imageScaleBuffer);
       // io.of('/projector').emit('textBuffer', textBuffer);
       projectors.push(socket.id);
       consoleData.totalProjector += 1;
@@ -334,11 +336,13 @@
       //projectorId.push(socket.id);
       socket.on("typed", function(key) {
           io.of('/projector').emit('newText', key);
+          io.of('/display').emit('newText', key);
           // textBuffer.push("a");
           // imageBuffer.push();
       });
       socket.on("Cfont", function(key) {
           io.of('/projector').emit('Cfont', key);
+          io.of('/display').emit('newText', key);
           // textBuffer.push("a");
           // imageBuffer.push();
       });
@@ -347,11 +351,14 @@
       socket.on('imgFlushed', function(i) {
           io.of('/projector').emit('imageBuffer', imageBuffer);
           io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
+          io.of('/display').emit('imageBuffer', imageBuffer);
+          io.of('/display').emit('imageScaleBuffer', imageScaleBuffer);
           if (ServerLimit > 0) {
               //console.log(i)
               imageScaleBuffer.splice(i, 1);
               imageBuffer.splice(i, 1);
               io.of('/projector').emit('flushByOther');
+              io.of('/display').emit('flushByOther');
               ServerLimit -= 1;
           }
           consoleData.currentImage = imageBuffer.length;
@@ -371,10 +378,14 @@
           io.of('/projector').emit('limitFromServer', ServerLimit);
           io.of('/projector').emit('isFlushing', consoleData.isFlushing);
           io.of('/projector').emit('flushPressedFromServer');
+          io.of('/display').emit('limitFromServer', ServerLimit);
+          io.of('/display').emit('isFlushing', consoleData.isFlushing);
+          io.of('/display').emit('flushPressedFromServer');
           setTimeout(function() {
               limit = 200000;
               consoleData.isFlushing = false;
               io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+              io.of('/display').emit('isFlushing', consoleData.isFlushing);
               io.of('/serialPort').emit('flushIsOver');
           }, 6500) //新进来的Socket没有触发回调函数
       });
@@ -438,7 +449,7 @@
                   // io.of('/').emit('uploaded');
                   consoleData.totalImage += 1;
                   io.of('/projector').emit('uploadName', newUpload);
-                    io.of('/display').emit('uploadName', newUpload);
+                  io.of('/display').emit('uploadName', newUpload);
                   imageBuffer.push(newUpload);
                   imageScaleBuffer.push(1 + 0.5 * Math.random())
                   consoleData.currentImage = imageBuffer.length;
