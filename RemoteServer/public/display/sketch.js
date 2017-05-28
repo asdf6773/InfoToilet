@@ -128,7 +128,8 @@ function setup() {
         imageRandomBuffer = imageScaleBuffer;
         for (var i = 0; i < imageScaleBuffer.length; i++) {
             // console.log('triggered?')
-            imgPos[i].scale = imageRandomBuffer[i];
+            if (imgPos[i])
+                imgPos[i].scale = imageRandomBuffer[i];
         }
     });
     socket.on("newText", function(key) {
@@ -227,21 +228,31 @@ function loadImageBuffer(buffer) {
         var cacheSpd = [];
         var cacheScl = [];
         for (var i = 0; i < imgPos.length; i++) {
-            cachePos.push(imgPos[i].pos);
-            cacheDes.push(imgPos[i].des);
-            cacheDir.push(imgPos[i].dir);
-            cacheSpd.push(imgPos[i].speed);
-            cacheScl.push(imgPos[i].scaleRandom);
+            if (imgPos[i])
+                cachePos.push(imgPos[i].pos);
+            if (imgPos[i])
+                cacheDes.push(imgPos[i].des);
+            if (imgPos[i])
+                cacheDir.push(imgPos[i].dir);
+            if (imgPos[i])
+                cacheSpd.push(imgPos[i].speed);
+            if (imgPos[i])
+                cacheScl.push(imgPos[i].scaleRandom);
         }
         imgPos.splice(0, imgPos.length);
         for (var i = 0; i < buffer.length; i++) {
             img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
-            imgPos[i].pos = cachePos[i];
-            imgPos[i].des = cacheDes[i];
-            imgPos[i].dir = cacheDir[i];
-            imgPos[i].speed = cacheSpd[i];
-            imgPos[i].scaleRandom = cacheScl[i];
+            if (imgPos[i])
+                imgPos[i].pos = cachePos[i];
+            if (imgPos[i])
+                imgPos[i].des = cacheDes[i];
+            if (imgPos[i])
+                imgPos[i].dir = cacheDir[i];
+            if (imgPos[i])
+                imgPos[i].speed = cacheSpd[i];
+            if (imgPos[i])
+                imgPos[i].scaleRandom = cacheScl[i];
         }
         // for (var i = 0; i < imgPos.length; i++) {
         //
@@ -316,25 +327,31 @@ function draw() {
     }
 
     for (var i = 0; i < imgPos.length; i++) {
-        if (imgPos[i].pos) {
+        if (imgPos[i].pos)
             //draw Image
             var pos = imgPos[i].pos
-
+        if (imgPos[i].pos)
             imgPos[i].update(attractForce);
 
-            push();
-            translate(window.innerWidth / 2, window.innerWidth / 1.8);
+        push();
+        translate(window.innerWidth / 2, window.innerWidth / 1.8);
 
 
-            if (imageRandomBuffer[i])
+        if (imageRandomBuffer[i]) {
+            if (imgPos[i].pos)
                 imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
-            else
+        } else {
+            if (imgPos[i].pos)
                 imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
-            rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
-            scale(imgPos[i].scale);
-            image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
-            pop();
         }
+        if (imgPos[i].pos)
+            rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
+        if (imgPos[i].pos)
+            scale(imgPos[i].scale);
+        if (imgPos[i].pos)
+            image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
+        pop();
+
 
     }
     //------------------water
@@ -392,12 +409,13 @@ function draw() {
         }
     }
     for (var i = 0; i < imgPos.length; i++) {
-        if (imgPos[i].scale < 0.1 && limit > 0) {
-            imgPos.splice(i, 1);
-            img.splice(i, 1);
-            socket.emit('imgFlushed', i);
-            limit -= 1
-        }
+        if (imgPos[i].pos)
+            if (imgPos[i].scale < 0.1 && limit > 0) {
+                imgPos.splice(i, 1);
+                img.splice(i, 1);
+                socket.emit('imgFlushed', i);
+                limit -= 1
+            }
 
     }
     // text(key, 33,65);

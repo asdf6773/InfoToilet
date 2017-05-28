@@ -360,8 +360,8 @@
           socket.emit('limitFromServer', ServerLimit)
       });
       socket.on('flushPressed', function() {
-          if (consoleData.currentImage > 20 || consoleData.currentImage == 0)
-              // reverse();
+          // if (consoleData.currentImage > 20 || consoleData.currentImage == 0)
+          // reverse();
           consoleData.totalFlush += 1;
           consoleData.isFlushing = true;
           ServerLimit = 200000;
