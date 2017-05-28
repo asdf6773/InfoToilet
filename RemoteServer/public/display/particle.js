@@ -9,7 +9,7 @@ function Particle(attractor) {
     // this.dir = random(TWO_PI)
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(width/2,height);
+    this.pos = createVector(width / 2, height);
     // createVector(random(30, width - 30), random(height - 300, height - 100));
     // this.pos = createVector(random(width / 3), random(width / 3));
     // console.log(this.scale + ' ' + this.scaleRandom)
@@ -22,26 +22,29 @@ function Particle(attractor) {
     this.update = function(rotate) {
 
         // var distance = this.pos.dist(this.des)
-        var temp = p5.Vector.sub(this.des, this.pos)
-        if (this.pos.dist(this.des) > 1)
-            this.pos.add(temp.mult(0.09));
+
+            var temp = p5.Vector.sub(this.des, this.pos)
+
+            if (this.pos.dist(this.des) > 1)
+                this.pos.add(temp.mult(0.09));
 
 
-        this.scale = 1;
-        //add attraction
-        var dir = p5.Vector.sub(attractor, this.pos);
-        dir.normalize();
-        var distance = dist(this.pos.x, this.pos.y, attractor.x, attractor.y);
-        var force = dir.mult(rotate / distance * distance / 10);
-        this.acc = force;
-        //apply force
-        this.vel.add(this.acc);
-        this.pos.add(this.vel);
-        this.acc.mult(0);
-        this.vel.limit(5);
-        this.lifespan -= 1;
-        fill(255);
-        //  ellipse(this.pos.x, this.pos.y, 10, 10);
+            this.scale = 1;
+            //add attraction
+            var dir = p5.Vector.sub(attractor, this.pos);
+            dir.normalize();
+            var distance = dist(this.pos.x, this.pos.y, attractor.x, attractor.y);
+            var force = dir.mult(rotate / distance * distance / 10);
+            this.acc = force;
+            //apply force
+            this.vel.add(this.acc);
+            this.pos.add(this.vel);
+            this.acc.mult(0);
+            this.vel.limit(5);
+            this.lifespan -= 1;
+            fill(255);
+            //  ellipse(this.pos.x, this.pos.y, 10, 10);
+
     }
 }
 
