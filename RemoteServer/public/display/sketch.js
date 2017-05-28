@@ -316,23 +316,25 @@ function draw() {
     }
 
     for (var i = 0; i < imgPos.length; i++) {
-        //draw Image
-        var pos = imgPos[i].pos
         if (imgPos[i].pos) {
+            //draw Image
+            var pos = imgPos[i].pos
+
             imgPos[i].update(attractForce);
+
+            push();
+            translate(window.innerWidth / 2, window.innerWidth / 1.8);
+
+
+            if (imageRandomBuffer[i])
+                imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
+            else
+                imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
+            rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
+            scale(imgPos[i].scale);
+            image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
+            pop();
         }
-        push();
-        translate(window.innerWidth / 2, window.innerWidth / 1.8);
-
-
-        if (imageRandomBuffer[i])
-            imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
-        else
-            imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
-        rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
-        scale(imgPos[i].scale);
-        image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
-        pop();
 
     }
     //------------------water
