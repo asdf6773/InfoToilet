@@ -75,7 +75,11 @@ function setup() {
     // upload.position(width / 2, height - 30);
     flush.mousePressed(flushing);
     //  socket = io.connect('http://59.110.143.143:4000/projector')
-    socket = io.connect('http://' + ip + '/projector')
+    if (projector)
+        socket = io.connect('http://' + ip + '/projector')
+    else
+        socket = io.connect('http://' + ip + '/display')
+
     // socketToLocal = io.connect('http://'+ipAddress+':5000/')
     // socket = io.connect('http://127.0.0.1:4000/')
     // socketToLocal = io.connect('http://127.0.0.1:5000/');

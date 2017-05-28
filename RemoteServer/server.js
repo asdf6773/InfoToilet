@@ -319,7 +319,8 @@
       }, 5000)
   }
   var numOfFlushOver = 0;
-  io.of("/projector").on('connection', function(socket) {
+
+  function projector(socket, fn) {
       socket.emit('limitFromServer', ServerLimit);
       socket.emit('isFlushingSetup', consoleData.isFlushing);
       io.of('/projector').emit('imageBuffer', imageBuffer);
@@ -385,9 +386,22 @@
               }
           }
           consoleData.onlineProjector = projectors.length;
-          io.of('/checkStatus').emit('restart');
+          fn()
       });
+  }
+  io.of("/projector").on('connection', function(socket) {
+      projector(socket, function() {
+          io.of('/checkStatus').emit('restart');
+      })
   });
+
+
+  io.of("/display").on('connection', function(socket) {
+      projector(socket, function() {})
+  });
+
+
+
   //new uploadMode
   io.of("/test").on('connection', function(socket) {
       user.push(socket.id);
