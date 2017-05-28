@@ -4,6 +4,7 @@ var xvec, yvec;
 var waitForFlush = false;
 var acc = document.getElementById("acc");
 var socket;
+var socketToScreen;
 var json;
 var noiseInc = .1;
 var time = 0;
@@ -35,6 +36,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     noStroke();
     socket = io.connect('http://' + ip + '/mirror')
+      socketToScreen = io.connect('http://' + ip + '/projectorStatus')
     console.log(windowWidth)
     textAlign(RIGHT);
     socket.on("initLikes", function(num) {
