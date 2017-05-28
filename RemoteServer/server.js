@@ -438,6 +438,7 @@
                   // io.of('/').emit('uploaded');
                   consoleData.totalImage += 1;
                   io.of('/projector').emit('uploadName', newUpload);
+                    io.of('/display').emit('uploadName', newUpload);
                   imageBuffer.push(newUpload);
                   imageScaleBuffer.push(1 + 0.5 * Math.random())
                   consoleData.currentImage = imageBuffer.length;
