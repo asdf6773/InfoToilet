@@ -39,7 +39,7 @@ if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {
 } else {
     login()
 }
-listenPort.setup("COM8")
+listenPort.setup("COM3")
 // Initialize wifi module
 // Absolutely necessary even to set interface to null
 

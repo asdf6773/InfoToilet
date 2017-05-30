@@ -56,6 +56,9 @@ var ServerLimit = 200000;
 app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");
 });
+app.get("/washroom", function(req, res) {
+    res.sendFile(__dirname + "/public/catalog/index.html");
+});
 app.get("/mirrorClient", function(req, res) {
     res.sendFile(__dirname + "/public/mirror/client.html");
 });

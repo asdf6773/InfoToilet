@@ -38,9 +38,9 @@ void loop() {
 
 
   int val  = analogRead(0);
-  Serial.print(count);
-  Serial.print(" ");
-  Serial.println(val);
+//  Serial.print(count);
+//  Serial.print(" ");
+//  Serial.println(val);
   //  if ( lastVal < 500 && val >= 500) {
   //    byte data = 1;
   //    radio.write(&val, sizeof(val));

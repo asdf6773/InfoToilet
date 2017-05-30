@@ -8,6 +8,7 @@ var socketToScreen;
 var json;
 var noiseInc = .1;
 var time = 0;
+var hollow;
 var str;
 var button;
 var dryerFlag;
@@ -33,10 +34,11 @@ function setup() {
     str = ""
     ellipseMode(CENTER);
     heart = loadImage("./lib/heart.png")
+    hollow = loadImage("./lib/hollow.png")
     createCanvas(windowWidth, windowHeight);
     noStroke();
     socket = io.connect('http://' + ip + '/mirror')
-      socketToScreen = io.connect('http://' + ip + '/projectorStatus')
+    socketToScreen = io.connect('http://' + ip + '/projectorStatus')
     console.log(windowWidth)
     textAlign(RIGHT);
     socket.on("initLikes", function(num) {
@@ -73,7 +75,7 @@ function changeStatus() {
 
 function draw() {
     background(0);
-
+    image(hollow,width-100, height-100, hollow.width, hollow.height)
     for (var i = 0; i < particles.length; i++) {
         push();
         tint(255, particles[i].lifespan)
