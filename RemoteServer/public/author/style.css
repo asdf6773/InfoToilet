@@ -10,6 +10,16 @@
     position: relative;
     bottom: 0px;
 }
+#arrow{
+    /*position: relative;*/
+    margin:10 auto;
+    width:10%;
+
+}
+#loadMore{
+  margin-bottom: 20px;
+
+}
 
 #back {
     background: url(../lib/back.png);
