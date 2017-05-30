@@ -53,7 +53,9 @@
                     <div class="info insc">——作者</div>
                 </div>
                 <div class="info content" id="anonymous">
-                    <div id="aContent"></div>
+                    <div class="comment" id="comment0"></div>
+                    <div class="comment" id="comment1"></div>
+                    <div class="comment" id="comment2"></div>
                     <div class="info insc" id="anon">——匿名</div>
                 </div>
             </div>
@@ -61,18 +63,26 @@
                 <textarea id="text" name="text" style="width:80%;height:80px;"></textarea>
                 <input type="submit" value="留言" id="send"></input>
             </form>
+            <img src= "./lib/qr.png" id = "qr">
         </div>
         <script>
+            function update(data) {
+
+                console.log(data);
+                comments = data;
+                for (var i = 0; i < 3; i++) {
+                  var obj = "#comment" + i.toString()
+                    $(obj).html(data.comments[data.comments.length - i-1].comment);
+
+                    console.log(obj)
+
+                }
+            }
             $.ajax({
                 type: 'GET',
                 url: "/comments",
                 data: 0,
-                success: function(data) {
-                    console.log(data);
-                    comments = data;
-                    $("#aContent").html(data.comments[data.comments.length - 1].comment);
-                    console.log($("#aContent").html())
-                },
+                success: update
                 // dataType: 'text',
             });
             var comments;
@@ -90,12 +100,7 @@
                         type: 'POST',
                         url: "/comments",
                         data: result,
-                        success: function(data) {
-                            console.log(data);
-                            comments = data;
-                            $("#aContent").html(data.comments[data.comments.length - 1].comment);
-                            console.log($("#aContent").html())
-                        },
+                        success: update
                         // dataType: 'text',
                     });
 

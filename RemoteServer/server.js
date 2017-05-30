@@ -11,7 +11,7 @@ var uploadName;
 var flush = true;
 var Console = [];
 var comments = JSON.parse(fs.readFileSync('./public/lib/comments.json', 'utf8'));
-
+var likes = 0;
 
 console.log("running on 80;")
 var imageBuffer = [];
@@ -23,6 +23,7 @@ consoleData.onlineUser = 0;
 consoleData.onlineProjector = 0;
 consoleData.currentImage = 0;
 consoleData.isFlushing = false;
+consoleData.likes = 0;
 //others
 consoleData.faucetOnline = 0;
 consoleData.mirrorOnline = 0;
@@ -148,7 +149,7 @@ app.use(express.static(__dirname + '/public'))
 var projectors = [];
 var user = [];
 var uploadNum = 0;
-var likes = 0;
+
 var pullData = "https://api.weibo.com/2/statuses/public_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ"
 // var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
 var weiboData = JSON.parse(fs.readFileSync('./public/lib/weibo.json', 'utf8'));;
@@ -175,7 +176,8 @@ setInterval(function() {
 
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
-    socket.emit("initLikes", likes);
+    socket.emit("initLikes", consoleData.likes);
+
     socket.on("disconnect", function() {
         io.of("/checkStatus").emit("restart")
     })
@@ -189,7 +191,7 @@ io.of("/faucet").on('connection', function(socket) {
 io.of("/mirrorClient").on('connection', function(socket) {
     socket.on("sendLike", function(type) {
         io.of("/mirror").emit("like", type);
-        likes += 1;
+        consoleData.likes += 1;
     });
 });
 

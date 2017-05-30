@@ -3,7 +3,7 @@
 }
 
 #anonymous {
-    height: 80px
+    height: auto;
 }
 
 #anon {
@@ -23,7 +23,11 @@
     /*background: #E0EEE7;*/
     /*color: #527283;*/
 }
-
+#qr{
+width:50vw;
+  mix-blend-mode: darken;
+    margin-bottom: 80px;
+}
 .item {
     /*width: 100vw;*/
     /*height:25%;*/
@@ -118,6 +122,7 @@ textarea {
     overflow: hidden;*/
     color: #666464;
     height: auto;
+    z-index: 999;
 }
 
 .title {
@@ -137,7 +142,10 @@ textarea {
 #intro {
     /*top: 180;*/
 }
-
+.comment{
+  word-wrap:break-word;
+  margin-bottom: 10px;
+}
 .word {
     font-weight: lighter;
 }
@@ -164,7 +172,7 @@ textarea {
     height: 30;
     background: #E0EEE7;
     border-radius: 100px;
-    margin-bottom: 100px;
+    margin-bottom: 20px;
 }
 
 .insc {
