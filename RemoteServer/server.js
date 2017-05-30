@@ -74,8 +74,13 @@ app.get("/toilet", function(req, res) {
 app.get("/mirror", function(req, res) {
     res.sendFile(__dirname + "/public/mirror/index.html");
 });
-app.get("/mirror", function(req, res) {
+
+
+app.get("/mirrorScreen", function(req, res) {
     res.sendFile(__dirname + "/public/mirror/index.html");
+});
+app.get("/mirror", function(req, res) {
+    res.sendFile(__dirname + "/public/mirror/client.html");
 });
 app.get("/graduateProject", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");
