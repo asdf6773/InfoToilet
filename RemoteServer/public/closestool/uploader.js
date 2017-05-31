@@ -4,7 +4,10 @@
 
 
 window.onload = function() {
-    document.getElementById('entrance').href = 'http://' + ip + '/display';
+    if (document.getElementById('entrance'))
+        document.getElementById('entrance').href = 'http://' + ip + '/display';
+    // if (document.getElementById('description'))
+        // document.getElementById('description').href = 'http://' + ip + '/display';
     document.getElementById('back').href = 'http://' + ip + '/graduateProject';
     // $("#imgFile").on("change", function(e) {
     //     var files = $(this)[0].files;

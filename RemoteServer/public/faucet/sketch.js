@@ -27,7 +27,7 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     noStroke();
     socket = io.connect('http://' + ip + '/faucet')
-    console.log(windowWidth)
+    // console.log(windowWidth)
     socket.on('weiboData', handleData)
 
     // button = createButton('test');
@@ -111,7 +111,7 @@ var threshold = 0.1;
 
 function draw() {
     $p = $('div')
-    console.log($p.length)
+    // console.log($p.length)
     if ($p.length > 700) {
         threshold = $p.length / 1500
     } else {
