@@ -20,6 +20,12 @@ $(document).ready(function() {
             socket.emit("restart")
 
     })
+    $("#reOpen").click(function() {
+        var c = confirm("确认重开串口？");
+        if (c)
+            socket.emit("reOpen")
+
+    })
     var current = document.getElementById("current");
     var total = document.getElementById("total");
     var max = document.getElementById("max");

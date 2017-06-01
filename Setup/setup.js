@@ -39,7 +39,7 @@ if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {
 } else {
     login()
 }
-listenPort.setup("COM3")
+listenPort.setup("COM19")
 // Initialize wifi module
 // Absolutely necessary even to set interface to null
 
@@ -58,10 +58,10 @@ function checkInternet(cb) {
 
 //1. check whether it is Tsinghua WIFI
 setInterval(function() {
-  console.log("isSetup？："+isSetup)
+    console.log("isSetup？：" + isSetup)
     ifaceState = WiFiControl.getIfaceState();
-    if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {//如果没连接校园网，则自动连接
-         isSetup = false;
+    if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
+        isSetup = false;
         var _ap = {
             ssid: "Tsinghua",
             password: ""
@@ -96,6 +96,9 @@ socket2.on("restart", function() {
     if (!isSetting) {
         setup()
     }
+})
+socket2.on("reopen", function() {
+    listenPort.restart()
 })
 //---------------------------------------------------
 

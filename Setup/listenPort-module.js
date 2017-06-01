@@ -14,40 +14,46 @@ var preload = JSON.parse(fs.readFileSync('./ip.json', 'utf8'));
 var ip = preload.ip
 var socket = require('socket.io-client')('http://' + ip + '/serialPort');
 // var ip = preload.ip
-
+var Port;
 
 
 
 
 var setup = function(portname) {
-    console.log("ServerAddress: "+ip)
-    openPort(portname);
-
-}
-
-var closePort = function(portname) {
+    console.log("ServerAddress: " + ip)
     var myPort = new serialport(portname, {
         baudRate: 9600,
         options: false,
         parser: serialport.parsers.readline("\r\n")
     });
-    myPort.close(function(err) {
-        {
-            if (err) {
-                console.log("close port ERROR")
-            } else {
-                console.log("close port")
-            }
-        }
-    })
+    Port = myPort;
+    listening(Port);
+
 }
 
-function openPort(portname) {
-    var myPort = new serialport(portname, {
-        baudRate: 9600,
-        options: false,
-        parser: serialport.parsers.readline("\r\n")
+var isOpen = function() {
+
+    return Port.isOpen()
+}
+var restart = function() {
+
+    closePort();
+}
+var openPort = function() {
+    Port.open(function(err) {
+        console.log('open open err:', err);
     });
+}
+var closePort = function() {
+    Port.close(function(err) {
+        console.log('port closed err:', err);
+        Port.open(function(err) {
+            console.log('port open err:', err);
+        })
+    });
+}
+
+function listening(myPort) {
     myPort.on('open', function() {
         console.log('port is open')
     });
@@ -130,6 +136,8 @@ function openPort(portname) {
 
     })
 }
-
+module.exports.restart = restart;
+module.exports.isOpen = isOpen;
 module.exports.setup = setup;
-// module.exports.close = closePort;
+module.exports.close = closePort;
+module.exports.open = openPort;
