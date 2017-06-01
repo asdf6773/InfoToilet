@@ -45,7 +45,7 @@ function setup() {
         likes = num;
     })
     socket.on("like", function(type) {
-        likes += 1;
+        likes = type;
         particles.push(new Particle());
     })
     socket.on('weiboData', function(data) {

@@ -176,7 +176,7 @@ setInterval(function() {
 
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
-    socket.emit("initLikes", consoleData.likes+1);
+    socket.emit("initLikes", consoleData.likes);
     socket.on("disconnect", function() {
         io.of("/checkStatus").emit("restart")
     })
@@ -191,7 +191,7 @@ io.of("/mirrorClient").on('connection', function(socket) {
   socket.emit("initLikesClient",consoleData.likes)
     socket.on("sendLike", function(type) {
         io.of("/mirrorClient").emit("likeNum", consoleData.likes)
-        io.of("/mirror").emit("like", type);
+        io.of("/mirror").emit("like",   consoleData.likes);
         consoleData.likes += 1;
     });
 });
