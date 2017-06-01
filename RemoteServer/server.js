@@ -176,7 +176,7 @@ setInterval(function() {
 
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
-    socket.emit("initLikesClient", consoleData.likes);
+    socket.emit("initLikes", consoleData.likes);
     socket.on("disconnect", function() {
         io.of("/checkStatus").emit("restart")
     })
