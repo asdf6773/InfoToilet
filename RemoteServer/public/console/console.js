@@ -11,7 +11,12 @@ $(document).ready(function() {
         maxOnlineUser = 0,
         maxOnlineProjector = 0;
     var socket = io.connect('http://' + ip + '/console');
+
+
     socket.on("consoleData", getConsole);
+    $("#restart").click(function() {
+      socket.emit("restart")
+    })
     var current = document.getElementById("current");
     var total = document.getElementById("total");
     var max = document.getElementById("max");

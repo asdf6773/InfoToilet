@@ -188,10 +188,10 @@ io.of("/faucet").on('connection', function(socket) {
     })
 });
 io.of("/mirrorClient").on('connection', function(socket) {
-  socket.emit("initLikesClient",consoleData.likes)
+    socket.emit("initLikesClient", consoleData.likes)
     socket.on("sendLike", function(type) {
         io.of("/mirrorClient").emit("likeNum", consoleData.likes)
-        io.of("/mirror").emit("like",   consoleData.likes);
+        io.of("/mirror").emit("like", consoleData.likes);
         consoleData.likes += 1;
     });
 });
@@ -290,7 +290,10 @@ io.of("/console").on('connection', function(socket) {
         interval,
         id
     });
-
+    socket.on("restart", function() {
+        io.of('/checkStatus').emit('restart');
+        console.log("restart by console")
+    })
     for (var i = 0; i < Console.length; i++) {
         // console.log("I come from" + socket.id)
         // console.log(Console[i].id + " " + socket.id)
