@@ -23,7 +23,7 @@ $(document).ready(function() {
     $("#reOpen").click(function() {
         var c = confirm("确认重开串口？");
         if (c)
-            socket.emit("reOpen")
+            socket.emit("reopen")
 
     })
     var current = document.getElementById("current");
