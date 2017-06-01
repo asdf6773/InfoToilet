@@ -23,7 +23,7 @@ consoleData.onlineUser = 0;
 consoleData.onlineProjector = 0;
 consoleData.currentImage = 0;
 consoleData.isFlushing = false;
-// consoleData.likes = 0;
+consoleData.likes = 0;
 //others
 consoleData.faucetOnline = 0;
 consoleData.mirrorOnline = 0;
@@ -176,8 +176,7 @@ setInterval(function() {
 
 //mirrir
 io.of("/mirror").on('connection', function(socket) {
-    socket.emit("initLikes", consoleData.likes);
-
+    socket.emit("initLikesClient", consoleData.likes);
     socket.on("disconnect", function() {
         io.of("/checkStatus").emit("restart")
     })

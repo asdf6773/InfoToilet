@@ -3,7 +3,7 @@ window.onload = function() {
     document.getElementById('back').href = 'http://' + ip + '/graduateProject';
     var type = 1;
     var socket = io.connect('http://' + ip + '/mirrorClient')
-      socket.on("initLikes",function (data) {
+      socket.on("initLikesClient",function (data) {
         likes=data;
         document.getElementById("num").innerHTML = likes;
       })
