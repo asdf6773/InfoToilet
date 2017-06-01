@@ -188,7 +188,7 @@ io.of("/faucet").on('connection', function(socket) {
     })
 });
 io.of("/mirrorClient").on('connection', function(socket) {
-  socket.emit("initLikes",consoleData.likes)
+  socket.emit("initLikesClient",consoleData.likes)
     socket.on("sendLike", function(type) {
         io.of("/mirrorClient").emit("likeNum", consoleData.likes)
         io.of("/mirror").emit("like", type);
