@@ -18,6 +18,7 @@ var bg;
 var layer;
 var waterHeight;
 var rise, fall;
+var matt;
 var flag = true;
 var addWater;
 var angle = 0;
@@ -43,7 +44,7 @@ function preload() {
 
 function setup() {
     // mySound.setVolume(0.5);
-
+    matt = loadImage("http://" + ip + "/lib/matt.png")
     waterHeight = 1
     document.getElementById('back').href = 'http://' + ip + '/toilet';
     hole = 50;
@@ -77,7 +78,7 @@ function setup() {
     flush.mousePressed(flushing);
     //  socket = io.connect('http://59.110.143.143:4000/projector')
     socket = io.connect('http://' + ip + '/projector')
-    if(projector){
+    if (projector) {
         socketToProjector = io.connect('http://' + ip + '/projectorStatus')
     }
     // socketToLocal = io.connect('http://'+ipAddress+':5000/')
@@ -294,6 +295,7 @@ function flushing() {
 angl = 0;
 
 function draw() {
+
     // if (imgPos[0])
     //     console.log(imgAngle)
     for (var i = 0; i < imgPos.length; i++) {}
@@ -362,7 +364,15 @@ function draw() {
     noStroke();
     fill(204, 230, 237, map(waterHeight, 10, 200, 50, 100))
     push();
+
     translate(window.innerWidth / 2, window.innerWidth / 1.8);
+    if (projector) {
+        translate(0, 50)
+        //  push()
+        // //  image(matt,0,0)
+        //  pop()
+        scale(0.7);
+    }
     rotate(angle)
     ellipse(80, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 300);
     ellipse(10, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 300);
@@ -424,6 +434,19 @@ function draw() {
     }
     // text(key, 33,65);
     //  console.log(flush)
+
+
+
+    if (projector) {
+        //
+        push()
+        rotate()
+        translate(width / 2, height / 2 -150)
+        scale(0.56);
+        image(matt, 0, 0)
+        pop()
+
+    }
 }
 
 function keyTyped() {
