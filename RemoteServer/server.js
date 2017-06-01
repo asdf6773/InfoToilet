@@ -334,8 +334,8 @@ var numOfFlushOver = 0;
 io.of("/projector").on('connection', function(socket) {
     socket.emit('limitFromServer', ServerLimit);
     socket.emit('isFlushingSetup', consoleData.isFlushing);
-    io.of('/projector').emit('imageBuffer', imageBuffer);
-    io.of('/projector').emit('imageScaleBuffer', imageScaleBuffer);
+    socket.emit('imageBuffer', imageBuffer);
+    socket.emit('imageScaleBuffer', imageScaleBuffer);
     // io.of('/projector').emit('textBuffer', textBuffer);
     projectors.push(socket.id);
     consoleData.totalProjector += 1;
