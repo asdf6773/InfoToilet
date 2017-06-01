@@ -15,7 +15,10 @@ $(document).ready(function() {
 
     socket.on("consoleData", getConsole);
     $("#restart").click(function() {
-      socket.emit("restart")
+        var c = confirm("确认重启？");
+        if (c)
+            socket.emit("restart")
+
     })
     var current = document.getElementById("current");
     var total = document.getElementById("total");
