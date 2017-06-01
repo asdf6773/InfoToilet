@@ -23,7 +23,7 @@ consoleData.onlineUser = 0;
 consoleData.onlineProjector = 0;
 consoleData.currentImage = 0;
 consoleData.isFlushing = false;
-consoleData.likes = 0;
+// consoleData.likes = 0;
 //others
 consoleData.faucetOnline = 0;
 consoleData.mirrorOnline = 0;
@@ -189,7 +189,9 @@ io.of("/faucet").on('connection', function(socket) {
     })
 });
 io.of("/mirrorClient").on('connection', function(socket) {
+  socket.emit("initLikes",consoleData.likes)
     socket.on("sendLike", function(type) {
+        io.of("/mirrorClient").emit("likeNum", consoleData.likes)
         io.of("/mirror").emit("like", type);
         consoleData.likes += 1;
     });

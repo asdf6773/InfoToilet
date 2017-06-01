@@ -101,7 +101,7 @@ function draw() {
             text(str.charAt(i), 0, 0);
         pop()
     }
-    image(dryer, width / 2, (dryPosY-50)*2, dryer.width, dryer.height)
+    // image(dryer, width / 2, (dryPosY-50)*2, dryer.width, dryer.height)
     FlowField();
     // console.log(txt）
     for (var i = 0; i < particles.length; i++) {

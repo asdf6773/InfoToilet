@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="user-scalable=0" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="./lib/favicon.ico" rel="shortcut icon">
+    <link href="./lib/favicon.ico" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="./css/main.css">
     <script language="javascript" type="text/javascript" src="./lib/split.js"></script>
     <script language="javascript" type="text/javascript" src="./lib/TweenMax.min.js"></script>
@@ -34,7 +34,31 @@
 <body ontouchmove="event.preventDefault()">
     <label for="back" id="backLabel" class="entry"></label>
     <a id="back"></a>
+    <a id="intro">
+    </a>
+    <div id="introDiv">
+        <image id="introImg" src="./lib/introFau.jpg" />
+    </div>
     <div class="box" id="box">
+        <script>
+            $("#intro").click(function() {
+                if ($("#introDiv").css("display") == "none") {
+                    $("#introDiv").css('display', 'block')
+                } else {
+                    $("#introDiv").css('display', 'none')
+                }
+            })
+            $("#introImg").click(function() {
+                if ($("#introDiv").css("display") == "none") {
+                    $("#introDiv").css('display', 'block')
+                } else {
+                    $("#introDiv").css('display', 'none')
+                }
+            })
+        </script>
+
+
+        <!-- <div class="box" id="intro"> -->
         <!-- <p class="split" id="test0"> -->
         <!-- </p> -->
 

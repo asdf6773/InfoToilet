@@ -36,13 +36,33 @@
 <body ontouchmove="event.preventDefault()">
     <label for="back" id="backLabel" class="entry"></label>
     <a id="back"></a>
+    <a id="intro">
+    </a>
+    <div id="introDiv">
+        <image id="introImg" src="./lib/introDryer.jpg" />
+    </div>
     <div class="box" id="box">
         <!-- <p class="split" id="test0"> -->
         <!-- </p> -->
 
     </div>
 
-
+    <script>
+        $("#intro").click(function() {
+            if ($("#introDiv").css("display") == "none") {
+                $("#introDiv").css('display', 'block')
+            } else {
+                $("#introDiv").css('display', 'none')
+            }
+        })
+        $("#introImg").click(function() {
+            if ($("#introDiv").css("display") == "none") {
+                $("#introDiv").css('display', 'block')
+            } else {
+                $("#introDiv").css('display', 'none')
+            }
+        })
+    </script>
     <!-- <ul id="acc">
       <li>Coffee</li>
       <li>Tea</li>

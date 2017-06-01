@@ -16,7 +16,16 @@
     top: 50%;
     transform: translateY(-50%);
 }
-
+#num{
+  height:0;
+  font-family: sans-serif;
+  font-size: 30px;
+  color:#b1c1c8;
+  position:relative;
+  text-align: center;
+  top:20%;
+  margin:0 auto
+}
 #back {
     background: url(../lib/back.png);
     position: absolute;

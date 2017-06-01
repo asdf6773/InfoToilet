@@ -140,7 +140,7 @@ function setup() {
     socket.on("newText", function(key) {
         var num = floor(random(0, 2));
         var temp = loadImage("http://" + ip + "/lib/text/" + key + key + ".png");
-        dropSound[num].setVolume(random(0.3, 0.8));
+        dropSound[num].setVolume(random(0.8, 1));
         dropSound[num].play();
         imgPos.push(new Particle(attractor));
 
