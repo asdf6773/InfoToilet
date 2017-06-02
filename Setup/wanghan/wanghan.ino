@@ -1,11 +1,11 @@
 #include <SPI.h>
-#include <nRF24L01.h>
+
 const int trigPin = 3;
 const int echoPin = 4;
 long duration;
 int distance;
 #include "SoftwareSerial.h"
-#include <RF24.h>
+
 # define Start_Byte     0x7E
 # define Version_Byte   0xFF
 # define Command_Length 0x06
@@ -17,7 +17,6 @@ int val;
 int lastVal;
 String head = "f";
 int busy = 7;
-RF24 radio(7, 8); // CNS, CE
 const byte address[6] = "00001        ";
 void setup() {
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
@@ -31,10 +30,7 @@ void setup() {
     //    Serial.println("ww");
   }
   execute_CMD(0x06, 0x00, 0x05);
-  radio.begin();
-  radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_MIN);
-  radio.stopListening();
+
   byte Command    = 6;
   byte Parameter1 = 0;
   byte Parameter2 = 0x20;
