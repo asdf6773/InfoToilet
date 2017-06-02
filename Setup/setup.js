@@ -100,6 +100,9 @@ socket2.on("restart", function() {
 socket2.on("reopen", function() {
     listenPort.restart()
 })
+socket2.on("reboot", function() {
+      childProcess.exec('shutdown /r /t 0');
+})
 //---------------------------------------------------
 
 

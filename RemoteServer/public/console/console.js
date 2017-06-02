@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     socket.on("consoleData", getConsole);
     $("#restart").click(function() {
-        var c = confirm("确认重启？");
+        var c = confirm("确认重启页面？");
         if (c)
             socket.emit("restart")
 
@@ -24,6 +24,12 @@ $(document).ready(function() {
         var c = confirm("确认重开串口？");
         if (c)
             socket.emit("reopen")
+
+    })
+    $("#reboot").click(function() {
+        var c = confirm("确认重启设备？");
+        if (c)
+            socket.emit("reboot")
 
     })
     var current = document.getElementById("current");

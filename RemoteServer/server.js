@@ -299,6 +299,10 @@ io.of("/console").on('connection', function(socket) {
         io.of('/checkStatus').emit('reopen');
         console.log("reopen by console")
     })
+    socket.on("rerboot", function() {
+        io.of('/checkStatus').emit('reboot');
+        console.log("reboot by console")
+    })
     for (var i = 0; i < Console.length; i++) {
         // console.log("I come from" + socket.id)
         // console.log(Console[i].id + " " + socket.id)
