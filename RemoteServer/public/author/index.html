@@ -80,7 +80,8 @@
 
                 for (var i = 0; i < 5; i++) {
                     var newDiv = document.createElement("div");
-                    num += 1;
+                    if (i != 0)
+                        num += 1;
                     newDiv.className = "comment";
                     // newDiv.className = "comment";
                     newDiv.id = "comment" + (num - 1).toString();
@@ -130,6 +131,7 @@
                     form.reset()
                 }
             }
+
             function mySubmit(flag) {
                 return flag;
             }
