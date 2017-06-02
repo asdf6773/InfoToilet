@@ -86,7 +86,7 @@
                     // newDiv.className = "comment";
                     newDiv.id = "comment" + (num - 1).toString();
                     document.getElementById("comment").appendChild(newDiv);
-                    $("#comment" + (num - 1).toString()).html(dataGlobal.comments[dataGlobal.comments.length - num - 1].comment);
+                    $("#comment" + (num - 1).toString()).html(dataGlobal.comments[dataGlobal.comments.length - num ].comment);
                 }
             }
 
@@ -94,7 +94,7 @@
                 dataGlobal = data;
                 //console.log(data);
                 comments = data;
-                for (var i = 0; i < num+1; i++) {
+                for (var i = 0; i < num; i++) {
                     var obj = "#comment" + i.toString()
                     $(obj).html(data.comments[data.comments.length - i - 1].comment);
 
