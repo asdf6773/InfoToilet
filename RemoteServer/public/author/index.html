@@ -80,7 +80,7 @@
 
                 for (var i = 0; i < 5; i++) {
                     var newDiv = document.createElement("div");
-                    
+
                     num += 1;
                     newDiv.className = "comment";
                     // newDiv.className = "comment";
@@ -94,7 +94,7 @@
                 dataGlobal = data;
                 //console.log(data);
                 comments = data;
-                for (var i = 0; i < num; i++) {
+                for (var i = 0; i < num+1; i++) {
                     var obj = "#comment" + i.toString()
                     $(obj).html(data.comments[data.comments.length - i - 1].comment);
 
