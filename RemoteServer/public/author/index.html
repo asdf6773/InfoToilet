@@ -80,13 +80,12 @@
 
                 for (var i = 0; i < 5; i++) {
                     var newDiv = document.createElement("div");
-
+                    num += 1;
                     newDiv.className = "comment";
                     // newDiv.className = "comment";
                     newDiv.id = "comment" + (num - 1).toString();
                     document.getElementById("comment").appendChild(newDiv);
                     $("#comment" + (num - 1).toString()).html(dataGlobal.comments[dataGlobal.comments.length - num - 1].comment);
-                    num += 1;
                 }
             }
 
@@ -131,7 +130,6 @@
                     form.reset()
                 }
             }
-
             function mySubmit(flag) {
                 return flag;
             }
