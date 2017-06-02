@@ -299,7 +299,7 @@ io.of("/console").on('connection', function(socket) {
         io.of('/checkStatus').emit('reopen');
         console.log("reopen by console")
     })
-    socket.on("rerboot", function() {
+    socket.on("reboot", function() {
         io.of('/checkStatus').emit('reboot');
         console.log("reboot by console")
     })
