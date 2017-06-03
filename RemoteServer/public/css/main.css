@@ -33,7 +33,7 @@
     height: 0px;
     text-align: center;
     margin: 0 0;
-    display: none;
+    display: block;
 }
 
 #intro {
