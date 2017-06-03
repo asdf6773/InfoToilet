@@ -38,7 +38,7 @@ void loop() {
 
 
   int val  = analogRead(0);
-//  Serial.print(count);
+ Serial.print(val);
 //  Serial.print(" ");
 //  Serial.println(val);
   //  if ( lastVal < 500 && val >= 500) {
