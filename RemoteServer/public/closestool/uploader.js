@@ -252,7 +252,7 @@ window.onload = function() {
     //submit, send data to server
     $('#submit').click(function() {
         if (document.getElementById("imgFile").value == "" && img.length == 0) {
-            alert("没有东西可以丢")
+            alert("没有东西可以丢，先拾取吧")
         } else if (moving || uploading) {
             if (uploading)
                 // ctx.fillText("请稍等", window.innerWidth / 2, window.innerHeight / 2);
