@@ -32,6 +32,12 @@ $(document).ready(function() {
             socket.emit("reboot")
 
     })
+    $("#bonus").click(function() {
+        var c = confirm("确认发送Bonus？");
+        if (c)
+            socket.emit("bonus")
+
+    })
     var current = document.getElementById("current");
     var total = document.getElementById("total");
     var max = document.getElementById("max");

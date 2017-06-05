@@ -26,6 +26,26 @@
   top:20%;
   margin:0 auto
 }
+#bonus{
+  height:0;
+  font-family: sans-serif;
+  font-size: 12px;
+  color:#b1c1c8;
+  position:relative;
+  text-align: center;
+  top:95%;
+  margin:0 auto
+}
+#bonusC{
+  height:0;
+  font-family: sans-serif;
+  font-size: 12px;
+  color:#b1c1c8;
+  position:relative;
+  text-align: center;
+  top:90%;
+  margin:0 auto
+}
 #back {
     background: url(../lib/back.png);
     position: absolute;

@@ -196,6 +196,13 @@ io.of("/mirrorClient").on('connection', function(socket) {
     socket.on("sendLike", function(type) {
 
         consoleData.likes += 1;
+        if (consoleData.likes % 100 == 0) {
+            io.of('/mirror').emit('bonus');
+            setTimeout(function() {
+                io.of('/mirror').emit('clearBonus');
+            }, 6000)
+
+        }
         io.of("/mirrorClient").emit("likeNum", consoleData.likes)
         io.of("/mirror").emit("like", consoleData.likes);
     });
@@ -295,6 +302,13 @@ io.of("/console").on('connection', function(socket) {
         interval,
         id
     });
+    socket.on("bonus", function() {
+        io.of('/mirror').emit('bonus');
+        console.log("bonus by console")
+        setTimeout(function() {
+            io.of('/mirror').emit('clearBonus');
+        }, 6000)
+    })
     socket.on("restart", function() {
         io.of('/checkStatus').emit('restart');
         console.log("restart by console")

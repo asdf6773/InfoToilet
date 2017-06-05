@@ -18,6 +18,8 @@ var dryer;
 var dryPosY;
 var MAX_NUM = 100;
 var likes;
+var bonus = [];
+var suprise;
 // document.getElementById('back').href = 'http://' + ip + '/graduateProject';
 var heart;
 
@@ -47,6 +49,14 @@ function setup() {
     socket.on("like", function(type) {
         likes = type;
         particles.push(new Particle());
+    })
+    socket.on("bonus", function(type) {
+        suprise = setInterval(function() {
+            bonus.push(new bonusParticle())
+        }, 100)
+    })
+    socket.on("clearBonus", function(type) {
+        clearInterval(suprise);
     })
     socket.on('weiboData', function(data) {
         for (var i = 0; i < data.statuses.length; i++)
@@ -79,12 +89,12 @@ function keyPressed() {
 function draw() {
     background(0);
     image(hollow, width - 100, height - 100, hollow.width, hollow.height)
+
+
     for (var i = 0; i < particles.length; i++) {
         push();
         tint(255, particles[i].lifespan)
-        // particles[i].update();
         image(heart, particles[i].pos.x, particles[i].pos.y, heart.width, heart.height)
-
         pop();
     }
     for (var i = 0; i < particles.length; i++) {
@@ -92,56 +102,30 @@ function draw() {
             particles.splice(i, 1);
         }
     }
-    // var rand = Math.random()
-    // if (dryerFlag) {
-    //     if (dryPosY > -50)
-    //         dryPosY -= dryPosY / 10;
-    //
-    // } else {
-    //     if (dryPosY < 70)
-    //         dryPosY += dryPosY / 10 + 1;
-    // }
+
+    for (var i = 0; i < bonus.length; i++) {
+        push();
+        tint(255, bonus[i].lifespan)
+        image(heart, bonus[i].pos.x, bonus[i].pos.y, heart.width, heart.height)
+        pop();
+    }
+    for (var i = 0; i < bonus.length; i++) {
+        if (bonus[i].lifespan <= 0 || bonus[i].pos.y < -100) {
+            bonus.splice(i, 1);
+        }
+    }
 
     fill(255)
-    // ellipse(width / 2, height / 2, 200, 200);
-    // rect(0, 0, width, height)
     noStroke();
     textSize(50)
     text(likes, width - 170, height - 80);
-    // textSize(20)
-    // text("扫码为自己点赞", width - 70, height -30);
-    // print(particles[0].pos)
-    // fill(255);
-    // for (var i = 0; i < particles.length; i++) {
-    //     push()
-    //     textSize(particles[i].scaleRandom);
-    //     translate(particles[i].pos.x, particles[i].pos.y);
-    //     rotate(particles[i].rotate);
-    //     if (str.charAt(i))
-    //         text(str.charAt(i), 0, 0);
-    //     pop()
-    // }
-    // // image(dryer, width / 2, dryPosY, dryer.width, dryer.height)
     FlowField();
-    // // console.log(txt)
     for (var i = 0; i < particles.length; i++) {
         particles[i].update();
-        // particles[i].edge();
         particles[i].follow(flowfield);
     }
-    // for (var i = 0; i < particles.length; i++) {
-    //
-    //     if (particles[i].pos.x < 0 || particles[i].pos.x > width || particles[i].pos.y < 0 || particles[i].pos.y > height) {
-    //         particles.splice(i, dryerFlag == true ? 1 : 1);
-    //         if (rand > 0.1) {
-    //             particles.push(new Particle());
-    //         }
-    //     }
-    // }
-    // if (particles.length < MAX_NUM && !dryerFlag) {
-    //     if (rand > 0.96)
-    //         particles.push(new Particle());
-    //
-    // }
-
+    for (var i = 0; i < bonus.length; i++) {
+        bonus[i].update();
+        bonus[i].follow(flowfield);
+    }
 }
