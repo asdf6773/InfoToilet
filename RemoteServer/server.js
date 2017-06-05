@@ -180,6 +180,10 @@ io.of("/mirror").on('connection', function(socket) {
     socket.on("disconnect", function() {
         io.of("/checkStatus").emit("restart")
     })
+    socket.on("restart", function() {
+        io.of('/checkStatus').emit('restart');
+        console.log("restart by wrong window")
+    })
 });
 //socket
 io.of("/faucet").on('connection', function(socket) {

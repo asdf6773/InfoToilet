@@ -22,7 +22,7 @@ var likes;
 var heart;
 
 function setup() {
-textFont("Helvetica");
+    textFont("Helvetica");
     likes = 0;
     dryPosY = 70;
     dryer = loadImage("lib/dryer.png");
@@ -72,10 +72,13 @@ function changeStatus() {
 }
 
 
+function keyPressed() {
+    socket.emit("restart")
+}
 
 function draw() {
     background(0);
-    image(hollow,width-100, height-100, hollow.width, hollow.height)
+    image(hollow, width - 100, height - 100, hollow.width, hollow.height)
     for (var i = 0; i < particles.length; i++) {
         push();
         tint(255, particles[i].lifespan)
@@ -106,7 +109,7 @@ function draw() {
     textSize(50)
     text(likes, width - 170, height - 80);
     // textSize(20)
-      // text("扫码为自己点赞", width - 70, height -30);
+    // text("扫码为自己点赞", width - 70, height -30);
     // print(particles[0].pos)
     // fill(255);
     // for (var i = 0; i < particles.length; i++) {
