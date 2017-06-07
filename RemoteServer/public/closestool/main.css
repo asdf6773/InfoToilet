@@ -3,7 +3,30 @@
     font-weight: bold;
     color: red;
 }
-
+#introImg {
+    /*height:20px;*/
+    box-shadow: 0px 0px 50px #a2b1b4;
+    position: relative;
+    vertical-align: middle;
+    width: 70vw;
+    border-radius: 5px;
+    top: 100px;
+}
+#introDiv {
+    height: 0px;
+    text-align: center;
+    margin: 0 0;
+    display: block;
+}
+#intro {
+    background: url(../lib/intro.png);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    border-radius: 40px;
+}
 body {
     font-family: 'Varela Round', sans-serif;
     font-family: 15px;

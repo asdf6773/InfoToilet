@@ -25,6 +25,11 @@
     <!--
     <label for="entrance" id="entry" class="entry"></label>
         <a id="entrance"></a> -->
+    <a id="intro">
+    </a>
+    <div id="introDiv">
+        <image id="introImg" src="./lib/introToilet.jpg" />
+    </div>
     <label for="description" id="description" class="entry"></label>
     <a id="description"></a>
     <label for="back" id="backLabel" class="entry"></label>
@@ -52,7 +57,22 @@
     <span id="label_span">丢 入</span>
     </label>
     <input type="button" id="submit" value="submit">
-
+    <script>
+        $("#intro").click(function() {
+            if ($("#introDiv").css("display") == "none") {
+                $("#introDiv").css('display', 'block')
+            } else {
+                $("#introDiv").css('display', 'none')
+            }
+        })
+        $("#introImg").click(function() {
+            if ($("#introDiv").css("display") == "none") {
+                $("#introDiv").css('display', 'block')
+            } else {
+                $("#introDiv").css('display', 'none')
+            }
+        })
+    </script>
 </body>
 
 </html>

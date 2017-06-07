@@ -155,7 +155,7 @@ window.onload = function() {
     }
 
     function handleFiles(e) {
-
+  $("#introDiv").css('display', 'none')
         img = []
         size = []
         ctx.clearRect(0, 0, canvas.width, canvas.height);
