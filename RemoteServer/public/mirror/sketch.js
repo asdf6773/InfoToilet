@@ -54,6 +54,9 @@ function setup() {
         suprise = setInterval(function() {
             bonus.push(new bonusParticle())
         }, 100)
+        setTimeout(function() {
+            clearInterval(suprise);
+        }, 9000)
     })
     socket.on("clearBonus", function(type) {
         clearInterval(suprise);
