@@ -16,6 +16,7 @@ var Y_AXIS = 1;
 var X_AXIS = 2;
 var dryer;
 var dryPosY;
+var bonusStatus;
 var MAX_NUM = 100;
 var likes;
 var bonus = [];
@@ -24,6 +25,7 @@ var suprise;
 var heart;
 
 function setup() {
+    bonusStatus = false;
     textFont("Helvetica");
     likes = 0;
     dryPosY = 70;
@@ -51,12 +53,16 @@ function setup() {
         particles.push(new Particle());
     })
     socket.on("bonus", function(type) {
-        suprise = setInterval(function() {
-            bonus.push(new bonusParticle())
-        }, 100)
-        setTimeout(function() {
-            clearInterval(suprise);
-        }, 9000)
+        if (bonusStatus == false) {
+            suprise = setInterval(function() {
+                bonus.push(new bonusParticle())
+                bonusStatus = true;
+            }, 100)
+            setTimeout(function() {
+                clearInterval(suprise);
+                bonusStatus = false;
+            }, 9000)
+        }
     })
     socket.on("clearBonus", function(type) {
         clearInterval(suprise);
