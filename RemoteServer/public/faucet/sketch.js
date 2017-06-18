@@ -79,6 +79,7 @@ var a = new Array;
 var i = 0;
 
 function handleData(obj) {
+    $("#introDiv").css('display', 'none')
     // num+=10;
     for (var i = 0; i < obj.statuses.length; i++) {
         if (obj.statuses[i]) {
