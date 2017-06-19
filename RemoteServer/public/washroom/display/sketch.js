@@ -139,7 +139,7 @@ function setup() {
     });
     socket.on("newText", function(key) {
         var num = floor(random(0, 2));
-        var temp = loadImage("http://" + ip + "/lib/text/" + key + key + ".png");
+        var temp = loadImage("http://" + ip + "washroom/lib/text/" + key + key + ".png");
         dropSound[num].setVolume(random(0.8, 1));
         dropSound[num].play();
         imgPos.push(new Particle(attractor));
@@ -149,7 +149,7 @@ function setup() {
     })
     socket.on("Cfont", function(key) {
         var num = floor(random(0, 2));
-        var temp = loadImage("http://" + ip + "/lib/text/" + key + ".png");
+        var temp = loadImage("http://" + ip + "washroom/lib/text/" + key + ".png");
         dropSound[num].setVolume(random(0.3, 0.8));
         dropSound[num].play();
         imgPos.push(new Particle(attractor));
@@ -163,7 +163,7 @@ function setup() {
             var rand = Math.floor(Math.random() * str.length);
             s = str.charAt(rand);
         }
-        var temp = loadImage("http://" + ip + "/lib/text/" + s + ".png");
+        var temp = loadImage("http://" + ip + "washroom/lib/text/" + s + ".png");
 
         imgPos.push(new Particle(attractor));
         imgPos[imgPos.length - 1].pos = createVector(0, 0);
@@ -219,7 +219,7 @@ function loadImageBuffer(buffer) {
 
     if (!bufferLoaded) {
         for (var i = 0; i < buffer.length; i++) {
-            img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
+            img.push(loadImage("http://" + ip + "washroom/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
         }
         bufferLoaded = true;
@@ -246,7 +246,7 @@ function loadImageBuffer(buffer) {
         }
         imgPos.splice(0, imgPos.length);
         for (var i = 0; i < buffer.length; i++) {
-            img.push(loadImage("http://" + ip + "/Images/" + buffer[i]));
+            img.push(loadImage("http://" + ip + "washroom/Images/" + buffer[i]));
             imgPos.push(new Particle(attractor));
             if (imgPos[i])
                 imgPos[i].pos = cachePos[i];
