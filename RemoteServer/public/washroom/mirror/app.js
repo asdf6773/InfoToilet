@@ -1,6 +1,6 @@
 window.onload = function() {
   var likes
-    document.getElementById('back').href = 'http://' + ip + '/graduateProject';
+    document.getElementById('back').href = 'http://' + ip + '/washroom/';
     var type = 1;
     var socket = io.connect('http://' + ip + '/mirrorClient')
       socket.on("initLikesClient",function (data) {

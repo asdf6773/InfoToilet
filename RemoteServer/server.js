@@ -5,18 +5,19 @@ var multer = require('multer');
 var bodyParser = require('body-parser');
 var socket = require("socket.io")
 var request = require('request');
+var router = express.Router();
 var server = app.listen(80);
 var io = socket(server);
 var uploadName;
 var flush = true;
 var Console = [];
-var comments = JSON.parse(fs.readFileSync('./public/lib/comments.json', 'utf8'));
+var comments = JSON.parse(fs.readFileSync('./public/washroom/lib/comments.json', 'utf8'));
 var likes = 0;
 
 console.log("running on 80;")
 var imageBuffer = [];
 var imageScaleBuffer = [];
-var consoleData = JSON.parse(fs.readFileSync('./public/lib/record.json', 'utf8'));
+var consoleData = JSON.parse(fs.readFileSync('./public/washroom/lib/record.json', 'utf8'));
 //toiletData
 consoleData.show = false;
 consoleData.onlineUser = 0;
@@ -30,12 +31,12 @@ consoleData.mirrorOnline = 0;
 consoleData.dryerOnline = 0;
 console.log(consoleData)
 setInterval(function() {
-    fs.writeFile('./public/lib/record.json', JSON.stringify(consoleData), function(err) {});
+    fs.writeFile('./public/washroom/lib/record.json', JSON.stringify(consoleData), function(err) {});
 }, 1000)
 
 var Storage = multer.diskStorage({
     destination: function(req, file, callback) {
-        callback(null, "./public/Images");
+        callback(null, "./public/washroom/Images");
     },
     filename: function(req, file, callback) {
         uploadName = file.fieldname + "_" + Date.now() + "_" + file.originalname;
@@ -50,63 +51,85 @@ var upload = multer({
 // var ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
 var ServerLimit = 200000;
 
+app.use('/washroom', router);
 
-
+router.get('/', function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/home/index.html");
+})
+router.get('/toilet', function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/closestool/uploader.html");
+})
+router.get('/faucet', function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/faucet/index.html");
+})
+router.get('/dryer', function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/dryer/index.html");
+})
+router.get("/mirror", function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/mirror/index.html");
+});
+router.get("/mirrorClient", function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/mirror/client.html");
+});
+router.get("/me", function(req, res) {
+      res.sendFile(__dirname + "/public/washroom/author/index.html");
+});
 
 //router
+
 app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/public/catalog/index.html");
+    res.sendFile(__dirname + "/public/washroom/home/index.html");
 });
-app.get("/washroom", function(req, res) {
-    res.sendFile(__dirname + "/public/catalog/index.html");
+app.get("/a", function(req, res) {
+      res.redirect('/washroom/');
 });
 app.get("/mirrorClient", function(req, res) {
-    res.sendFile(__dirname + "/public/mirror/client.html");
+    res.redirect('../washroom/mirrorClient')
 });
 app.get("/author", function(req, res) {
-    res.sendFile(__dirname + "/public/author/index.html");
+    res.sendFile(__dirname + "/public/washroom/author/index.html");
 });
 app.get("/me", function(req, res) {
-    res.sendFile(__dirname + "/public/author/index.html");
+    res.sendFile(__dirname + "/public/washroom/author/index.html");
 });
 app.get("/toilet", function(req, res) {
-    res.sendFile(__dirname + "/public/closestool/uploader.html");
+    res.sendFile(__dirname + "/public/washroom/closestool/uploader.html");
 });
 app.get("/mirror", function(req, res) {
-    res.sendFile(__dirname + "/public/mirror/index.html");
+    res.sendFile(__dirname + "/public/washroom/mirror/index.html");
 });
-
-
 app.get("/mirrorScreen", function(req, res) {
-    res.sendFile(__dirname + "/public/mirror/index.html");
+    res.sendFile(__dirname + "/public/washroom/mirror/index.html");
 });
 app.get("/mirror", function(req, res) {
-    res.sendFile(__dirname + "/public/mirror/client.html");
+    res.sendFile(__dirname + "/public/washroom/mirror/client.html");
 });
 app.get("/graduateProject", function(req, res) {
-    res.sendFile(__dirname + "/public/catalog/index.html");
+    res.sendFile(__dirname + "/public/washroom/home/index.html");
 });
-app.get("/catalog", function(req, res) {
-    res.sendFile(__dirname + "/public/catalog/index.html");
+app.get("/home", function(req, res) {
+    res.sendFile(__dirname + "/public/washroom/home/index.html");
 });
 app.get("/dryer", function(req, res) {
-    res.sendFile(__dirname + "/public/dryer/index.html");
+    res.sendFile(__dirname + "/public/washroom/dryer/index.html");
 });
 app.get("/projector", function(req, res) {
-    res.sendFile(__dirname + "/public/display/projector.html");
+    res.sendFile(__dirname + "/public/washroom/display/projector.html");
 });
 app.get("/display", function(req, res) {
-    res.sendFile(__dirname + "/public/display/display.html");
+    res.sendFile(__dirname + "/public/washroom/display/display.html");
 });
 app.get("/handDryer", function(req, res) {
-    res.sendFile(__dirname + "/public/handDryer/index.html");
+    res.sendFile(__dirname + "/public/washroom/handDryer/index.html");
 });
 app.get("/faucet", function(req, res) {
-    res.sendFile(__dirname + "/public/faucet/index.html");
+    res.sendFile(__dirname + "/public/washroom/faucet/index.html");
 });
 app.get("/console", function(req, res) {
-    res.sendFile(__dirname + "/public/console/console.html");
+    res.sendFile(__dirname + "/public/washroom/console/console.html");
 });
+
+
 var urlencodedParser = bodyParser.urlencoded({
     extended: false
 })
@@ -117,7 +140,7 @@ app.post("/comments", urlencodedParser, function(req, res) {
         id: id + 1,
         comment: txt
     });
-    fs.writeFile('./public/lib/comments.json', JSON.stringify(comments), function(err) {});
+    fs.writeFile('./public/washroom/lib/comments.json', JSON.stringify(comments), function(err) {});
     res.send(comments)
     console.log(txt)
 });
@@ -127,17 +150,7 @@ app.get("/comments", urlencodedParser, function(req, res) {
     res.send(comments)
     console.log(txt)
 });
-//
-//
-// app.post("/api/Upload", function(req, res) {
-//     upload(req, res, function(err) {
-//         if (err) { //  alert(failed);
-//             return res.end("Something went wrong!");
-//         }
-//         io.of('/projector').emit('uploadName', uploadName);
-//         return res.redirect("/uploadSuccess.html");
-//     });
-// });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ //此项必须在 bodyParser.json 下面,为参数编码
     extended: false
@@ -152,7 +165,7 @@ var uploadNum = 0;
 
 var pullData = "https://api.weibo.com/2/statuses/public_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ"
 // var pullData = 'https://api.weibo.com/2/place/poi_timeline.json?access_token=2.00eSb_UD2DU1eDf3a9e590d50d5pCZ&poiid=B2094654D26EABF8449E&count=30';
-var weiboData = JSON.parse(fs.readFileSync('./public/lib/weibo.json', 'utf8'));;
+var weiboData = JSON.parse(fs.readFileSync('./public/washroom/lib/weibo.json', 'utf8'));;
 var timer = 60 * 60 * 1000;
 setInterval(function() {
     request(pullData, function(error, response, body) {
@@ -162,7 +175,7 @@ setInterval(function() {
             console.log('refresh weiboData');
             // socket.emit("weiboData", obj);
             weiboData = obj;
-            fs.writeFile('./public/lib/weibo.json', JSON.stringify(weiboData), function(err) {
+            fs.writeFile('./public/washroom/lib/weibo.json', JSON.stringify(weiboData), function(err) {
 
             });
         }
@@ -467,7 +480,7 @@ io.of("/test").on('connection', function(socket) {
             var buffer = new Buffer('empty', 'base64'); //?????????????????????????????????????
         }
         var newUpload = 'img_' + Date.now() + ".png"
-        fs.writeFile("public/Images/" + newUpload, buffer, (err) => {
+        fs.writeFile("public/washroom/Images/" + newUpload, buffer, (err) => {
             if (err) {
                 io.of('/').emit('error');
                 throw err;

@@ -12,7 +12,7 @@ var json;
 var content = [];
 var Y_AXIS = 1;
 var X_AXIS = 2;
-document.getElementById('back').href = 'http://' + ip + '/graduateProject';
+document.getElementById('back').href = 'http://' + ip + '/washroom/';
 var times = 0;
 var num;
 

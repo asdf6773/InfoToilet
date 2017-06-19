@@ -15,10 +15,10 @@ var X_AXIS = 2;
 var dryer;
 var dryPosY;
 var MAX_NUM = 100;
-document.getElementById('back').href = 'http://' + ip + '/graduateProject';
+document.getElementById('back').href = 'http://' + ip + '/washroom/';
 function setup() {
     dryPosY = 70;
-    dryer = loadImage("lib/dryer.png");
+    dryer = loadImage("/washroom/lib/dryer.png");
     //BG
     b1 = color(214, 227, 233);
     b2 = color(222);

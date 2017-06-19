@@ -38,18 +38,18 @@ document.oncontextmenu = function() {
 var waitForFlush = false;
 
 function preload() {
-    dropSound.push(loadSound('lib/drop.wav'))
-    dropSound.push(loadSound('lib/drop2.mp3'))
+    dropSound.push(loadSound('/washroom/lib/drop.wav'))
+    dropSound.push(loadSound('/washroom/lib/drop2.mp3'))
 }
 
 function setup() {
     // mySound.setVolume(0.5);
-    matt = loadImage("http://" + ip + "/lib/matt.png")
+    matt = loadImage("http://" + ip + "/washroom/lib/matt.png")
     waterHeight = 1
     document.getElementById('back').href = 'http://' + ip + '/toilet';
     hole = 50;
-    bg = loadImage("http://" + ip + "/lib/toilet-display.png")
-    layer = loadImage("http://" + ip + "/lib/toilet-layer.png")
+    bg = loadImage("http://" + ip + "/washroom/lib/toilet-display.png")
+    layer = loadImage("http://" + ip + "/washroom/lib/toilet-layer.png")
     imageMode(CENTER);
     noiseSeed = 0;
     createCanvas(windowWidth, windowHeight - 50);

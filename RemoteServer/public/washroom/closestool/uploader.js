@@ -8,7 +8,7 @@ window.onload = function() {
         document.getElementById('entrance').href = 'http://' + ip + '/display';
     // if (document.getElementById('description'))
         // document.getElementById('description').href = 'http://' + ip + '/display';
-    document.getElementById('back').href = 'http://' + ip + '/graduateProject';
+    document.getElementById('back').href = 'http://' + ip + '/washroom/';
     // $("#imgFile").on("change", function(e) {
     //     var files = $(this)[0].files;
     //     var fileName = e.target.value.split('\\').pop();
@@ -33,8 +33,8 @@ window.onload = function() {
     ctx.textAlign = "center";
     ctx.fillStyle = "#527283";
     ctx.save();
-    toilet.src = 'http://' + ip + '/lib/toilet.png'
-    toilet_layer.src = 'http://' + ip + '/lib/toilet-uplayer.png'
+    toilet.src = 'http://' + ip + '/washroom/lib/toilet.png'
+    toilet_layer.src = 'http://' + ip + '/washroom/lib/toilet-uplayer.png'
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.translate(canvas.width / 2, canvas.height / 2);
     toilet.onload = function() {

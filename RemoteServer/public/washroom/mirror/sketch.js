@@ -29,7 +29,7 @@ function setup() {
     textFont("Helvetica");
     likes = 0;
     dryPosY = 70;
-    dryer = loadImage("lib/dryer.png");
+    dryer = loadImage("/washroom/lib/dryer.png");
     //BG
     b1 = color(214, 227, 233);
     b2 = color(222);
@@ -37,8 +37,8 @@ function setup() {
     c2 = color(0, 102, 153);
     str = ""
     ellipseMode(CENTER);
-    heart = loadImage("./lib/heart.png")
-    hollow = loadImage("./lib/hollow.png")
+    heart = loadImage("/washroom/lib/heart.png")
+    hollow = loadImage("/washroom/lib/hollow.png")
     createCanvas(windowWidth, windowHeight);
     noStroke();
     socket = io.connect('http://' + ip + '/mirror')
