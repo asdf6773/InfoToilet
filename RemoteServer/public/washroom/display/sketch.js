@@ -280,7 +280,7 @@ function flushFromToilet(data) {
 
 function addImage(data) {
     // console.log("addImage")
-    var temp = loadImage("http://" + ip + "/Images/" + data);
+    var temp = loadImage("http://" + ip + "washroom/Images/" + data);
     dropSound[1].setVolume(0.8);
     dropSound[1].play();
     imgPos.push(new Particle(attractor));
