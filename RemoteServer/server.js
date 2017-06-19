@@ -55,7 +55,7 @@ var ServerLimit = 200000;
 
 //router
 app.get("/", function(req, res) {
-    res.sendFile(__dirname + "/public/HomePage/index.html");
+    res.sendFile(__dirname + "/public/catalog/index.html");
 });
 app.get("/washroom", function(req, res) {
     res.sendFile(__dirname + "/public/catalog/index.html");

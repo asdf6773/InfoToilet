@@ -27,8 +27,8 @@ function createApp(opt) {
     }
 
     // Show the <canvas> on screen
-    const canvas = renderer.domElement;
-    document.body.appendChild(canvas);
+    const canvas = document.getElementById("canvas");
+    // document.body.appendChild(canvas);
 
     // 3D camera looking
     const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 10000);
@@ -67,11 +67,11 @@ function createApp(opt) {
         const width = window.innerWidth;
         const height = window.innerHeight;
         const aspect = width / height;
-        controls.rotateSpeed = 0.05
+        controls.rotateSpeed = 0.00001
         controls.damping = 0.05;
         // update camera controls
         controls.update();
-        controls.zoomSpeed = 0.3;
+        controls.zoomSpeed = 0.0;
         //  controls.damping =0.01;
         camera.position.fromArray(controls.position);
         camera.up.fromArray(controls.up);
@@ -307,7 +307,7 @@ createLoop(function(dt) {
     }
 
     for (var i = 0; i < particles.length; i++) {
-        if (particles[i].pos.z > 10000)
+        if (particles[i].pos.z > 9000)
             particles.splice(i, 1)
     }
 
@@ -11988,7 +11988,7 @@ var raf = require('raf')
 
 module.exports = Engine
 function Engine(fn) {
-    if (!(this instanceof Engine))
+    if (!(this instanceof Engine)) 
         return new Engine(fn)
     this.running = false
     this.last = now()
@@ -12002,7 +12002,7 @@ function Engine(fn) {
 inherits(Engine, EventEmitter)
 
 Engine.prototype.start = function() {
-    if (this.running)
+    if (this.running) 
         return
     this.running = true
     this.last = now()
@@ -28722,7 +28722,7 @@ module.exports =
 
 			prefixVertex = [
 
-
+	        
 				'precision ' + parameters.precision + ' float;',
 				'precision ' + parameters.precision + ' int;',
 
@@ -31897,7 +31897,7 @@ module.exports =
 			}
 
 			scope.numPlanes = nPlanes;
-
+			
 			return dstArray;
 
 		}
@@ -55442,7 +55442,7 @@ function toPX(str, element) {
   element = element || document.body
   str = (str || 'px').trim().toLowerCase()
   if(element === window || element === document) {
-    element = document.body
+    element = document.body 
   }
   switch(str) {
     case '%':  //Ambiguous, not sure if we should use width or height
