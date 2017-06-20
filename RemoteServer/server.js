@@ -195,7 +195,7 @@ setInterval(function() {
 }, timer);
 //3600000
 //----------------------atomicBomb---------------------------
-var timer;
+var timer2;
 var timerIsSet = false;
 var green = 0;
 
@@ -205,7 +205,7 @@ io.of("/bottonStatus").on('connection', function(socket) {
         green += 1;
         console.log("press" + green)
         if (!timerIsSet)
-            timer = setTimeout(function() {
+            timer2 = setTimeout(function() {
                 io.of("/bottonStatus").emit("releasedAll")
                 green = 0;
             }, 5000)
@@ -218,7 +218,7 @@ io.of("/bottonStatus").on('connection', function(socket) {
         if (green === 0) {
             io.of("/bottonStatus").emit("released")
             green = 0;
-            clearTimeout(timer)
+            clearTimeout(timer2)
             timerIsSet = false;
         }
     })
