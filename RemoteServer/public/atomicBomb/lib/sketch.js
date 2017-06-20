@@ -2,6 +2,7 @@ var standby;
 var pushed;
 var button;
 var status;
+var title;
 var flag = false;
 var socket;
 var presser = false;
@@ -14,14 +15,22 @@ function preload() {
     green = loadImage("/atomicBomb/lib/green.png");
     purple = loadImage("/atomicBomb/lib/purple.png");
     red = loadImage("/atomicBomb/lib/red.png");
+    title = loadImage("/atomicBomb/lib/title.png");
 }
 
+var Y_AXIS = 1;
+var X_AXIS = 2;
+
 function setup() {
+    b1 = color(199, 214, 214);
+    b2 = color(210, 218, 214);
+    c1 = color(204, 102, 0);
+    c2 = color(0, 102, 153);
     status = 0;
     rectMode(CENTER);
     imageMode(CENTER);
     createCanvas(window.innerWidth, window.innerHeight)
-    socket = io.connect('http://' + ip + '/bottonStatus')
+    socket = io.connect('http://' + ip + '/greenButton')
     socket.on("init", function(init) {
         flag = init;
     })
@@ -44,7 +53,7 @@ function setup() {
 
 function draw() {
     // print(flag)
-    background(255);
+    setGradient(0, 0, width, height, b1, b2, Y_AXIS);
     push()
     translate(width / 2, height / 2)
     if (!flag) {
@@ -55,10 +64,12 @@ function draw() {
         // image(red, 0, window.width / 3.1, green.width, green.height);
         // image(purple, -window.width / 9.2, window.width /  3.33, green.width, green.height);
     }
+    image(title, window.innerWidth/10,- window.innerWidth/2.4, window.innerWidth/2, title.height / title.width * window.innerWidth/2);
     pop()
     noFill();
     noStroke();
-    rect(width / 2, height / 2 + 8, window.innerWidth / 2.5, window.innerWidth / 2.5);
+
+    // rect(width / 2, height / 2 + 8, window.innerWidth / 2.5, window.innerWidth / 2.5);
 }
 
 function mousePressed() {
@@ -75,9 +86,30 @@ function mousePressed() {
 }
 
 function mouseReleased() {
-    if (presser){
+    if (presser) {
         socket.emit("released")
         presser = false;
-      }
+    }
     // flag = false;
+}
+
+function setGradient(x, y, w, h, c1, c2, axis) {
+
+    noFill();
+
+    if (axis == Y_AXIS) { // Top to bottom gradient
+        for (var i = y; i <= y + h; i++) {
+            var inter = map(i, y, y + h, 0, 1);
+            var c = lerpColor(c1, c2, inter);
+            stroke(c);
+            line(x, i, x + w, i);
+        }
+    } else if (axis == X_AXIS) { // Left to right gradient
+        for (var i = x; i <= x + w; i++) {
+            var inter = map(i, x, x + w, 0, 1);
+            var c = lerpColor(c1, c2, inter);
+            stroke(c);
+            line(i, y, i, y + h);
+        }
+    }
 }

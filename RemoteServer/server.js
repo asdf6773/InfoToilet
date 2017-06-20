@@ -90,7 +90,7 @@
      res.redirect('/washroom/');
  });
  app.get("/atomicBomb", function(req, res) {
-     res.sendFile(__dirname + "/public/atomicBomb/index.html");
+     res.sendFile(__dirname + "/public/atomicBomb/test.html");
  });
  app.get("/atomicBombTest", function(req, res) {
      res.sendFile(__dirname + "/public/atomicBomb/test.html");
@@ -199,7 +199,7 @@
  var timerIsSet = false;
  var green = false;
 
- io.of("/bottonStatus").on('connection', function(socket) {
+ io.of("/greenButton").on('connection', function(socket) {
      if (green == true)
          socket.emit("init", true);
      if (green == false)
@@ -207,28 +207,22 @@
      socket.on("pressed", function() {
          if (green === false) {
              socket.emit("presser")
-             io.of("/bottonStatus").emit("pressed")
+             io.of("/greenButton").emit("pressed")
              green = true;
              console.log("getPresser")
              if (!timerIsSet)
                  timer2 = setTimeout(function() {
-                     io.of("/bottonStatus").emit("releasedAll")
+                     io.of("/greenButton").emit("releasedAll")
                      green = 0;
                  }, 4000)
              timerIsSet = true;
          }
-
      })
      socket.on("released", function() {
          clearTimeout(timer2)
          green = false;
          timerIsSet = false;
-
-         io.of("/bottonStatus").emit("releasedAll")
-         //  green = 0;
-         //  clearTimeout(timer2)
-         //  timerIsSet = false;
-         //  }
+         io.of("/greenButton").emit("releasedAll")
      })
  });
  /////////////////-----------------------------------------------
