@@ -206,13 +206,7 @@
  var purple = false;
 
  io.of("/Button").on('connection', function(socket) {
-    //  if (green == true)
-    //      socket.emit("init", true);
-    //  if (green == false)
-    //      socket.emit("init", false)
-
-
-
+   socket.emit("init")
      socket.on("greenPressed", function() {
          socket.emit("presser")
          io.of("/Button").emit("greenPressed")
