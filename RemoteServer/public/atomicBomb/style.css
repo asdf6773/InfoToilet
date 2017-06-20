@@ -1,0 +1,61 @@
+#catalog1 {
+    /*background-image: url(../lib/catalog/catalog-1.png);*/
+}
+.item{
+  margin-bottom: 1px;
+}
+a {
+    width: 100px;
+    height: 100%;
+    z-index: 200;
+    top: 0px;
+}
+
+.item {
+    /*width: 100vw;*/
+    /*height:25%;*/
+    /*width:100%;*/
+}
+
+
+
+html, body {
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.name {
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    line-height: 0;
+    position: relative;
+    font-weight: bold;
+    text-align: center;
+    top: 80px;
+    left:67px;
+    font-size: 20px;
+    word-spacing: 8px;
+    letter-spacing: 7px;
+    color: 527283;
+    z-index: 101;
+    /*font-size: :30px;*/
+}
+
+.en {
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    line-height: 0;
+    position: relative;
+    left: 60vw;
+    top: 36vw;
+    font-size: 15px;
+    word-spacing: 5px;
+    letter-spacing: 5px;
+    color: 527283;
+    z-index: 101;
+    /*font-size: :30px;*/
+}
+
+.img {
+    width: 100vw;
+    position: relative;
+    /*top: 0;*/
+}

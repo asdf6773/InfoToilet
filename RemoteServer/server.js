@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var socket = require("socket.io")
 var request = require('request');
 var router = express.Router();
+// var atomicBomb = express.Router();
 var server = app.listen(80);
 var io = socket(server);
 var uploadName;
@@ -52,6 +53,11 @@ var upload = multer({
 var ServerLimit = 200000;
 
 app.use('/washroom', router);
+// app.use('/atomicBomb', atomicBomb);
+
+// atomicBomb.get('/', function(req, res) {
+//     res.sendFile(__dirname + "/public/washroom/home/index.html");
+// })
 
 router.get('/', function(req, res) {
     res.sendFile(__dirname + "/public/washroom/home/index.html");
@@ -72,7 +78,7 @@ router.get("/mirrorClient", function(req, res) {
     res.sendFile(__dirname + "/public/washroom/mirror/client.html");
 });
 router.get("/me", function(req, res) {
-      res.sendFile(__dirname + "/public/washroom/author/index.html");
+    res.sendFile(__dirname + "/public/washroom/author/index.html");
 });
 
 //router
@@ -81,7 +87,10 @@ app.get("/", function(req, res) {
     res.sendFile(__dirname + "/public/washroom/home/index.html");
 });
 app.get("/a", function(req, res) {
-      res.redirect('/washroom/');
+    res.redirect('/washroom/');
+});
+app.get("/atomicBomb", function(req, res) {
+    res.sendFile(__dirname + "/public/atomicBomb/index.html");
 });
 app.get("/mirrorClient", function(req, res) {
     res.redirect('../washroom/mirrorClient')
