@@ -206,7 +206,11 @@
  var purple = false;
 
  io.of("/Button").on('connection', function(socket) {
-   socket.emit("init")
+     socket.emit("init", {
+         green: green,
+         red: red,
+         purple: purple
+     })
      socket.on("greenPressed", function() {
          socket.emit("presser")
          io.of("/Button").emit("greenPressed")
@@ -248,7 +252,6 @@
              purpleIsSet = true;
          }
      })
-
 
      socket.on("releaseGreen", function() {
          clearTimeout(greenTimer)
