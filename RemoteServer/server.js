@@ -216,18 +216,18 @@
          timerIsSet = true;
      })
      socket.on("released", function() {
-         if (green > 0)
-             green -= 1;
-         console.log("release" + green)
-         if (green === 0) {
+        //  if (green > 0)
+        //      green -= 1;
+        //  console.log("release" + green)
+        //  if (green === 0) {
              io.of("/bottonStatus").emit("released")
-             green = 0;
-             clearTimeout(timer2)
-             timerIsSet = false;
-         }
+            //  green = 0;
+            //  clearTimeout(timer2)
+            //  timerIsSet = false;
+        //  }
      })
  });
- /////////////////------------------------------------------------------------
+ /////////////////-----------------------------------------------
 
 
  //mirrir
