@@ -21,6 +21,9 @@ function setup() {
     imageMode(CENTER);
     createCanvas(window.innerWidth, window.innerHeight)
     socket = io.connect('http://' + ip + '/bottonStatus')
+    socket.on("init", function(init) {
+    flag = init;
+})
     socket.on("pressed", function() {
         flag = true;
     })
