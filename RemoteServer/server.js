@@ -197,34 +197,38 @@
  //----------------------atomicBomb---------------------------
  var timer2;
  var timerIsSet = false;
- var green = 0;
+ var green = false;
 
  io.of("/bottonStatus").on('connection', function(socket) {
-     if (green > 0)
+     if (green == true)
          socket.emit("init", true);
-     if (green == 0)
+     if (green == false)
          socket.emit("init", false)
      socket.on("pressed", function() {
-         io.of("/bottonStatus").emit("pressed")
-         green += 1;
-         console.log("press" + green)
-         if (!timerIsSet)
-             timer2 = setTimeout(function() {
-                 io.of("/bottonStatus").emit("releasedAll")
-                 green = 0;
-             }, 5000)
-         timerIsSet = true;
+         if (green === false) {
+             socket.emit("presser")
+             io.of("/bottonStatus").emit("pressed")
+             green = true;
+             console.log("getPresser")
+             if (!timerIsSet)
+                 timer2 = setTimeout(function() {
+                     io.of("/bottonStatus").emit("releasedAll")
+                     green = 0;
+                 }, 4000)
+             timerIsSet = true;
+         }
+
      })
      socket.on("released", function() {
-        //  if (green > 0)
-        //      green -= 1;
-        //  console.log("release" + green)
-        //  if (green === 0) {
-             io.of("/bottonStatus").emit("released")
-            //  green = 0;
-            //  clearTimeout(timer2)
-            //  timerIsSet = false;
-        //  }
+         clearTimeout(timer2)
+         green = false;
+         timerIsSet = false;
+
+         io.of("/bottonStatus").emit("releasedAll")
+         //  green = 0;
+         //  clearTimeout(timer2)
+         //  timerIsSet = false;
+         //  }
      })
  });
  /////////////////-----------------------------------------------

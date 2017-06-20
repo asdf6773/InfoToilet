@@ -4,6 +4,7 @@ var button;
 var status;
 var flag = false;
 var socket;
+var presser = false;
 // var ip = "192.168.137.1:8888"
 var green, red, purple;
 
@@ -22,9 +23,13 @@ function setup() {
     createCanvas(window.innerWidth, window.innerHeight)
     socket = io.connect('http://' + ip + '/bottonStatus')
     socket.on("init", function(init) {
-    flag = init;
-})
+        flag = init;
+    })
     socket.on("pressed", function() {
+        flag = true;
+    })
+    socket.on("presser", function() {
+        presser = true;
         flag = true;
     })
     socket.on("released", function() {
@@ -33,7 +38,7 @@ function setup() {
     })
     socket.on("releasedAll", function() {
 
-            flag = false;
+        flag = false;
     })
 }
 
@@ -61,13 +66,18 @@ function mousePressed() {
     if (mouseX > width / 2 - window.innerWidth / 2.5 / 2 &&
         mouseX < width / 2 + window.innerWidth / 2.5 / 2 &&
         mouseY > (height / 2 + 8) - window.innerWidth / 2.5 / 2 &&
-        mouseY < (height / 2 + 8) + window.innerWidth / 2.5 / 2) {
+        mouseY < (height / 2 + 8) + window.innerWidth / 2.5 / 2 &&
+        flag === false) {
         socket.emit("pressed")
+    } else {
+
     }
 }
 
 function mouseReleased() {
-    if (flag)
+    if (presser){
         socket.emit("released")
+        presser = false;
+      }
     // flag = false;
 }
