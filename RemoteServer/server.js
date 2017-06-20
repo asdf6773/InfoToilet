@@ -1,4 +1,4 @@
-var express = require('express');
+ var express = require('express');
 var fs = require('fs');
 var app = express();
 var multer = require('multer');
@@ -91,6 +91,9 @@ app.get("/a", function(req, res) {
 });
 app.get("/atomicBomb", function(req, res) {
     res.sendFile(__dirname + "/public/atomicBomb/index.html");
+});
+app.get("/atomicBombTest", function(req, res) {
+    res.sendFile(__dirname + "/public/atomicBomb/test.html");
 });
 app.get("/mirrorClient", function(req, res) {
     res.redirect('../washroom/mirrorClient')
@@ -191,9 +194,36 @@ setInterval(function() {
     })
 }, timer);
 //3600000
+//----------------------atomicBomb---------------------------
+var timer;
+var timerIsSet = false;
+var green = 0;
 
-
-
+io.of("/bottonStatus").on('connection', function(socket) {
+    socket.on("pressed", function() {
+        io.of("/bottonStatus").emit("pressed")
+        green += 1;
+        console.log("press" + green)
+        if (!timerIsSet)
+            timer = setTimeout(function() {
+                io.of("/bottonStatus").emit("releasedAll")
+                green = 0;
+            }, 5000)
+        timerIsSet = true;
+    })
+    socket.on("released", function() {
+        if (green > 0)
+            green -= 1;
+        console.log("release" + green)
+        if (green === 0) {
+            io.of("/bottonStatus").emit("released")
+            green = 0;
+            clearTimeout(timer)
+            timerIsSet = false;
+        }
+    })
+});
+/////////////////------------------------------------------------------------
 
 
 //mirrir
