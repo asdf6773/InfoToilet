@@ -6,6 +6,7 @@ var title;
 var flag = false;
 var socket;
 var presser = false;
+var greenLight, purpleLight, redLight;
 // var ip = "192.168.137.1:8888"
 var green, red, purple;
 var dice;
@@ -33,6 +34,9 @@ function setup() {
     c1 = color(204, 102, 0);
     c2 = color(0, 102, 153);
     status = 0;
+    greenLight = false;
+    redLight = false;
+    purpleLight = false;
     rectMode(CENTER);
     imageMode(CENTER);
     createCanvas(window.innerWidth, window.innerHeight);
@@ -43,34 +47,38 @@ function setup() {
     socket.on("buttonInit", function(init) {
         flag = init;
     })
-    switch (dice) {
-        case 0:
-            socket.on("greenPressed", function() {
-                flag = true;
-            })
-            socket.on("releaseGreen", function() {
-                flag = false;
-            })
-            break;
-        case 1:
-            socket.on("redPressed", function() {
-                flag = true;
-            })
-            socket.on("releaseRed", function() {
-                flag = false;
-            })
-            break;
-        case 2:
-            socket.on("purplePressed", function() {
-                flag = true;
-            })
-            socket.on("releasePurple", function() {
-                flag = false;
-            })
-            break;
-        default:
 
-    }
+    socket.on("greenPressed", function() {
+        if (dice == 0)
+            flag = true;
+        greenLight = true;
+    })
+    socket.on("redPressed", function() {
+        if (dice == 1)
+            flag = true;
+        redLight = true;
+    })
+    socket.on("purplePressed", function() {
+        if (dice == 2)
+            flag = true;
+        purpleLight = true;
+    })
+    socket.on("releaseGreen", function() {
+        if (dice == 0)
+            flag = false;
+        greenLight = false;
+    })
+    socket.on("releaseRed", function() {
+        if (dice == 1)
+            flag = false;
+        redLight = false;
+    })
+    socket.on("releasePurple", function() {
+        if (dice == 2)
+            flag = false;
+        purpleLight = false;
+    })
+
     socket.on("presser", function() {
         presser = true;
         flag = true;
@@ -106,21 +114,27 @@ function draw() {
         switch (dice) {
             case 0:
                 image(green_pushed, 0, 0, window.innerWidth, green_pushed.height / green_pushed.width * window.innerWidth);
-                image(green, window.width / 9.2, window.width / 3.33, green.width, green.height);
+                // image(green, window.width / 9.2, window.width / 3.33, green.width, green.height);
                 break;
             case 1:
                 image(red_pushed, 0, 0, window.innerWidth, red_pushed.height / red_pushed.width * window.innerWidth);
-                image(red, 0, window.width / 3.1, green.width, green.height);
+                // image(red, 0, window.width / 3.1, green.width, green.height);
                 break;
             case 2:
                 image(purple_pushed, 0, 0, window.innerWidth, purple_pushed.height / purple_pushed.width * window.innerWidth);
-                image(purple, -window.width / 9.2, window.width / 3.33, green.width, green.height);
+                // image(purple, -window.width / 9.2, window.width / 3.33, green.width, green.height);
                 break;
             default:
         }
         // image(red, 0, window.width / 3.1, green.width, green.height);
         // image(purple, -window.width / 9.2, window.width /  3.33, green.width, green.height);
     }
+    if (greenLight)
+        image(green, window.width / 9.2, window.width / 3.33, green.width, green.height);
+    if (redLight)
+        image(red, 0, window.width / 3.1, red.width, red.height);
+    if (purpleLight)
+        image(purple, -window.width / 9.2, window.width / 3.33, purple.width, purple.height);
     image(title, window.innerWidth / 10, -window.innerWidth / 2.4, window.innerWidth / 2, title.height / title.width * window.innerWidth / 2);
     pop()
     noFill();
