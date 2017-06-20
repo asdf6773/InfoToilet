@@ -195,36 +195,98 @@
  }, timer);
  //3600000
  //----------------------atomicBomb---------------------------
- var timer2;
- var timerIsSet = false;
+ var greenTimer;
+ var redTimer;
+ var purpleTimer;
+ var greenIsSet = false;
+ var redIsSet = false;
+ var purpleIsSet = false;
  var green = false;
+ var red = false;
+ var purple = false;
 
- io.of("/greenButton").on('connection', function(socket) {
-     if (green == true)
-         socket.emit("init", true);
-     if (green == false)
-         socket.emit("init", false)
-     socket.on("pressed", function() {
-         if (green === false) {
-             socket.emit("presser")
-             io.of("/greenButton").emit("pressed")
-             green = true;
-             console.log("getPresser")
-             if (!timerIsSet)
-                 timer2 = setTimeout(function() {
-                     io.of("/greenButton").emit("releasedAll")
-                     green = 0;
-                 }, 4000)
-             timerIsSet = true;
+ io.of("/Button").on('connection', function(socket) {
+    //  if (green == true)
+    //      socket.emit("init", true);
+    //  if (green == false)
+    //      socket.emit("init", false)
+
+
+
+     socket.on("greenPressed", function() {
+         socket.emit("presser")
+         io.of("/Button").emit("greenPressed")
+         green = true;
+         console.log("getgreenPresser")
+         if (!greenIsSet) {
+             greenTimer = setTimeout(function() {
+                 io.of("/Button").emit("releaseGreen")
+                 green = false;
+             }, 4000)
+             greenIsSet = true;
          }
      })
-     socket.on("released", function() {
-         clearTimeout(timer2)
+
+     socket.on("redPressed", function() {
+         socket.emit("presser")
+         io.of("/Button").emit("redPressed")
+         red = true;
+         console.log("getRedPresser")
+         if (!redIsSet) {
+             redTimer = setTimeout(function() {
+                 io.of("/Button").emit("releaseRed")
+                 red = false;
+             }, 4000)
+             redIsSet = true;
+         }
+     })
+
+     socket.on("purplePressed", function() {
+         socket.emit("presser")
+         io.of("/Button").emit("purplePressed")
+         purple = true;
+         console.log("getPurplePresser")
+         if (!purpleIsSet) {
+             purpleTimer = setTimeout(function() {
+                 io.of("/Button").emit("releasePurple")
+                 purple = false;
+             }, 4000)
+             purpleIsSet = true;
+         }
+     })
+
+
+     socket.on("releaseGreen", function() {
+         clearTimeout(greenTimer)
          green = false;
-         timerIsSet = false;
-         io.of("/greenButton").emit("releasedAll")
+         greenIsSet = false;
+         io.of("/Button").emit("releaseGreen")
+     })
+     socket.on("releaseRed", function() {
+         clearTimeout(redTimer)
+         green = false;
+         redIsSet = false;
+         io.of("/Button").emit("releaseRed")
+     })
+     socket.on("releasePurple", function() {
+         clearTimeout(purpleTimer)
+         green = false;
+         purpleIsSet = false;
+         io.of("/Button").emit("releasePurple")
+     })
+
+
+
+     socket.on("color", function(dice) {
+         if (dice == 0)
+             socket.emit("buttonInit", green) //green
+         if (dice == 1)
+             socket.emit("buttonInit", red) //green
+         if (dice == 2)
+             socket.emit("buttonInit", purple) //green
      })
  });
+
  /////////////////-----------------------------------------------
 
 

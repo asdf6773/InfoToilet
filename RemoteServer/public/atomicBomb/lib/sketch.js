@@ -8,10 +8,15 @@ var socket;
 var presser = false;
 // var ip = "192.168.137.1:8888"
 var green, red, purple;
+var dice;
 
 function preload() {
-    standby = loadImage("/atomicBomb/lib/standby.png");
-    pushed = loadImage("/atomicBomb/lib/pushed.png");
+    green_standby = loadImage("/atomicBomb/lib/green_standby.png");
+    green_pushed = loadImage("/atomicBomb/lib/green_pushed.png");
+    red_standby = loadImage("/atomicBomb/lib/red_standby.png");
+    red_pushed = loadImage("/atomicBomb/lib/red_pushed.png");
+    purple_standby = loadImage("/atomicBomb/lib/purple_standby.png");
+    purple_pushed = loadImage("/atomicBomb/lib/purple_pushed.png");
     green = loadImage("/atomicBomb/lib/green.png");
     purple = loadImage("/atomicBomb/lib/purple.png");
     red = loadImage("/atomicBomb/lib/red.png");
@@ -22,6 +27,7 @@ var Y_AXIS = 1;
 var X_AXIS = 2;
 
 function setup() {
+    dice = Math.floor(random(0, 3));
     b1 = color(199, 214, 214);
     b2 = color(210, 218, 214);
     c1 = color(204, 102, 0);
@@ -29,14 +35,42 @@ function setup() {
     status = 0;
     rectMode(CENTER);
     imageMode(CENTER);
-    createCanvas(window.innerWidth, window.innerHeight)
-    socket = io.connect('http://' + ip + '/greenButton')
+    createCanvas(window.innerWidth, window.innerHeight);
+    socket = io.connect('http://' + ip + '/Button')
     socket.on("init", function(init) {
+        socket.emit("color", dice)
+    })
+    socket.on("buttonInit", function(init) {
         flag = init;
     })
-    socket.on("pressed", function() {
-        flag = true;
-    })
+    switch (dice) {
+        case 0:
+            socket.on("greenPressed", function() {
+                flag = true;
+            })
+            socket.on("releaseGreen", function() {
+                flag = false;
+            })
+            break;
+        case 1:
+            socket.on("redPressed", function() {
+                flag = true;
+            })
+            socket.on("releaseRed", function() {
+                flag = false;
+            })
+            break;
+        case 2:
+            socket.on("purplePressed", function() {
+                flag = true;
+            })
+            socket.on("releasePurple", function() {
+                flag = false;
+            })
+            break;
+        default:
+
+    }
     socket.on("presser", function() {
         presser = true;
         flag = true;
@@ -45,10 +79,9 @@ function setup() {
         if (!mouseIsPressed)
             flag = false;
     })
-    socket.on("releasedAll", function() {
 
-        flag = false;
-    })
+
+
 }
 
 function draw() {
@@ -57,14 +90,38 @@ function draw() {
     push()
     translate(width / 2, height / 2)
     if (!flag) {
-        image(standby, 0, 0, window.innerWidth, standby.height / standby.width * window.innerWidth);
+        switch (dice) {
+            case 0:
+                image(green_standby, 0, 0, window.innerWidth, green_standby.height / green_standby.width * window.innerWidth);
+                break;
+            case 1:
+                image(red_standby, 0, 0, window.innerWidth, red_standby.height / red_standby.width * window.innerWidth);
+                break;
+            case 2:
+                image(purple_standby, 0, 0, window.innerWidth, purple_standby.height / purple_standby.width * window.innerWidth);
+                break;
+            default:
+        }
     } else {
-        image(pushed, 0, 0, window.innerWidth, standby.height / standby.width * window.innerWidth);
-        image(green, window.width / 9.2, window.width / 3.33, green.width, green.height);
+        switch (dice) {
+            case 0:
+                image(green_pushed, 0, 0, window.innerWidth, green_pushed.height / green_pushed.width * window.innerWidth);
+                image(green, window.width / 9.2, window.width / 3.33, green.width, green.height);
+                break;
+            case 1:
+                image(red_pushed, 0, 0, window.innerWidth, red_pushed.height / red_pushed.width * window.innerWidth);
+                image(red, 0, window.width / 3.1, green.width, green.height);
+                break;
+            case 2:
+                image(purple_pushed, 0, 0, window.innerWidth, purple_pushed.height / purple_pushed.width * window.innerWidth);
+                image(purple, -window.width / 9.2, window.width / 3.33, green.width, green.height);
+                break;
+            default:
+        }
         // image(red, 0, window.width / 3.1, green.width, green.height);
         // image(purple, -window.width / 9.2, window.width /  3.33, green.width, green.height);
     }
-    image(title, window.innerWidth/10,- window.innerWidth/2.4, window.innerWidth/2, title.height / title.width * window.innerWidth/2);
+    image(title, window.innerWidth / 10, -window.innerWidth / 2.4, window.innerWidth / 2, title.height / title.width * window.innerWidth / 2);
     pop()
     noFill();
     noStroke();
@@ -79,7 +136,12 @@ function mousePressed() {
         mouseY > (height / 2 + 8) - window.innerWidth / 2.5 / 2 &&
         mouseY < (height / 2 + 8) + window.innerWidth / 2.5 / 2 &&
         flag === false) {
-        socket.emit("pressed")
+        if (dice == 0)
+            socket.emit("greenPressed")
+        if (dice == 1)
+            socket.emit("redPressed")
+        if (dice == 2)
+            socket.emit("purplePressed")
     } else {
 
     }
@@ -87,7 +149,12 @@ function mousePressed() {
 
 function mouseReleased() {
     if (presser) {
-        socket.emit("released")
+        if (dice == 0)
+            socket.emit("releaseGreen")
+        if (dice == 1)
+            socket.emit("releaseRed")
+        if (dice == 2)
+            socket.emit("releasePurple")
         presser = false;
     }
     // flag = false;
