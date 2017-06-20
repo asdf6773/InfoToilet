@@ -261,13 +261,13 @@
      })
      socket.on("releaseRed", function() {
          clearTimeout(redTimer)
-         green = false;
+         red = false;
          redIsSet = false;
          io.of("/Button").emit("releaseRed")
      })
      socket.on("releasePurple", function() {
          clearTimeout(purpleTimer)
-         green = false;
+         purple = false;
          purpleIsSet = false;
          io.of("/Button").emit("releasePurple")
      })
