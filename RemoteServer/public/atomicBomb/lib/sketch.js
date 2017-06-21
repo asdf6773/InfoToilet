@@ -161,12 +161,30 @@ function mousePressed() {
         mouseY > (height / 2 + 8) - window.innerWidth / 2.5 / 2 &&
         mouseY < (height / 2 + 8) + window.innerWidth / 2.5 / 2 &&
         flag === false) {
-        if (dice == 0)
+        if (dice == 0) {
             socket.emit("greenPressed")
-        if (dice == 1)
+            setTimeout(function() {
+                if (!mouseIsPressed) {
+                    socket.emit("releaseGreen")
+                }
+            }, 200)
+        }
+        if (dice == 1) {
             socket.emit("redPressed")
-        if (dice == 2)
+            setTimeout(function() {
+                if (!mouseIsPressed) {
+                    socket.emit("releaseRed")
+                }
+            }, 200)
+        }
+        if (dice == 2) {
             socket.emit("purplePressed")
+            setTimeout(function() {
+                if (!mouseIsPressed) {
+                    socket.emit("releasePurple")
+                }
+            }, 200)
+        }
     } else {
 
     }
