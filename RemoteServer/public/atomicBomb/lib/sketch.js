@@ -163,27 +163,27 @@ function mousePressed() {
         flag === false) {
         if (dice == 0) {
             socket.emit("greenPressed")
-            setTimeout(function() {
-                if (!mouseIsPressed) {
-                    socket.emit("releaseGreen")
-                }
-            }, 200)
+            // setTimeout(function() {
+            //     if (!mouseIsPressed) {
+            //         socket.emit("releaseGreen")
+            //     }
+            // }, 200)
         }
         if (dice == 1) {
             socket.emit("redPressed")
-            setTimeout(function() {
-                if (!mouseIsPressed) {
-                    socket.emit("releaseRed")
-                }
-            }, 200)
+            // setTimeout(function() {
+            //     if (!mouseIsPressed) {
+            //         socket.emit("releaseRed")
+            //     }
+            // }, 200)
         }
         if (dice == 2) {
             socket.emit("purplePressed")
-            setTimeout(function() {
-                if (!mouseIsPressed) {
-                    socket.emit("releasePurple")
-                }
-            }, 200)
+            // setTimeout(function() {
+            //     if (!mouseIsPressed) {
+            //         socket.emit("releasePurple")
+            //     }
+            // }, 200)
         }
     } else {
 
