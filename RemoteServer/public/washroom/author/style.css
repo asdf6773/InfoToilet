@@ -10,15 +10,15 @@
     position: relative;
     bottom: 0px;
 }
-#arrow{
+
+#arrow {
     /*position: relative;*/
-    margin:10 auto;
-    width:10%;
-
+    margin: 10 auto;
+    width: 10%;
 }
-#loadMore{
-  margin-bottom: 20px;
 
+#loadMore {
+    margin-bottom: 20px;
 }
 
 #back {
@@ -33,11 +33,21 @@
     /*background: #E0EEE7;*/
     /*color: #527283;*/
 }
-#qr{
-width:50vw;
-  mix-blend-mode: darken;
+
+#qr {
+    width: 50vw;
+    mix-blend-mode: darken;
+    margin-bottom: 30px;
+    margin-top: 10px;
+}
+
+#atomic {
+      margin-top: 10px;
+    width: 80vw;
+    mix-blend-mode: darken;
     margin-bottom: 80px;
 }
+
 .item {
     /*width: 100vw;*/
     /*height:25%;*/
@@ -149,13 +159,18 @@ textarea {
     /*top: 135;*/
 }
 
-#intro {
-    /*top: 180;*/
+#txtQR {
+    letter-spacing: 1px;
+    font-weight: normal;
+    font-size: 12px;
+
 }
-.comment{
-  word-wrap:break-word;
-  margin-bottom: 10px;
+
+.comment {
+    word-wrap: break-word;
+    margin-bottom: 10px;
 }
+
 .word {
     font-weight: lighter;
 }
