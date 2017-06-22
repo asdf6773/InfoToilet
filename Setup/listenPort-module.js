@@ -15,8 +15,11 @@ var ip = preload.ip
 var socket = require('socket.io-client')('http://' + ip + '/serialPort');
 // var ip = preload.ip
 var Port;
+var faucet_status, toilet_status, dryer_status;
 
-
+faucet_status = false;
+toilet_status = false;
+dryer_status = false;
 
 
 var setup = function(portname) {
@@ -75,6 +78,18 @@ function listening(myPort) {
 
     })
     myPort.on('data', function(data) {
+        if (data.charAt(0) == 'H') {
+            dryer_status = true;
+            socket.emit("dryerStatus", dryer_status)
+        } //handDryerCheck
+        if (data.charAt(0) == 'T') {
+            toilet_status = true;
+            socket.emit("toiletStatus", toilet_status)
+        } //toiletCheck
+        if (data.charAt(0) == 'F') {
+            faucet_status = true;
+            socket.emit("faucetStatus", faucet_status)
+        } //faucetCheck
         if (data.charAt(0) == 'h') { //handDryer
             // console.log(data)
             data = data.substr(1);

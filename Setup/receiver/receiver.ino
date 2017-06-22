@@ -17,8 +17,8 @@ void setup() {
   Serial1.begin(9600);
   radio.begin();
   radio.openWritingPipe(address);
-  
-//  radio.openWritingPipe(flushStatus);//waiting
+
+  //  radio.openWritingPipe(flushStatus);//waiting
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MAX);
   radio.startListening();
@@ -51,9 +51,9 @@ void loop() {
       }
     }
     lastHandDryerInt = handDryerInt;
-    
+
     if (data[0] == 'f') {
-//        Serial.println(data);
+      //        Serial.println(data);
       // int val = data.toInt();
       char tap[4];
       for (int i = 0; i < 4; i++) {
@@ -87,10 +87,18 @@ void loop() {
       }
       //       lastTapInt = tapInt;
     }
+    if (data[0] == 'F') {
+      Serial.println(data);
+    }
+    if (data[0] == 'T') {
+      Serial.println(data);
+    }
+    if (data[0] == 'H') {
+      Serial.println(data);
+    }
     lastToiletInt = toiletInt;
     lastTapInt = tapInt;
     //Serial.println(sizeof(data));
     //Serial.println(data);
-
   }
 }

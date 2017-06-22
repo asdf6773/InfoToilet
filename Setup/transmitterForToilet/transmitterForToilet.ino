@@ -17,18 +17,30 @@ bool flushStatus;
 int lastVal1;
 String head = "t";
 RF24 radio(7, 8); // CNS, CE
+int initCount;
+int checkCount; 
 const byte address[6] = "00001";
 //const byte flushStatus[6] = "00002";
+void(* resetFunc)(void) = 0; //declare reset function @ address 0
 void setup() {
+  checkCount = 0;
+  initCount = 0;
   flushStatus = false;
   Serial.begin(9600);
   mySerial.begin (9600);
   execute_CMD(0x3F, 0x00, 0x00);   // Send request for initialization parameters
-  while (mySerial.available() < 10) // Wait until initialization parameters are received (10 bytes)
-    delay(30);
+  while (mySerial.available() < 10) { // Wait until initialization parameters are received (10 bytes)
+    if (initCount < 100) {
+      delay(30);
+      initCount += 1;
+    } else {
+      resetFunc();  //call reset
+    }
+    //    Serial.println("ww");
+  }
   execute_CMD(0x06, 0x00, 0x05);
   radio.begin();
-//    radio.openReadingPipe(0, flushStatus);//waiting
+  //    radio.openReadingPipe(0, flushStatus);//waiting
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_MIN);
   radio.stopListening();
@@ -38,21 +50,21 @@ void setup() {
   execute_CMD(Command, Parameter1, Parameter2);
 }
 void loop() {
-//  if (Serial.available() > 0) {
-//    incomingByte = Serial.read();
-////    if (incomingByte == 'O')
-//      flushStatus = false;
-//
-//  }
-//  Serial.print(Serial.available());
+  //  if (Serial.available() > 0) {
+  //    incomingByte = Serial.read();
+  ////    if (incomingByte == 'O')
+  //      flushStatus = false;
+  //
+  //  }
+  //  Serial.print(Serial.available());
 
-//  Serial.println(flushStatus);
+  //  Serial.println(flushStatus);
   busy = digitalRead(2);
   int val  = map(analogRead(A0), 0, 736, 0, 1023);
   int val1  = map(analogRead(A1), 0, 736, 0, 1023);
-//    Serial.print(val);
-//        Serial.print(" ");
-//             Serial.println(val1);
+  //    Serial.print(val);
+  //        Serial.print(" ");
+  //             Serial.println(val1);
   //  if ( lastVal < 500 && val >= 500) {
   //    byte data = 1;
   //    radio.write(&val, sizeof(val));
@@ -64,7 +76,15 @@ void loop() {
   myString.toCharArray(buf, myString.length() + 1);
 
   radio.write(&buf, 5);
-
+  //check Process
+  char check[5];
+  check[0] = 'T';
+  checkCount += 1;
+  if (checkCount > 100) {
+    radio.write(&check, 5);
+    checkCount = 0;
+  }
+  //---------
   if (((val > 500 && lastVal <= 500) || (val1 > 500 && lastVal1 <= 500))) {
     flushStatus = true;
 
