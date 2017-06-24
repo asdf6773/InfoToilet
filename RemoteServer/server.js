@@ -204,7 +204,13 @@
  var green = false;
  var red = false;
  var purple = false;
-
+ var triggered = false;
+ var g = false;
+ var r = false;
+ var p = false;
+function boom(){
+   io.of("/Button").emit("boom")
+}
  io.of("/Button").on('connection', function(socket) {
      socket.emit("init", {
          green: green,
@@ -216,6 +222,15 @@
              socket.emit("presser")
              io.of("/Button").emit("greenPressed")
              green = true;
+             g = true
+             if (r && p && g) {
+                 boom();
+             }
+             setTimeout(function() {
+                 g = false;
+                 r = false;
+                 p = false;
+             }, 500)
              console.log("getgreenPresser")
              if (!greenIsSet) {
                  greenTimer = setTimeout(function() {
@@ -234,6 +249,15 @@
              socket.emit("presser")
              io.of("/Button").emit("redPressed")
              red = true;
+             r = true
+             if (r && p && g) {
+                 boom();
+             }
+             setTimeout(function() {
+                 g = false;
+                 r = false;
+                 p = false;
+             }, 500)
              console.log("getRedPresser")
              if (!redIsSet) {
                  redTimer = setTimeout(function() {
@@ -252,6 +276,15 @@
              socket.emit("presser")
              io.of("/Button").emit("purplePressed")
              purple = true;
+             p = true
+             if (r && p && g) {
+                 boom();
+             }
+             setTimeout(function() {
+                 g = false;
+                 r = false;
+                 p = false;
+             }, 500)
              console.log("getPurplePresser")
              if (!purpleIsSet) {
                  purpleTimer = setTimeout(function() {
@@ -260,8 +293,8 @@
                  }, 4000)
                  purpleIsSet = true;
              }
-         }else{
-           io.of("/Button").emit("purplePressed")
+         } else {
+             io.of("/Button").emit("purplePressed")
          }
      })
 

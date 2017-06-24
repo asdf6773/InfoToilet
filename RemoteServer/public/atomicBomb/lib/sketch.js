@@ -41,6 +41,10 @@ function setup() {
     imageMode(CENTER);
     createCanvas(window.innerWidth, window.innerHeight);
     socket = io.connect('http://' + ip + '/Button')
+    socket.on("boom", function(init) {
+      alert("boom!!!")
+    })
+
     socket.on("init", function(data) {
         greenLight = data.green;
         redLight = data.red;
