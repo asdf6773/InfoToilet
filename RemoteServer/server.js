@@ -212,44 +212,56 @@
          purple: purple
      })
      socket.on("greenPressed", function() {
-         socket.emit("presser")
-         io.of("/Button").emit("greenPressed")
-         green = true;
-         console.log("getgreenPresser")
-         if (!greenIsSet) {
-             greenTimer = setTimeout(function() {
-                 io.of("/Button").emit("releaseGreen")
-                 green = false;
-             }, 4000)
-             greenIsSet = true;
+         if (!green) {
+             socket.emit("presser")
+             io.of("/Button").emit("greenPressed")
+             green = true;
+             console.log("getgreenPresser")
+             if (!greenIsSet) {
+                 greenTimer = setTimeout(function() {
+                     io.of("/Button").emit("releaseGreen")
+                     green = false;
+                 }, 4000)
+                 greenIsSet = true;
+             }
+         } else {
+             io.of("/Button").emit("greenPressed")
          }
      })
 
      socket.on("redPressed", function() {
-         socket.emit("presser")
-         io.of("/Button").emit("redPressed")
-         red = true;
-         console.log("getRedPresser")
-         if (!redIsSet) {
-             redTimer = setTimeout(function() {
-                 io.of("/Button").emit("releaseRed")
-                 red = false;
-             }, 4000)
-             redIsSet = true;
+         if (!red) {
+             socket.emit("presser")
+             io.of("/Button").emit("redPressed")
+             red = true;
+             console.log("getRedPresser")
+             if (!redIsSet) {
+                 redTimer = setTimeout(function() {
+                     io.of("/Button").emit("releaseRed")
+                     red = false;
+                 }, 4000)
+                 redIsSet = true;
+             }
+         } else {
+             io.of("/Button").emit("redPressed")
          }
      })
 
      socket.on("purplePressed", function() {
-         socket.emit("presser")
-         io.of("/Button").emit("purplePressed")
-         purple = true;
-         console.log("getPurplePresser")
-         if (!purpleIsSet) {
-             purpleTimer = setTimeout(function() {
-                 io.of("/Button").emit("releasePurple")
-                 purple = false;
-             }, 4000)
-             purpleIsSet = true;
+         if (!purple) {
+             socket.emit("presser")
+             io.of("/Button").emit("purplePressed")
+             purple = true;
+             console.log("getPurplePresser")
+             if (!purpleIsSet) {
+                 purpleTimer = setTimeout(function() {
+                     io.of("/Button").emit("releasePurple")
+                     purple = false;
+                 }, 4000)
+                 purpleIsSet = true;
+             }
+         }else{
+           io.of("/Button").emit("purplePressed")
          }
      })
 
