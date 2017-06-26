@@ -112,7 +112,7 @@ function setup() {
     //socket.on('flushPressd', addWater);
     //flush.touchStarted(addWater);
     //  if (isFlushing===false) {
-    if (hour >= 17) {
+    if (hour >= 17 || hour <= 9) {
         // if (minute >= 45) {
         flush.touchStarted(flushPressed); //-----------------------------毕展后开放
         // }
@@ -129,7 +129,7 @@ function setup() {
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
             //  if (isFlushing===false) {
-            if (hour >= 17) {
+            if (hour >= 17 || hour <= 9) {
                 // if (minute >= 45) {
                 flush.elt.innerHTML = "冲水"
                 // }
@@ -153,7 +153,7 @@ function setup() {
             document.getElementById('flush').style.background = "#BDD9E0";
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
-            if (hour >= 17) {
+            if (hour >= 17 || hour <= 9) {
                 // if (minute >= 45) {
                 flush.elt.innerHTML = "冲水"
                 // }
