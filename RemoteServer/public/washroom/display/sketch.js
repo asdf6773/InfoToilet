@@ -32,6 +32,12 @@ var IAstepForEase = 1;
 var isFlushing;
 var imageRandomBuffer;
 var dropSound = [];
+// var water = [];
+var offset;
+var xNoise;
+var d = new Date();
+var yNoise;
+// var en; //noise parameter
 document.oncontextmenu = function() {
     return false;
 }
@@ -40,9 +46,21 @@ var waitForFlush = false;
 function preload() {
     dropSound.push(loadSound('/washroom/lib/drop.wav'))
     dropSound.push(loadSound('/washroom/lib/drop2.mp3'))
+
+
+    // for (var i = 0; i < 16; i++) {
+    //     if (i >= 10)
+    //         water.push(loadImage('/washroom/lib/water/water_anim_00' + i + '_0.png'))
+    //     else
+    //         water.push(loadImage('/washroom/lib/water/water_anim_000' + i + '_0.png'))
+    // }
 }
 
 function setup() {
+    var hour = d.getHours()
+    var minute = d.getMinutes()
+    console.log(hour + ' ' + minute)
+    offset = 0;
     // mySound.setVolume(0.5);
     matt = loadImage("http://" + ip + "/washroom/lib/matt.png")
     waterHeight = 1
@@ -94,7 +112,12 @@ function setup() {
     //socket.on('flushPressd', addWater);
     //flush.touchStarted(addWater);
     //  if (isFlushing===false) {
-    flush.touchStarted(flushPressed);
+    if (hour >= 17) {
+        if (minute >= 45) {
+            flush.touchStarted(flushPressed); //-----------------------------毕展后开放
+        }
+    }
+    socket.on('flushFromConsole', flushPressed)
     //  }
     socket.on('isFlushingSetup', function(status) {
         // console.log("Origial " + status)
@@ -105,7 +128,14 @@ function setup() {
             document.getElementById('flush').style.background = "#BDD9E0";
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
-            flush.elt.innerHTML = "冲水"
+            //  if (isFlushing===false) {
+            if (hour >= 17) {
+                if (minute >= 45) {
+                    flush.elt.innerHTML = "冲水"
+                }
+            } else {
+                flush.elt.innerHTML = "闭馆后开放在线冲水"
+            }
             document.getElementById('flush').style.background = "#E0EEE7";
             document.getElementById('flush').style.color = "#527283";
         }
@@ -123,7 +153,13 @@ function setup() {
             document.getElementById('flush').style.background = "#BDD9E0";
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
-            flush.elt.innerHTML = "冲水"
+            if (hour >= 17) {
+                if (minute >= 45) {
+                    flush.elt.innerHTML = "冲水"
+                }
+            } else {
+                flush.elt.innerHTML = "闭馆后开放在线冲水"
+            }
             document.getElementById('flush').style.background = "#E0EEE7";
             document.getElementById('flush').style.color = "#527283";
         }
@@ -295,7 +331,9 @@ function flushing() {
 angl = 0;
 
 function draw() {
-
+    xNoise = noise(offset);
+    yNoise = noise(offset + 100);
+    offset += 0.007;
     // if (imgPos[0])
     //     console.log(imgAngle)
     for (var i = 0; i < imgPos.length; i++) {}
@@ -340,8 +378,11 @@ function draw() {
             imgPos[i].update(attractForce);
 
         push();
-        translate(window.innerWidth / 2, window.innerWidth / 1.8);
-
+        if (!projector)
+            translate(window.innerWidth / 2, window.innerWidth / 2.5);
+        else {
+            translate(window.innerWidth / 2, window.innerWidth / 1.8);
+        }
 
         if (imageRandomBuffer[i]) {
             if (imgPos[i].pos)
@@ -354,8 +395,12 @@ function draw() {
             rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
         if (imgPos[i].pos)
             scale(imgPos[i].scale);
-        if (imgPos[i].pos)
-            image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
+        if (imgPos[i].pos) {
+            if (projector)
+                image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
+            else
+                image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 200), img[i].height / (constrain(width, 0, 400) / 200));
+        }
         pop();
 
 
@@ -367,22 +412,53 @@ function draw() {
 
     translate(window.innerWidth / 2, window.innerWidth / 1.8);
     if (projector) {
-        translate(0, 50)
+        translate(0, 20)
+        //  push()
+        // //  image(matt,0,0)
+        //  pop()
+        scale(0.7);
+    } else {
+        translate(0, -30)
         //  push()
         // //  image(matt,0,0)
         //  pop()
         scale(0.7);
     }
     rotate(angle)
-    ellipse(80, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 300);
-    ellipse(10, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 300);
+    imageMode(CENTER)
+    translate(0, -20)
+
+    // image(water[Math.floor(waterCount)], 0, 0, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200)
+    ellipse(80, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 250);
+    ellipse(10, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 250);
+    ellipse(80, 140, waterHeight / 5 * window.innerWidth / 220, waterHeight / 5 * window.innerWidth / 220);
+    ellipse(100, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 250);
     rotate(1)
-    ellipse(20, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 300);
+    ellipse(20, 10, waterHeight * window.innerWidth / 300, waterHeight * window.innerWidth / 250);
     rotate(2 + (waterHeight + 10) / 100)
-    ellipse(20, 10, waterHeight / 1.11 * window.innerWidth / 300, waterHeight / 1.11 * window.innerWidth / 300);
-    ellipse(60, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 300);
+    ellipse(20, 10, waterHeight / 1.11 * window.innerWidth / 300, waterHeight / 1.11 * window.innerWidth / 250);
+    ellipse(60, 40, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 250);
+    ellipse(100, 20, waterHeight / 5 * window.innerWidth / 300, waterHeight / 5 * window.innerWidth / 250);
     fill(204, 230, 237, map(waterHeight, 10, 200, 80, 150))
-    ellipse(0, 0, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200);
+    // ellipse(0, 0, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 200, Math.abs(waterHeight - 100) * 2 * riseIndex * window.innerWidth / 160);
+    push()
+
+    scale(Math.abs(waterHeight - 100) * 2 * riseIndex / 100);
+    // translate(0,20)
+    fill(204, 230, 237, map(waterHeight, 10, 200, 50, 100) / 2)
+    if (projector) {
+        ellipse(0 + xNoise * 20, -88 + yNoise * 20, window.innerWidth / (2.1), window.innerWidth / (1.95));
+        ellipse(0 - xNoise * 20, -100 + yNoise * 10, window.innerWidth / (2), window.innerWidth / (1.85));
+        ellipse(10 + yNoise * 20, -90 + xNoise * 20, window.innerWidth / (2), window.innerWidth / (1.85));
+        ellipse(20 + xNoise * 20, -118 + yNoise * 20 + xNoise * 20, window.innerWidth / (2.1), window.innerWidth / (1.95));
+        ellipse(0 + yNoise * 20, -128 + xNoise * 20, window.innerWidth / (2.1), window.innerWidth / (1.95));
+    } else {
+        ellipse(5, -55, window.innerWidth / (1.6), window.innerWidth / (1.5));
+        ellipse(0, -50, window.innerWidth / (1.6), window.innerWidth / (1.5));
+        ellipse(15, -55, window.innerWidth / (1.4), window.innerWidth / (1.3));
+        ellipse(0, -60, window.innerWidth / (1.6), window.innerWidth / (1.5));
+    }
+    pop()
     pop();
 
     attractor.x = width / 2 + 200 * cos(noiseSeed)
@@ -394,8 +470,9 @@ function draw() {
     //     console.log(imgPos[2].scale + " " + imgPos[2].scaleRandom)
     //upper background
     imageMode(CORNER);
-    if (!projector)
+    if (!projector) {
         image(layer, 0, -window.innerWidth / 5, window.innerWidth, window.innerWidth * 2 / 1.2);
+    }
     imageMode(CENTER)
     //---------------------
     fill(222);
@@ -440,9 +517,9 @@ function draw() {
     if (projector) {
         //
         push()
-        rotate()
-        translate(width / 2, height / 2 -150)
-        scale(0.56);
+        // rotate()
+        translate(width / 2, height / 2 - 150)
+        scale(-0.56);
         image(matt, 0, 0)
         pop()
 

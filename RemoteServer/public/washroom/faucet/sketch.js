@@ -17,7 +17,20 @@ var times = 0;
 var num;
 
 function setup() {
-
+    $("#intro").click(function() {
+        if ($("#introDiv").css("display") == "none") {
+            $("#introDiv").css('display', 'block')
+        } else {
+            $("#introDiv").css('display', 'none')
+        }
+    })
+    $("#introImg").click(function() {
+        if ($("#introDiv").css("display") == "none") {
+            $("#introDiv").css('display', 'block')
+        } else {
+            $("#introDiv").css('display', 'none')
+        }
+    })
     num = 0;
     $(".box p div div div").css("width", "40px")
     //BG

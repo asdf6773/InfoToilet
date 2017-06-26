@@ -20,20 +20,21 @@ $(document).ready(function() {
             socket.emit("restart")
 
     })
-    $("#reOpen").click(function() {
-        var c = confirm("确认重开串口？");
-        if (c)
-            socket.emit("reopen")
-
-    })
     $("#reboot").click(function() {
-        var c = confirm("确认重启设备？");
+        var c = confirm("确认重启主机？");
         if (c)
             socket.emit("reboot")
 
     })
+    $("#flush").click(function() {
+        var c = confirm("确认清理马桶");
+        if (c)
+            socket.emit("flushPressed")
+
+    })
+
     $("#bonus").click(function() {
-        var c = confirm("确认发送Bonus？");
+        var c = confirm("确认发送彩蛋？");
         if (c)
             socket.emit("bonus")
 

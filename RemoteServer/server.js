@@ -208,9 +208,10 @@
  var g = false;
  var r = false;
  var p = false;
-function boom(){
-   io.of("/Button").emit("boom")
-}
+
+ function boom() {
+     io.of("/Button").emit("boom")
+ }
  io.of("/Button").on('connection', function(socket) {
      socket.emit("init", {
          green: green,
@@ -460,6 +461,9 @@ function boom(){
          interval,
          id
      });
+     socket.on("flushPressed", function(){
+       io.of('/projector').emit('flushFromConsole')
+     })
      socket.on("bonus", function() {
          io.of('/mirror').emit('bonus');
          console.log("bonus by console")
@@ -519,6 +523,25 @@ function boom(){
      }, 5000)
  }
  var numOfFlushOver = 0;
+
+ function flushAway() {
+     // if (consoleData.currentImage > 20 || consoleData.currentImage == 0)
+     // reverse();
+     consoleData.totalFlush += 1;
+     consoleData.isFlushing = true;
+     ServerLimit = 200000;
+     // ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
+     //console.log(ServerLimit)
+     io.of('/projector').emit('limitFromServer', ServerLimit);
+     io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+     io.of('/projector').emit('flushPressedFromServer');
+     setTimeout(function() {
+         limit = 200000;
+         consoleData.isFlushing = false;
+         io.of('/projector').emit('isFlushing', consoleData.isFlushing);
+         io.of('/serialPort').emit('flushIsOver');
+     }, 6500) //新进来的Socket没有触发回调函数
+ }
  io.of("/projector").on('connection', function(socket) {
      socket.emit('limitFromServer', ServerLimit);
      socket.emit('isFlushingSetup', consoleData.isFlushing);
@@ -559,24 +582,7 @@ function boom(){
      socket.on('requestNewLimit', function() {
          socket.emit('limitFromServer', ServerLimit)
      });
-     socket.on('flushPressed', function() {
-         // if (consoleData.currentImage > 20 || consoleData.currentImage == 0)
-         // reverse();
-         consoleData.totalFlush += 1;
-         consoleData.isFlushing = true;
-         ServerLimit = 200000;
-         // ServerLimit = Math.round(imageBuffer.length / 3) >= 3 ? Math.round(imageBuffer.length / 3) : 3;
-         //console.log(ServerLimit)
-         io.of('/projector').emit('limitFromServer', ServerLimit);
-         io.of('/projector').emit('isFlushing', consoleData.isFlushing);
-         io.of('/projector').emit('flushPressedFromServer');
-         setTimeout(function() {
-             limit = 200000;
-             consoleData.isFlushing = false;
-             io.of('/projector').emit('isFlushing', consoleData.isFlushing);
-             io.of('/serialPort').emit('flushIsOver');
-         }, 6500) //新进来的Socket没有触发回调函数
-     });
+     socket.on('flushPressed', flushAway);
      socket.on('disconnect', function() {
          for (var i = 0; i < projectors.length; i++) {
              if (projectors[i] === socket.id) {

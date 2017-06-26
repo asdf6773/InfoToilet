@@ -84,13 +84,13 @@ input {
 }
 
 #entrance {
-    background: url(../lib/magnifying.png);
+    background: url(../lib/live.png);
 
     position: absolute;
-    width: 40px;
+    width: 97px;
     height: 40px;
     top: 10px;
-    right: 10px;
+    right: 70px;
     border-radius: 40px;
     /*background: #E0EEE7;*/
     /*color: #527283;*/
