@@ -159,7 +159,7 @@ function setup() {
                 // }
             // } else {
                 // flush.elt.innerHTML = "闭馆后开放在线冲水"
-            }
+            // }
             document.getElementById('flush').style.background = "#E0EEE7";
             document.getElementById('flush').style.color = "#527283";
         }
