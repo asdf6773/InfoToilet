@@ -112,11 +112,11 @@ function setup() {
     //socket.on('flushPressd', addWater);
     //flush.touchStarted(addWater);
     //  if (isFlushing===false) {
-    if (hour >= 17 || hour <= 9) {
+    // if (hour >= 17 || hour <= 9) {
         // if (minute >= 45) {
         flush.touchStarted(flushPressed); //-----------------------------毕展后开放
         // }
-    }
+    // }
     socket.on('flushFromConsole', flushPressed)
     //  }
     socket.on('isFlushingSetup', function(status) {
@@ -129,12 +129,12 @@ function setup() {
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
             //  if (isFlushing===false) {
-            if (hour >= 17 || hour <= 9) {
+            // if (hour >= 17 || hour <= 9) {
                 // if (minute >= 45) {
                 flush.elt.innerHTML = "冲水"
                 // }
-            } else {
-                flush.elt.innerHTML = "闭馆后开放在线冲水"
+            // } else {
+                // flush.elt.innerHTML = "闭馆后开放在线冲水"
             }
             document.getElementById('flush').style.background = "#E0EEE7";
             document.getElementById('flush').style.color = "#527283";
@@ -153,12 +153,12 @@ function setup() {
             document.getElementById('flush').style.background = "#BDD9E0";
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
-            if (hour >= 17 || hour <= 9) {
+            // if (hour >= 17 || hour <= 9) {
                 // if (minute >= 45) {
                 flush.elt.innerHTML = "冲水"
                 // }
-            } else {
-                flush.elt.innerHTML = "闭馆后开放在线冲水"
+            // } else {
+                // flush.elt.innerHTML = "闭馆后开放在线冲水"
             }
             document.getElementById('flush').style.background = "#E0EEE7";
             document.getElementById('flush').style.color = "#527283";
