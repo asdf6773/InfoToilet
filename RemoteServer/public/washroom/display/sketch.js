@@ -128,7 +128,7 @@ function setup() {
             document.getElementById('flush').style.background = "#BDD9E0";
             document.getElementById('flush').style.color = "#AAAAAA";
         } else {
-            //  if (isFlushing===false) {
+             if (isFlushing===false) {
             // if (hour >= 17 || hour <= 9) {
                 // if (minute >= 45) {
                 flush.elt.innerHTML = "冲水"
