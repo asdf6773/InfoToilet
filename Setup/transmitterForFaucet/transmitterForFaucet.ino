@@ -72,11 +72,11 @@ void loop() {
     count -= 1;
   }
   //check Process
-  char check[5];
+  char check[1];
   check[0] = 'F';
   checkCount += 1;
   if (checkCount > 100) {
-    radio.write(&check, 5);
+    radio.write(&check, 1);
     checkCount = 0;
   }
   //---------

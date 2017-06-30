@@ -33,7 +33,7 @@ var setup = function(portname) {
     listening(Port);
 
 }
-
+// socket.emit("initStatus");
 var isOpen = function() {
 
     return Port.isOpen()

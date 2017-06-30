@@ -409,6 +409,9 @@
  })
  io.of("/serialPort").on('connection', function(socket) {
      //handDryer
+     consoleData.status_faucet = 0;
+     consoleData.status_toilet = 0;
+     consoleData.status_dryer = 0;
      socket.on("switchOn", function(data) {
          io.of('/handDryer').emit('on');
          console.log("on");
