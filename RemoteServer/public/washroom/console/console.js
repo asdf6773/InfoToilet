@@ -10,6 +10,9 @@ $(document).ready(function() {
         maxImage = 0,
         maxOnlineUser = 0,
         maxOnlineProjector = 0;
+    toilet = 0,
+        dryer = 0,
+        faucet = 0;
     var socket = io.connect('http://' + ip + '/console');
 
 
@@ -42,6 +45,7 @@ $(document).ready(function() {
     var current = document.getElementById("current");
     var total = document.getElementById("total");
     var max = document.getElementById("max");
+    var status = document.getElementById("status");
     current.getElementsByTagName("li")[0].innerHTML = "当前在线人数：" + onlineUser;
     current.getElementsByTagName("li")[1].innerHTML = "当前观察剩余：" + onlineProjector;
     current.getElementsByTagName("li")[2].innerHTML = "当前图片剩余：" + totalImage;
@@ -56,6 +60,10 @@ $(document).ready(function() {
     total.getElementsByTagName("li")[2].innerHTML = "累计图片丢入：" + totalImage;
     total.getElementsByTagName("li")[3].innerHTML = "累计冲水次数：" + totalFlush;
 
+    status.getElementsByTagName("li")[0].innerHTML = "马桶状态：" + toilet;
+    status.getElementsByTagName("li")[1].innerHTML = "水龙头状态：" + faucet;
+    status.getElementsByTagName("li")[2].innerHTML = "烘手机状态：" + dryer;
+
     function getConsole(data) {
 
 
@@ -64,19 +72,19 @@ $(document).ready(function() {
         currentImage = data.currentImage;
         isFlushing = data.isFlushing;
 
-
-
-
-
         maxOnlineUser = data.maxOnlineUser;
         maxOnlineProjector = data.maxOnlineProjector;
         maxImage = data.maxImage;
-
 
         totalUser = data.totalUser;
         totalProjector = data.totalProjector;
         totalImage = data.totalImage;
         totalFlush = data.totalFlush;
+
+
+        toilet = data.status_toilet;
+        dryer = data.status_dryer;
+        faucet = data.status_faucet;
 
         current.getElementsByTagName("li")[0].innerHTML = "当前在线人数：" + onlineUser;
         current.getElementsByTagName("li")[1].innerHTML = "当前观察剩余：" + onlineProjector;
@@ -93,7 +101,9 @@ $(document).ready(function() {
         total.getElementsByTagName("li")[2].innerHTML = "累计图片丢入：" + totalImage;
         total.getElementsByTagName("li")[3].innerHTML = "累计冲水次数：" + totalFlush;
         //    console.log(document.getElementById("current").getChildElements(0))
-
+        status.getElementsByTagName("li")[0].innerHTML = "马桶状态：" + toilet;
+        status.getElementsByTagName("li")[1].innerHTML = "水龙头状态：" + faucet;
+        status.getElementsByTagName("li")[2].innerHTML = "烘手机状态：" + dryer;
 
     }
 

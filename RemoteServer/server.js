@@ -30,6 +30,15 @@
  consoleData.faucetOnline = 0;
  consoleData.mirrorOnline = 0;
  consoleData.dryerOnline = 0;
+ consoleData.status_faucet = 0;
+ consoleData.status_toilet = 0;
+ consoleData.status_dryer = 0;
+
+ // setInterval(function() {
+ //     consoleData.status_faucet = false;
+ //     consoleData.status_toilet = false;
+ //     consoleData.status_dryer = false;
+ // }, 10000)
  console.log(consoleData)
  setInterval(function() {
      fs.writeFile('./public/washroom/lib/record.json', JSON.stringify(consoleData), function(err) {});
@@ -412,6 +421,16 @@
      socket.on("faucetOn", function() {
          io.of("/faucet").emit('weiboData', weiboData);
      })
+     socket.on("dryerStatus", function(status) {
+
+         consoleData.status_dryer += 1;
+     })
+     socket.on("toiletStatus", function(status) {
+         consoleData.status_toilet += 1
+     })
+     socket.on("faucetStatus", function(status) {
+         consoleData.status_faucet += 1;
+     })
 
      socket.on("flushPressedFrombutton", function() {
          // if (!consoleData.isFlushing) {
@@ -461,8 +480,8 @@
          interval,
          id
      });
-     socket.on("flushPressed", function(){
-       io.of('/projector').emit('flushFromConsole')
+     socket.on("flushPressed", function() {
+         io.of('/projector').emit('flushFromConsole')
      })
      socket.on("bonus", function() {
          io.of('/mirror').emit('bonus');
