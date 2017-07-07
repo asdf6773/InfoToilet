@@ -13,10 +13,25 @@ var distance = 140;
 var rotateOfCam;
 var rotateCamIndex;
 var distOfRotate;
+
 function setup() {
+    $("#intro").click(function() {
+        if ($("#introDiv").css("display") == "none") {
+            $("#introDiv").css('display', 'block')
+        } else {
+            $("#introDiv").css('display', 'none')
+        }
+    })
+    $("#introImg").click(function() {
+        if ($("#introDiv").css("display") == "none") {
+            $("#introDiv").css('display', 'block')
+        } else {
+            $("#introDiv").css('display', 'none')
+        }
+    })
     rotateOfCam = 0;
-    distOfRotate=0;
-    rotateCamIndex=0;
+    distOfRotate = 0;
+    rotateCamIndex = 0;
     createCanvas(window.innerWidth, window.innerHeight, WEBGL);
     // rr = createDiv('this is some text');
     // aa = createDiv('this is some text');
@@ -97,8 +112,8 @@ function draw() {
     background(200);
     // rotateX(PI );
     rotateX(PI / 7);
-    distOfRotate = rotateOfCam-rotateCamIndex;
-    rotateCamIndex+=distOfRotate*0.05
+    distOfRotate = rotateOfCam - rotateCamIndex;
+    rotateCamIndex += distOfRotate * 0.05
 
     // rotateY(d[falled].camAngle);
     rotateY(rotateCamIndex);
@@ -154,7 +169,6 @@ function domino(x, y, z, id) {
             (-this.z * distance - camPos.z) * (-this.z * distance - camPos.z)
         );
         push()
-
         translate(this.x, this.y - 100, -this.z * distance)
         if (this.falling && this.angle < 70) {
             this.angle += increment;
@@ -167,7 +181,6 @@ function domino(x, y, z, id) {
         }
         rotateY(Math.atan(-Math.cos(id * 0.2)) / 2);
         rotateX(-0.02 * this.angle);
-        // rotateY((100*Math.cos(id*0.5)) )
         translate(300 * Math.sin(id * 0.2), -100, 0)
         box(100, 200, 10);
         pop()
