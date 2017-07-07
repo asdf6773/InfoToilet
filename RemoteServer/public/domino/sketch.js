@@ -10,11 +10,16 @@ var rx, ry, rz;
 var myDiv;
 var ax, ay, az;
 var distance = 140;
-
+var rotateOfCam;
+var rotateCamIndex;
+var distOfRotate;
 function setup() {
+    rotateOfCam = 0;
+    distOfRotate=0;
+    rotateCamIndex=0;
     createCanvas(window.innerWidth, window.innerHeight, WEBGL);
     // rr = createDiv('this is some text');
-    aa = createDiv('this is some text');
+    // aa = createDiv('this is some text');
     flag = false;
     des = createVector(0, 0, 0)
     camPos = createVector(0, -200, -300)
@@ -66,9 +71,9 @@ window.ondevicemotion = function(event) {
 }
 
 function draw() {
+    //Control----------------------------------------------------
     // pointLight(200, 200, 200, 100,400,-100);
     ambientLight(198);
-
     // if (mouseIsPressed === true) {
     //     flag = true
     //     d[0].falling = true;
@@ -80,18 +85,23 @@ function draw() {
     } else if (!flag) {
         increment = 5
     }
-
     if (ay > -4 && ay < 1) {
         flag = true
         d[0].falling = true;
     } else {
         flag = false;
     }
-    // rr.html(Math.floor(rx) + " " + Math.floor(ry) + " " + Math.floor(rz));
-    aa.html(Math.floor(ax) + " " + Math.floor(ay) + " " + Math.floor(az));
+    rotateOfCam = -Math.atan(-Math.cos(falled * 0.2)) / 3;
+    //------------------------------------------------
+    // aa.html(Math.floor(ax) + " " + Math.floor(ay) + " " + Math.floor(az));
     background(200);
     // rotateX(PI );
     rotateX(PI / 7);
+    distOfRotate = rotateOfCam-rotateCamIndex;
+    rotateCamIndex+=distOfRotate*0.05
+
+    // rotateY(d[falled].camAngle);
+    rotateY(rotateCamIndex);
     camera(camPos.x, camPos.y - 150, camPos.z);
     for (var i = 0; i < d.length; i++) {
 
@@ -108,7 +118,7 @@ function draw() {
         num += 1;
     }
     des.z = -falled * distance
-    des.x = 300*sin(falled*0.2);
+    des.x = 300 * sin(falled * 0.2);
     push()
     translate(0, 0, des.z);
     // sphere(100);
@@ -123,6 +133,7 @@ function draw() {
 function domino(x, y, z, id) {
 
     this.id = id;
+    this.camAngle = -Math.atan(-Math.cos(falled * 0.2)) / 3;
     this.angle = 0;
     this.falling = false;
     this.x = x;
@@ -135,7 +146,8 @@ function domino(x, y, z, id) {
         (-this.z * distance - camPos.z) * (-this.z * distance - camPos.z)
     );
     this.update = function() {
-        ambientMaterial(this.distToCam / 4-50);
+        this.camAngle = -Math.atan(-Math.cos(this.id * 0.2)) / 3;
+        ambientMaterial(this.distToCam / 6 - 50);
         this.distToCam = Math.sqrt(
             (this.x - camPos.x) * (this.x - camPos.x) +
             (this.y - 100 - camPos.y + 150) * (this.y - 100 - camPos.y + 150) +
@@ -153,7 +165,7 @@ function domino(x, y, z, id) {
             }, 500)
             this.isDeleting = true;
         }
-        rotateY(Math.atan(-Math.cos(id * 0.2)));
+        rotateY(Math.atan(-Math.cos(id * 0.2)) / 2);
         rotateX(-0.02 * this.angle);
         // rotateY((100*Math.cos(id*0.5)) )
         translate(300 * Math.sin(id * 0.2), -100, 0)
