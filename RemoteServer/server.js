@@ -93,7 +93,7 @@
  //router
 
  app.get("/", function(req, res) {
-     res.sendFile(__dirname + "/public/washroom/home/index.html");
+     res.sendFile(__dirname + "/public/HomePage/index.html");
  });
  app.get("/a", function(req, res) {
      res.redirect('/washroom/');

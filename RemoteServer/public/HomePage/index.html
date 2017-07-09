@@ -1,109 +1,46 @@
-<!DOCTYPE html>
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-		 <link rel="stylesheet" type="text/css" href="css.css">
-	<meta charset=utf-8>
-	<title>Connection v 1.0.8</title>
-	<style>
-		body {
-			margin: 0;
-		}
-
-		canvas {
-			width: 100%;
-			height: 100%
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>Domino</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://cdn.bootcss.com/p5.js/0.5.9/p5.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/HomePage/style.css">
+    <!-- <script src="https://cdn.bootcss.com/p5.js/0.5.9/addons/p5.sound.min.js"></script> -->
+    <script src="https://cdn.bootcss.com/p5.js/0.5.8/addons/p5.dom.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/HomePage/grid.js"></script>
+    <script language="javascript" type="text/javascript" src="/HomePage/home.js"></script>
+    <!-- <link href="/atomicBomb/lib//favicon.ico" rel="shortcut icon"> -->
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
 </head>
 
-<body id = "threejs"  touchend ="touch(event)" onclick="show_coords(event)" onmousemove ="show_coords(event)" style='overflow:hidden' >
-    <a id="bath" href="http://artisticode.net/Washroom">Washroom Project</a>
-<!-- <canvas id="canvas"></canvas> -->
-	<script type="x-shader/x-vertex" id="vertexshader">
-    #ifdef GL_ES
-		precision highp float;
-		#endif
-
-		uniform vec2 mouse;
-		varying vec3 vNormal;
-		varying vec3 newPosition;
-		void main() {
-			vNormal = normal;
-			newPosition = position;
-			gl_PointSize = 100.0*newPosition.z*0.00025;
-
-		  gl_Position = projectionMatrix *
-		                modelViewMatrix *
-		                vec4(newPosition,1.0);
-		}
-	</script>
-
-	<script type="x-shader/x-fragment" id="fragmentshader">
-
-	  #ifdef GL_ES
-		precision highp float;
-		#endif
-		varying vec3 newPosition;
-		varying vec3 vNormal;
-    float rand(vec2 co){
-        return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-    }
-		void main() {
-			vec4 color =  vec4(0.5,1.0,0.8,0.1);
-
-			float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
-			if (dist < 0.5) {
-
-				// gl_FragColor = color;
-        gl_FragColor.rgba = color.rgba;
-
-  gl_FragColor.r = rand(vec2(0.0,1.0));
-
-			}
-				 else {
-					discard;
-				}
-		 }
-	</script>
-
-	<script type="x-shader/x-fragment" id="fragmentshaderforline">
-
-		#ifdef GL_ES
-		precision highp float;
-		#endif
-		varying vec3 vNormal;
-		vec4 color;
-
-
-				void main() {
-
-						gl_FragColor = vec4(
-		  				1.0,1.0,1.0,0.2)	;
-
-		     }
-
-
-
-
-	</script>
-    <script src="js/three.min.js"></script>
-    <!-- <script src="bundle.js"></script> -->
-
-    <script>
-
-    </script>
-
-
-	<script>
-		// Our Javascript will go here.
-	</script>
-
-  <div id="info">Artisticode</div>
-    <div id="dev">Developing</div>
-
+<body ontouchmove="event.preventDefault()">
+      <div id="name">Domino</div>
+    <!-- <a id="intro"></a> -->
+    <!-- <div id ="logo"><image src = "./lib/logo_white.png"/></div> -->
+    <div id="introDiv">
+        <div class="content">
+            <p class="title" id="domino"> Domino</p>
+        </div>
+        <div class="content" id="interact">
+            <p class="title">互动方式</p>
+            <p> 倾斜、推倒手机</p>
+        </div>
+        <div class="content" id="creator">
+            <p class="title"> 作者</p>
+            <p>@张阳不张扬233</p>
+        </div>
+        <!-- <image id="introImg" src="/washroom/lib/introFau.jpg" /> -->
+    </div>
+    <div id="footer">2017 Artisticode All Right Reserved.</div>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <!-- <script language="javascript" type="text/javascript" src="/socket.io/socket.io.js"></script> -->
+    <script language="javascript" type="text/javascript" src="/HomePage/index.js"></script>
 </body>
-
 
 </html>
