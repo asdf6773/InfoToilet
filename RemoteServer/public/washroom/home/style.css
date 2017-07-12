@@ -16,8 +16,13 @@ a {
     /*height:25%;*/
     /*width:100%;*/
 }
-
-
+html {
+    background: -webkit-linear-gradient(#D6E3E9, #DEDEDE);
+    background: -o-linear-gradient(#D6E3E9, #DEDEDE);
+    background: -moz-linear-gradient(#D6E3E9, #DEDEDE);
+    background: linear-gradient(#D6E3E9, #DEDEDE);
+    background-attachment: fixed;
+}
 
 html, body {
     overflow: hidden;
@@ -30,8 +35,8 @@ html, body {
     position: relative;
     font-weight: bold;
     text-align: center;
-    top: 80px;
-    left:67px;
+    top: 20vw;
+    /*left:67px;*/
     font-size: 20px;
     word-spacing: 8px;
     letter-spacing: 7px;
@@ -44,8 +49,9 @@ html, body {
     font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
     line-height: 0;
     position: relative;
-    left: 60vw;
-    top: 36vw;
+        text-align: center;
+    /*left: 60vw;*/
+    top: 28vw;
     font-size: 15px;
     word-spacing: 5px;
     letter-spacing: 5px;
