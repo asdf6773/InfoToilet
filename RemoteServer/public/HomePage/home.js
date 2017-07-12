@@ -15,7 +15,7 @@ var qr;
 function homePreload() {
     qr = createImg('./lib/qr.png', "qr");
 
-    if (width < height) {
+    if (width <= height) {
         mobile = true;
     } else {
         mobile = false;
