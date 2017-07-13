@@ -1,9 +1,11 @@
 #catalog1 {
     /*background-image: url(../lib/catalog/catalog-1.png);*/
 }
-.item{
-  margin-bottom: 1px;
+
+.item {
+    margin-bottom: 1px;
 }
+
 a {
     width: 100px;
     height: 100%;
@@ -11,11 +13,16 @@ a {
     top: 0px;
 }
 
+.support {
+    opacity: 0.7;
+}
+
 .item {
     /*width: 100vw;*/
     /*height:25%;*/
     /*width:100%;*/
 }
+
 html {
     background: -webkit-linear-gradient(#D6E3E9, #DEDEDE);
     background: -o-linear-gradient(#D6E3E9, #DEDEDE);
@@ -49,15 +56,25 @@ html, body {
     font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
     line-height: 0;
     position: relative;
-        text-align: center;
+    text-align: center;
     /*left: 60vw;*/
-    top: 28vw;
+    /*top: 28vw;*/
     font-size: 15px;
     word-spacing: 5px;
     letter-spacing: 5px;
     color: 527283;
     z-index: 101;
     /*font-size: :30px;*/
+}
+
+.powerby {
+    font-family: "Arial", "Microsoft YaHei", "黑体", "宋体", sans-serif;
+    /*bottom:10px;*/
+    color: 527283;
+    z-index: 101;
+    font-size: 12px;
+    word-spacing: 0px;
+    letter-spacing: 0px;
 }
 
 .img {

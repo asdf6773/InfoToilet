@@ -171,16 +171,16 @@ function homeSetup() {
     others.push(new other("about", './lib/about.png'))
     others.push(new other("about", './lib/blog.png'))
     works[0].img.mouseClicked(function() {
-        window.location = "http://artisticode.net/washroom"
+        window.location = "./washroom"
     })
     works[1].img.mouseClicked(function() {
-        window.location = "http://artisticode.net/atomicBomb"
+        window.location = "./atomicBomb"
     })
     works[2].img.mouseClicked(function() {
-        window.location = "http://artisticode.net/domino"
+        window.location = "./domino"
     })
     others[0].img.mouseClicked(function() {
-        window.location = "http://artisticode.net/me"
+        window.location = "./me"
     })
     others[1].img.mouseClicked(function() {
         alert("敬请期待")
