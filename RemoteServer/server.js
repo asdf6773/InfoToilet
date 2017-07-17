@@ -89,11 +89,17 @@
  router.get("/me", function(req, res) {
      res.sendFile(__dirname + "/public/washroom/author/index.html");
  });
+ router.get("/intro", function(req, res) {
+     res.sendFile(__dirname + "/public/washroom/intro/index.html");
+ });
 
  //router
 
  app.get("/", function(req, res) {
      res.sendFile(__dirname + "/public/HomePage/index.html");
+ });
+ app.get("/me", function(req, res) {
+     res.sendFile(__dirname + "/public/me/index.html");
  });
  app.get("/a", function(req, res) {
      res.redirect('/washroom/');

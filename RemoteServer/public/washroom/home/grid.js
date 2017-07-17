@@ -27,3 +27,9 @@ function Grid(row, col, spacing) { //row,col,spacing
       bodyHeight:col*size+(col+1)*spacing
     };
 }
+function colorRGB2Hex(r,g,b) {
+
+
+    var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+    return hex;
+ }

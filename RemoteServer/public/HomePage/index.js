@@ -13,7 +13,7 @@ var distance = 140;
 var rotateOfCam;
 var rotateCamIndex;
 var distOfRotate;
-
+var mr, mg, mb;
 function preload() {
 
 
@@ -86,7 +86,7 @@ window.ondevicemotion = function(event) {
 function draw() {
     //Control----------------------------------------------------
     // pointLight(200, 200, 200, 100,400,-100);
-    ambientLight(200);
+    ambientLight(255);
     // if (mouseIsPressed === true) {
     //     flag = true
     //     d[0].falling = true;
@@ -107,7 +107,7 @@ function draw() {
     rotateOfCam = -Math.atan(-Math.cos(falled * 0.2)) / 3;
     //------------------------------------------------
     // aa.html(Math.floor(ax) + " " + Math.floor(ay) + " " + Math.floor(az));
-    background(200);
+        background(this.distToCam * 0.2 - 10, 150 * abs(Math.sin(falled * 0.03)) + 20, 255 * abs(Math.cos(falled * 0.03)) + 20);
     // rotateX(PI );
     rotateX(PI / 7);
     distOfRotate = rotateOfCam - rotateCamIndex;
@@ -141,8 +141,12 @@ function draw() {
         camPos.add(temp.mult(0.09));
     // print(d[0].distToCam)
     // print(falled + ' ' + d[d.length - 1].id + "flag " + flag)
-    home();
 
+    mr = Math.floor(255 - (d[0].distToCam / 10 ))
+    mg =Math.floor( 150 * abs(Math.sin(falled * 0.03)) +40)
+    mb = Math.floor(255 * abs(Math.cos(falled * 0.03)) + 40)
+    // document.getElementById("intro").style.backgroundColor ="rgb("+mr+","+mg+","+mb+")"
+    home();
 }
 
 function domino(x, y, z, id) {
@@ -162,7 +166,7 @@ function domino(x, y, z, id) {
     );
     this.update = function() {
         this.camAngle = -Math.atan(-Math.cos(this.id * 0.2)) / 3;
-        ambientMaterial(this.distToCam / 6 - 50);
+          ambientMaterial(255 - (this.distToCam / 10 - 10), 150 * abs(Math.sin(falled * 0.03)) + 50, 255 * abs(Math.cos(falled * 0.03)) + 50);
         this.distToCam = Math.sqrt(
             (this.x - camPos.x) * (this.x - camPos.x) +
             (this.y - 100 - camPos.y + 150) * (this.y - 100 - camPos.y + 150) +

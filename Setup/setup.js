@@ -26,10 +26,10 @@ if (ifaceState) {
 }
 // console.log(ifaceState.ssid === undefined)
 
-if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) {
+if (ifaceState.ssid != "TP-LINK_305A" || ifaceState.ssid == undefined) {
     var _ap = {
-        ssid: "Tsinghua",
-        password: ""
+        ssid: "TP-LINK_305A",
+        password: "23333333"
     };
     var results = WiFiControl.connectToAP(_ap, function(err, response) {
         if (err) console.log(err);
@@ -60,10 +60,10 @@ function checkInternet(cb) {
 setInterval(function() {
     console.log("isSetup？：" + isSetup)
     ifaceState = WiFiControl.getIfaceState();
-    if (ifaceState.ssid != "Tsinghua" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
+    if (ifaceState.ssid != "TP-LINK_305A" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
         isSetup = false;
         var _ap = {
-            ssid: "Tsinghua",
+            ssid: "TP-LINK_305A",
             password: ""
         }; //连上后自动登陆
         var results = WiFiControl.connectToAP(_ap, function(err, response) {
@@ -109,10 +109,10 @@ socket2.on("reboot", function() {
 // taskkill / IM chrome.exe
 function login() {
     setTimeout(function() {
-        tunet.login(options.name, options.pwd, function() {
+        // tunet.login(options.name, options.pwd, function() {
             setup();
             isSetup = true;
-        });
+        // });
     }, 5000);
 }
 
