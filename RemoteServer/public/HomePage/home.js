@@ -40,6 +40,12 @@ function homePreload() {
     select("#footer").style("bottom", +1.5 + "%")
     select("#footer").style("left", spacing + "px")
     grid = new Grid(row, col, spacing);
+    myp5 = new p5(s, 'logo')
+    select("#logo").style("top", grid[0][0].x + "px")
+    select("#logo").style("left", grid[0][0].x + "px")
+    select("#logo").mouseClicked(unfold);
+    // select("#defaultCanvas1").style("width",100+"px")
+    //     select("#defaultCanvas1").style("height",100+"px")
     // grid = new Grid(row, col, window.innerWidth / 20);
     //   grid = new Grid(6, 4, window.innerWidth / 50);
     console.log(grid)
@@ -48,7 +54,7 @@ function homePreload() {
     logo = {
         maxSize: 400,
         minSize: 200,
-        img: createImg('./lib/logo_white.png', "logo"),
+        // img: createImg('./lib/logo_white.png', "logo"),
         diff: 0,
         pos: createVector(grid[0][0].x, grid[0][0].y),
         size: 200,
@@ -67,10 +73,10 @@ function homePreload() {
             this.target.size = grid[0][0].size;
             this.maxSize = grid[0][0].size;
             this.minSize = grid[0][0].size;
-            this.img.position(logo.pos.x, logo.pos.y);
-            this.img.mouseClicked(unfold);
-            this.img.id("logo");
-            this.img.style("z-index", 100)
+            // this.img.position(logo.pos.x, logo.pos.y);
+            // this.img.mouseClicked(unfold);
+            // this.img.id("logo");
+            // this.img.style("z-index", 100)
         }
     }
     other = function(name, src) {
@@ -133,14 +139,14 @@ function homePreload() {
                     return width / 4
             },
             init: function() {
-                this.size = grid[0][this.id%row].size;
-                this.maxSize = grid[0][this.id%row].size;
-                this.minSize = grid[0][this.id%row].size;
+                this.size = grid[0][this.id % row].size;
+                this.maxSize = grid[0][this.id % row].size;
+                this.minSize = grid[0][this.id % row].size;
                 this.img.style("z-index", -this.id + 10)
                 this.img.position(this.pos.x, this.pos.y)
-                this.target.size = grid[0][this.id%row].size
-                this.target.pos.x = logo.pos.x + width / ratioWorkSpacing * (this.id%row + 1);
-                this.target.pos.y = logo.pos.y + width / ratioWorkSpacing * (this.id%row + 1);
+                this.target.size = grid[0][this.id % row].size
+                this.target.pos.x = logo.pos.x + width / ratioWorkSpacing * (this.id % row + 1);
+                this.target.pos.y = logo.pos.y + width / ratioWorkSpacing * (this.id % row + 1);
                 this.img.size(this.size, this.size);
             }
         };
@@ -168,7 +174,7 @@ function homeSetup() {
     works.push(new work("atomicBomb", './lib/atomicBomb.jpg'))
     works.push(new work("domino", './lib/domino.jpg'))
     works.push(new work("domino", './lib/jelly.jpg'))
-      works.push(new work("washroom", './lib/washroom.jpg'))
+    works.push(new work("washroom", './lib/washroom.jpg'))
 
 
     others.push(new other("about", './lib/about.png'))
@@ -202,9 +208,14 @@ function homeSetup() {
 }
 //---------------------------loop---------------------------------
 function home() {
-    logo.img.size(logo.size, logo.size);
+    // select("#defaultCanvas1").style("height",mouseX+"px")
+    // logo.img.size(logo.size, logo.size);
+
+
     logo.diff = logo.target.size - logo.size;
     logo.size += logo.diff * 0.3;
+        select("#defaultCanvas1").style("height",  logo.size+"px")
+                select("#defaultCanvas1").style("width",  logo.size+"px")
     for (var i = 0; i < works.length; i++) {
         workAnim(works[i])
     }
@@ -224,16 +235,19 @@ function workAnim(object) {
     object.img.size(object.size, object.size)
 }
 
+function windowResized() {
+    resizeCanvas(windowWidth, windowHeight);
+}
 
 function unfold() {
     if (!unfolded) {
         logo.target.size = grid[0][0].doubleSize;
         var rand = floor(random(3));
         for (var i = 0; i < works.length; i++) {
-            works[i].target.size = grid[0][i%row].size;
+            works[i].target.size = grid[0][i % row].size;
             if (mobile) {
-                works[i].target.pos.x = grid[0][i%row].x; //step*index+start
-                works[i].target.pos.y = grid[i % 2 == 0 ? 3 : 2][i%row].y;
+                works[i].target.pos.x = grid[0][i % row].x; //step*index+start
+                works[i].target.pos.y = grid[i % 2 == 0 ? 3 : 2][i % row].y;
             } else {
                 works[i].target.pos.x = grid[0][i + 2].x; //step*index+start
                 works[i].target.pos.y = grid[i % 2 == 0 ? 1 : 0][i].y;
@@ -259,12 +273,12 @@ function unfold() {
     } else {
         logo.target.size = grid[0][0].size;
         for (var i = 0; i < works.length; i++) {
-            works[i].target.size = grid[0][i%row].size;
+            works[i].target.size = grid[0][i % row].size;
             works[i].target.pos.x = logo.pos.x + width / ratioWorkSpacing * (i + 1); //border+offset
             works[i].target.pos.y = logo.pos.y + width / ratioWorkSpacing * (i + 1);
         }
         for (var i = 0; i < others.length; i++) {
-            others[i].target.size = grid[0][i%row].size;
+            others[i].target.size = grid[0][i % row].size;
             others[i].target.pos.x = logo.pos.x + width / ratioWorkSpacing * (i + countOfWork); //border+offset
             others[i].target.pos.y = logo.pos.y + width / ratioWorkSpacing * (i + countOfWork);
         }

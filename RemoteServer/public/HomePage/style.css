@@ -16,7 +16,16 @@
   color:#333333;
   z-index: 100;
 }
-
+#logo{
+  position:absolute;
+  top:0px;
+    z-index: 1000;
+}
+/*#defaultCanvas1{
+  position:absolute;
+  top:0px;
+  z-index: 1000;
+}*/
 #QR{
   position: absolute;
   bottom:20px;
