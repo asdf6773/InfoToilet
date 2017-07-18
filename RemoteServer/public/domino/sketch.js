@@ -111,7 +111,7 @@ function draw() {
     rotateOfCam = -Math.atan(-Math.cos(falled * 0.2)) / 3;
     //------------------------------------------------
     // aa.html(Math.floor(ax) + " " + Math.floor(ay) + " " + Math.floor(az));
-    background(this.distToCam * 0.2 - 10, 150 * abs(Math.sin(falled * 0.03)) + 20, 255 * abs(Math.cos(falled * 0.03)) + 20);
+        background(this.distToCam * 0.2 - 10, 150 * abs(Math.sin(falled * 0.03)) + 50, 255 * abs(Math.cos(falled * 0.03)) + 50);
     // rotateX(PI );
     rotateX(PI / 7);
     distOfRotate = rotateOfCam - rotateCamIndex;

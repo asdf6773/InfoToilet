@@ -58,18 +58,13 @@ var s = function(p) {
         p.strokeWeight(2);
         p.stroke(0);
 
-        p.push()
-        p.rotate()
-        p.rotate(angleH)
-        p.translate(0, -80)
-        p.image(a, 0, 0, a.width / ratio, a.height / ratio)
-        p.pop()
+
 
 
         p.push()
         p.rotate(-PI/2)
         p.rotate(angleM)
-        p.translate(60, 0)
+        p.translate(65, 0)
         p.image(o, 0, 0, o.width / ratio, o.height / ratio)
         p.pop()
 
@@ -78,6 +73,13 @@ var s = function(p) {
         p.rotate(angleS)
         p.translate(60, -60)
         p.image(I, 0, 0, I.width / ratio, I.height / ratio)
+        p.pop()
+
+        p.push()
+        p.rotate()
+        p.rotate(angleH)
+        p.translate(0, -25)
+        p.image(a, 0, 0, a.width / ratio, a.height / ratio)
         p.pop()
         angleS = p.map(p.second(), 0, 60, 0, p.TWO_PI) - p.HALF_PI;; // aling second to start at the top
         angleM = p.map(p.minute(), 0, 60, 0, p.TWO_PI); // aling minute to start at the top
