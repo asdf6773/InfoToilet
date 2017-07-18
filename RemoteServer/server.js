@@ -98,6 +98,9 @@
  app.get("/", function(req, res) {
      res.sendFile(__dirname + "/public/HomePage/index.html");
  });
+ app.get("/jelly", function(req, res) {
+     res.sendFile(__dirname + "/public/jelly/index.html");
+ });
  app.get("/me", function(req, res) {
      res.sendFile(__dirname + "/public/me/index.html");
  });

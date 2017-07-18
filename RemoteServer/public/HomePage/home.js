@@ -133,14 +133,14 @@ function homePreload() {
                     return width / 4
             },
             init: function() {
-                this.size = grid[0][this.id].size;
-                this.maxSize = grid[0][this.id].size;
-                this.minSize = grid[0][this.id].size;
+                this.size = grid[0][this.id%row].size;
+                this.maxSize = grid[0][this.id%row].size;
+                this.minSize = grid[0][this.id%row].size;
                 this.img.style("z-index", -this.id + 10)
                 this.img.position(this.pos.x, this.pos.y)
-                this.target.size = grid[0][this.id].size
-                this.target.pos.x = logo.pos.x + width / ratioWorkSpacing * (this.id + 1);
-                this.target.pos.y = logo.pos.y + width / ratioWorkSpacing * (this.id + 1);
+                this.target.size = grid[0][this.id%row].size
+                this.target.pos.x = logo.pos.x + width / ratioWorkSpacing * (this.id%row + 1);
+                this.target.pos.y = logo.pos.y + width / ratioWorkSpacing * (this.id%row + 1);
                 this.img.size(this.size, this.size);
             }
         };
@@ -164,20 +164,26 @@ function homeSetup() {
     mask.id("mask");
     mask.size(width, height);
     unfolded = false;
-    works.push(new work("washroom", './lib/washroom.jpg'))
+
     works.push(new work("atomicBomb", './lib/atomicBomb.jpg'))
     works.push(new work("domino", './lib/domino.jpg'))
+    works.push(new work("domino", './lib/jelly.jpg'))
+      works.push(new work("washroom", './lib/washroom.jpg'))
+
 
     others.push(new other("about", './lib/about.png'))
     others.push(new other("about", './lib/blog.png'))
     works[0].img.mouseClicked(function() {
-        window.location = "./washroom"
-    })
-    works[1].img.mouseClicked(function() {
         window.location = "./atomicBomb"
     })
-    works[2].img.mouseClicked(function() {
+    works[1].img.mouseClicked(function() {
         window.location = "./domino"
+    })
+    works[2].img.mouseClicked(function() {
+        window.location = "./jelly"
+    })
+    works[3].img.mouseClicked(function() {
+        window.location = "./washroom"
     })
     others[0].img.mouseClicked(function() {
         window.location = "./me"
@@ -224,10 +230,10 @@ function unfold() {
         logo.target.size = grid[0][0].doubleSize;
         var rand = floor(random(3));
         for (var i = 0; i < works.length; i++) {
-            works[i].target.size = grid[0][i].size;
+            works[i].target.size = grid[0][i%row].size;
             if (mobile) {
-                works[i].target.pos.x = grid[0][i].x; //step*index+start
-                works[i].target.pos.y = grid[i % 2 == 0 ? 3 : 2][i].y;
+                works[i].target.pos.x = grid[0][i%row].x; //step*index+start
+                works[i].target.pos.y = grid[i % 2 == 0 ? 3 : 2][i%row].y;
             } else {
                 works[i].target.pos.x = grid[0][i + 2].x; //step*index+start
                 works[i].target.pos.y = grid[i % 2 == 0 ? 1 : 0][i].y;
@@ -253,12 +259,12 @@ function unfold() {
     } else {
         logo.target.size = grid[0][0].size;
         for (var i = 0; i < works.length; i++) {
-            works[i].target.size = grid[0][i].size;
+            works[i].target.size = grid[0][i%row].size;
             works[i].target.pos.x = logo.pos.x + width / ratioWorkSpacing * (i + 1); //border+offset
             works[i].target.pos.y = logo.pos.y + width / ratioWorkSpacing * (i + 1);
         }
         for (var i = 0; i < others.length; i++) {
-            others[i].target.size = grid[0][i].size;
+            others[i].target.size = grid[0][i%row].size;
             others[i].target.pos.x = logo.pos.x + width / ratioWorkSpacing * (i + countOfWork); //border+offset
             others[i].target.pos.y = logo.pos.y + width / ratioWorkSpacing * (i + countOfWork);
         }
