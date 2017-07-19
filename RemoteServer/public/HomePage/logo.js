@@ -81,9 +81,9 @@ var s = function(p) {
             clearInterval(clockInterval)
             clocking = false
             logo(p)
-            // clockInterval = setTimeout(function() {
-            //     clocking = true;
-            // }, 2500)
+            clockInterval = setTimeout(function() {
+                clocking = true;
+            }, 2500)
         }
         if (clocking) {
             clock(p)
