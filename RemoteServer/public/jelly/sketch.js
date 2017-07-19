@@ -10,8 +10,8 @@ scene.add(camera);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 const RADIUS = 100;
-const SEGMENTS = 200;
-const RINGS = 200;
+const SEGMENTS = 300;
+const RINGS = 300;
 
 
 var mouse = new THREE.Vector2(0, 0);
@@ -61,7 +61,7 @@ scene.add(sphere);
 function update() {
     uniforms.seed.value += 0.1;
     //sphere.rotation.x +=0.002;
-      sphere.rotation.z+=0.002;
+    sphere.rotation.z += 0.002;
     //  sphere.rotation.y+=0.002;
     uniforms.mouse.value = mouse;
     //  console.log( uniforms.mouse.value);

@@ -25,7 +25,13 @@ var s = function(p) {
         curSS = 10,
         desSH = 10,
         desSM = 10,
-        desSS = 10;
+        desSS = 10,
+        curRH = 0,
+        curRM = 0,
+        curRS = 0,
+        desRH = 0,
+        desRM = 0,
+        desRS = 0;
     // var desSH,desSM,desSS;
     var clockInterval;
     var clocking = false;
@@ -60,20 +66,20 @@ var s = function(p) {
 
     p.draw = function() {
         p.background(255);
-        if(clocking)
-        p.background(167, 252, 250, map(second(),0,60,0,255)-100);
+        if (clocking)
+            p.background(167, 252, 250, map(second(), 0, 60, 0, 255) - 100);
         p.fill("#a7fcfa");
         p.translate(p.width / 2, p.height / 2); // origin at the middle
         p.push()
         p.translate(ps.x, ps.y)
-        p.rotate(angleS)
+        p.rotate(curRS)
         p.scale(curSS)
         p.rect(0, 0, 120, 15)
         p.pop()
         p.push()
         // p.rotate(-PI/2)
         p.translate(ph.x, ph.y)
-        p.rotate(angleH)
+        p.rotate(curRH)
         p.scale(curSH)
         p.fill(20)
         // p.rotate(PI/2)
@@ -82,7 +88,7 @@ var s = function(p) {
         p.pop()
         p.push()
         p.translate(pm.x, pm.y)
-        p.rotate(angleM)
+        p.rotate(curRM)
         p.scale(curSM)
         p.image(o, 0, 0, o.width / ratio, o.height / ratio)
         p.pop()
@@ -111,6 +117,14 @@ var s = function(p) {
         curSH += desSH * 0.2
         curSM += desSM * 0.2
         curSS += desSS * 0.2
+
+        desRH = angleH - curRH
+        desRM = angleM - curRM
+        desRS = angleS - curRS
+        curRH += desRH * 0.2
+        curRM += desRM * 0.2
+        curRS += desRS * 0.2
+
         var tempS = p5.Vector.sub(ds, ps)
         if (ps.dist(ds) > 1)
             ps.add(tempS.mult(0.2));

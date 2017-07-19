@@ -4,7 +4,8 @@
   "description": "",
   "main": "sketch.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify index.js -o bundle.js",
+     "dev": "budo sketch.js:bundle.js --live"
   },
   "author": "zhangyang",
   "license": "ISC"
