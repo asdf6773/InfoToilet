@@ -5,7 +5,7 @@ var s = function(p) {
     var x = 100;
     var y = 100;
     var ap, ip, op;
-    console.log(grid)
+    // console.log(grid)
     var lastFolded;
     var angleS = 0.0;
     var angleM = 0.0;
@@ -20,9 +20,17 @@ var s = function(p) {
     var ah, am, as;
     var ph, pm, ps;
     var sh, sm, ss;
+    var curSH = 10,
+        curSM = 10,
+        curSS = 10,
+        desSH = 10,
+        desSM = 10,
+        desSS = 10;
+    // var desSH,desSM,desSS;
     var clockInterval;
     var clocking = false;
     p.setup = function() {
+        p.blendMode(ADD);
         p.rectMode(CENTER)
         canvas = p.createCanvas(size, size);
         p.background(255);
@@ -51,31 +59,32 @@ var s = function(p) {
     };
 
     p.draw = function() {
-        // p.background(255, 255, 255, 255 - second() * 4);
         p.background(255);
-
+        if(clocking)
+        p.background(167, 252, 250, map(second(),0,60,0,255)-80);
         p.fill("#a7fcfa");
-        console.log(sx / 2)
         p.translate(p.width / 2, p.height / 2); // origin at the middle
-        p.push()
-        p.translate(pm.x, pm.y)
-        p.rotate(angleM)
-        p.scale(sm)
-        p.image(o, 0, 0, o.width / ratio, o.height / ratio)
-        p.pop()
         p.push()
         p.translate(ps.x, ps.y)
         p.rotate(angleS)
-        p.scale(ss)
-        // p.rotate(PI / 4)
+        p.scale(curSS)
         p.rect(0, 0, 120, 15)
-        // p.image(I, 0, 0, I.width / ratio, I.height / ratio)
         p.pop()
         p.push()
+        // p.rotate(-PI/2)
         p.translate(ph.x, ph.y)
         p.rotate(angleH)
-        p.scale(sh)
+        p.scale(curSH)
+        p.fill(20)
+        // p.rotate(PI/2)
         p.image(a, 0, 0, a.width / ratio, a.height / ratio)
+        // p.rect( 0, 0, a.width / ratio, a.height / ratio)
+        p.pop()
+        p.push()
+        p.translate(pm.x, pm.y)
+        p.rotate(angleM)
+        p.scale(curSM)
+        p.image(o, 0, 0, o.width / ratio, o.height / ratio)
         p.pop()
         if (unfolded != lastFolded) {
             clearInterval(clockInterval)
@@ -83,14 +92,25 @@ var s = function(p) {
             logo(p)
             clockInterval = setTimeout(function() {
                 clocking = true;
-            }, 2500)
+            }, 2000)
         }
         if (clocking) {
             clock(p)
         }
         // clock(p)
         // console.log(unfolded)
+        anmi();
+        // console.log(desSH)
+        lastFolded = unfolded
+    };
 
+    function anmi() {
+        desSH = sh - curSH
+        desSM = sm - curSM
+        desSS = ss - curSS
+        curSH += desSH * 0.2
+        curSM += desSM * 0.2
+        curSS += desSS * 0.2
         var tempS = p5.Vector.sub(ds, ps)
         if (ps.dist(ds) > 1)
             ps.add(tempS.mult(0.2));
@@ -100,8 +120,7 @@ var s = function(p) {
         var tempH = p5.Vector.sub(dh, ph);
         if (ph.dist(dh) > 1)
             ph.add(tempH.mult(0.2));
-        lastFolded = unfolded
-    };
+    }
 
     function logo(p) {
         sh = size / 200
@@ -118,18 +137,18 @@ var s = function(p) {
     }
 
     function clock(p) {
-        sh = size / 200
-        sm = size / 400
-        ss = size / 500
-        angleS = p.map(p.second(), 0, 60, 0, p.TWO_PI); // aling second to start at the top
+        sh = size / 130
+        sm = size / 200
+        ss = size / 20
+        angleS = p.map(p.second(), 0, 60, 0, p.TWO_PI) - PI / 2; // aling second to start at the top
         angleM = p.map(p.minute(), 0, 60, 0, p.TWO_PI) - p.HALF_PI; // aling minute to start at the top
         angleH = p.map(p.hour(), 0, 24, 0, p.TWO_PI * 2); // aling hour to start at the top
-        ds.x = cos(angleS) * 80 * size / 210
-        ds.y = sin(angleS) * 80 * size / 210
-        dm.x = cos(angleM) * 80 * size / 300
-        dm.y = sin(angleM) * 80 * size / 300
-        dh.x = cos(angleH) * 80 * size / 4000
-        dh.y = sin(angleH) * 80 * size / 4000
+        ds.x = cos(angleS) * 80 * size / 330
+        ds.y = sin(angleS) * 80 * size / 330
+        dm.x = cos(angleM) * 80 * size / 230
+        dm.y = sin(angleM) * 80 * size / 230
+        dh.x = 0
+        dh.y = 0
 
 
         // p.pop()
