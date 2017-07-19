@@ -3,6 +3,7 @@
 
 <head>
 	<meta charset=utf-8>
+	    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
 	<title>Jelly</title>
 	<style>
 		body {
@@ -218,7 +219,7 @@
 
 			vNormal = normal;
 			noise = 5.0 *  -.1 * turbulence(0.5 * normal +seed);
-			float b = -50.0 * pnoise( .03 * position+vec3(0.1*seed), vec3( 10. ) );
+			float b = -amplitude * pnoise( .03 * position+vec3(0.1*seed), vec3( 10. ) );
 			float displacement = noise +b;
 			vec3 newPosition = position + normal*displacement;
 

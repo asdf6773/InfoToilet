@@ -88,6 +88,8 @@ var s = function(p) {
         p.pop()
         p.push()
         p.translate(pm.x, pm.y)
+        if(clocking)
+          p.rotate(PI)
         p.rotate(curRM)
         p.scale(curSM)
         p.image(o, 0, 0, o.width / ratio, o.height / ratio)

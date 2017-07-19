@@ -2,14 +2,16 @@ var camera = new THREE.PerspectiveCamera(75, innerWidth / innerHeight, 0.1, 1000
 var scene = new THREE.Scene(); //2
 //const pointLight = new THREE.PointLight( 0xff0000, 1, 100 );; //3
 var renderer = new THREE.WebGLRenderer();
+var amplitude = 120;
 //pointLight.position.x = 10;
 //pointLight.position.y = 50;
 //pointLight.position.z = 130;
 scene.add(camera);
+var pressed = false
 //scene.add(pointLight);
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-const RADIUS = 100;
+ RADIUS = 70;
 const SEGMENTS = 300;
 const RINGS = 300;
 
@@ -19,16 +21,27 @@ var mouse = new THREE.Vector2(0, 0);
 function show_coords(event) {
     x = event.clientX;
     y = event.clientY;
-
     mouse.x = x;
     mouse.y = y;
-
 }
+
+
+
+
+
+$("canvas").click(function() {
+    pressed = true;
+    RADIUS+=10;
+
+})
+// $("body").mouseup(function() {
+//     pressed = false;
+// })
 //console.log(clientX);
 var uniforms = {
     amplitude: {
         type: 'float',
-        value: 0
+        value: amplitude
     },
     mouse: {
         type: 'vec2',
@@ -57,15 +70,36 @@ var shaderMaterial = new THREE.ShaderMaterial({ //6
 var sphere = new THREE.Mesh(geometry, shaderMaterial);
 sphere.position.z = -300;
 scene.add(sphere);
+var timeout;
 //--------------------------renderer-----------------------
 function update() {
+    if (pressed) {
+
+        clearTimeout(timeout)
+        amplitude -= amplitude / 5;
+        if (amplitude <= 10) {
+            amplitude = 10
+            pressed = false
+        }
+    } else {
+
+            if (amplitude > 90) {
+                amplitude = 90
+            } else {
+                amplitude += 2 / amplitude;
+            }
+
+
+    }
+
+    console.log(amplitude)
     uniforms.seed.value += 0.1;
     //sphere.rotation.x +=0.002;
     sphere.rotation.z += 0.002;
     //  sphere.rotation.y+=0.002;
     uniforms.mouse.value = mouse;
     //  console.log( uniforms.mouse.value);
-    uniforms.amplitude.value = Math.sin(frame);
+    uniforms.amplitude.value = amplitude;
     renderer.render(scene, camera);
     requestAnimationFrame(update);
     frame += 0.1;
