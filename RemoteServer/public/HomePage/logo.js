@@ -61,7 +61,7 @@ var s = function(p) {
     p.draw = function() {
         p.background(255);
         if(clocking)
-        p.background(167, 252, 250, map(second(),0,60,0,255)-80);
+        p.background(167, 252, 250, map(second(),0,60,0,255)-100);
         p.fill("#a7fcfa");
         p.translate(p.width / 2, p.height / 2); // origin at the middle
         p.push()
