@@ -35,9 +35,9 @@ function draw() {
     // $("#test").css("height", depth)
     $("#depth").html(Math.floor((depth - 2000) / 100))
     camera(0, 0, 200);
-    ambientLight(200)
-    directionalLight(100, 100, 120, 0, 1, 0);
-        directionalLight(60, 60, 50, 0, 0, -0);
+    ambientLight(210)
+    directionalLight(80, 80, 120, 0, 1, 0);
+        directionalLight(60, 60, 50, -1, -1, -1);
     // orbitControl();
     // img(0,0,100,2)
     // fill(50,200,50,150)
