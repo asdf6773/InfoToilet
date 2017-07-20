@@ -21,8 +21,24 @@
     margin-bottom: 20px;
 }
 
+.work{
+  width: 82vw;
+  mix-blend-mode: darken;
+  margin-bottom: 10px;
+  margin-top: 0px;
+
+}
+#test{
+  position: absolute,
+  top: 0px,
+  height:2000px
+}
+#bg{
+
+position:absolute,
+}
 #back {
-    background: url(../lib/back.png);
+    background: url(/washroom/lib/back.png);
     position: fixed;
     width: 40px;
     height: 40px;
@@ -91,7 +107,7 @@ html {
     display: block;
     /*top: 70px;*/
     position: relative;
-    width: 85vw;
+    width: 82vw;
     /*height: 80px;*/
     margin: 10px;
     margin-bottom: 30px;
@@ -205,7 +221,7 @@ textarea {
     padding-right: 30px;
     /*padding-left: 10;*/
     /*padding-right: 10;*/
-    letter-spacing: 5px;
+    letter-spacing: 1px;
     text-align: left;
 }
 

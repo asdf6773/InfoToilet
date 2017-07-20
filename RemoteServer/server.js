@@ -104,6 +104,9 @@
  app.get("/me", function(req, res) {
      res.sendFile(__dirname + "/public/me/index.html");
  });
+ app.get("/bg", function(req, res) {
+     res.sendFile(__dirname + "/public/me/bg.html");
+ });
  app.get("/a", function(req, res) {
      res.redirect('/washroom/');
  });

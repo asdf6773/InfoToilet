@@ -1,27 +1,17 @@
-#catalog1 {
-    /*background-image: url(../lib/catalog/catalog-1.png);*/
-}
-.item{
-  margin-bottom: 1px;
-}
-a {
-    width: 100px;
-    height: 100%;
-    z-index: 200;
-    top: 0px;
-}
-
-.item {
-    /*width: 100vw;*/
-    /*height:25%;*/
-    /*width:100%;*/
-}
 
 
 
 html, body {
     overflow: hidden;
     overflow-y: auto;
+}
+
+#video {
+    width: 300px;
+    height: 300px;
+    position:absolute;
+    top:0px;
+    z-index: 100;
 }
 
 .name {
@@ -31,7 +21,7 @@ html, body {
     font-weight: bold;
     text-align: center;
     top: 80px;
-    left:67px;
+    left: 67px;
     font-size: 20px;
     word-spacing: 8px;
     letter-spacing: 7px;
@@ -52,10 +42,4 @@ html, body {
     color: 527283;
     z-index: 101;
     /*font-size: :30px;*/
-}
-
-.img {
-    width: 100vw;
-    position: relative;
-    /*top: 0;*/
 }

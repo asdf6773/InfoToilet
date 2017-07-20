@@ -26,6 +26,9 @@ function preload() {
 
 var Y_AXIS = 1;
 var X_AXIS = 2;
+var c = document.getElementById("video");
+var ctx = c.getContext("2d");
+
 
 function setup() {
     dice = Math.floor(random(0, 3));
@@ -137,12 +140,9 @@ function draw() {
                 break;
             case 2:
                 image(purple_pushed, 0, 0, window.innerWidth, purple_pushed.height / purple_pushed.width * window.innerWidth);
-                // image(purple, -window.width / 9.2, window.width / 3.33, green.width, green.height);
                 break;
             default:
         }
-        // image(red, 0, window.width / 3.1, green.width, green.height);
-        // image(purple, -window.width / 9.2, window.width /  3.33, green.width, green.height);
     }
     if (greenLight)
         image(green, window.width / 9.2, window.width / 3.33, green.width, green.height);
@@ -154,8 +154,6 @@ function draw() {
     pop()
     noFill();
     noStroke();
-
-    // rect(width / 2, height / 2 + 8, window.innerWidth / 2.5, window.innerWidth / 2.5);
 }
 
 function mousePressed() {
@@ -167,27 +165,12 @@ function mousePressed() {
         flag === false) {
         if (dice == 0) {
             socket.emit("greenPressed")
-            // setTimeout(function() {
-            //     if (!mouseIsPressed) {
-            //         socket.emit("releaseGreen")
-            //     }
-            // }, 200)
         }
         if (dice == 1) {
             socket.emit("redPressed")
-            // setTimeout(function() {
-            //     if (!mouseIsPressed) {
-            //         socket.emit("releaseRed")
-            //     }
-            // }, 200)
         }
         if (dice == 2) {
             socket.emit("purplePressed")
-            // setTimeout(function() {
-            //     if (!mouseIsPressed) {
-            //         socket.emit("releasePurple")
-            //     }
-            // }, 200)
         }
     } else {
 
