@@ -20,13 +20,16 @@ function setup() {
     canvas = createCanvas(window.innerWidth, window.innerHeight, WEBGL)
     canvas.id("bg")
     $("#bg").css("position", "fixed")
-    $("#bg").css("top", 0+"px")
+    $("#bg").css("top", 0 + "px")
     $("#bg").css("z-index", "-10")
     // img= loadImage("/washroom/me/lib/dryer.png");
     noStroke();
     aaa = 0;
-}
 
+}
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 function draw() {
     depth = Math.floor($(document).scrollTop() * 1.1 + 2000)
@@ -36,8 +39,8 @@ function draw() {
     $("#depth").html(Math.floor((depth - 2000) / 100))
     camera(0, 0, 200);
     ambientLight(210)
-    directionalLight(80, 80, 120, 0, 1, 0);
-        directionalLight(60, 60, 50, -1, -1, -1);
+    directionalLight(80, 100, 120, 0, 1, 0);
+    directionalLight(80, 60, 50, -1, -1, -1);
     // orbitControl();
     // img(0,0,100,2)
     // fill(50,200,50,150)
@@ -48,27 +51,27 @@ function draw() {
     aaa += 1
     //--------------------aaaaaaaaaaaaa
     push()
-    translate(width/2, -($(document).scrollTop()*1.1- 400), 0)
-    rotateX(map(-($(document).scrollTop() - 800), 0, 200, 0, TWO_PI/7))
-    rotateZ(map(-($(document).scrollTop() - 800), 0, 200, 0, PI/4))
-            scale(1.5)
-  ambientMaterial(255,240,240);
+    translate(width / 2, -($(document).scrollTop() * 1.1 - 400), 0)
+    rotateX(map(-($(document).scrollTop() - 800), 0, 200, 0, TWO_PI / 7))
+    rotateZ(map(-($(document).scrollTop() - 800), 0, 200, 0, PI / 4))
+    scale(1.5)
+    ambientMaterial(255, 240, 240);
     model(a);
     pop()
     //-------------------------iiiiiiiiii
     push()
-      translate(-width/2, -($(document).scrollTop()*1.1 - 700), 0)
+    translate(-width / 2, -($(document).scrollTop() * 1.1 - 700), 0)
 
-    rotateX(map(-($(document).scrollTop()/10 - 800), 0, 200, 0, TWO_PI / 6))
-    rotateY(map(-($(document).scrollTop()/10 - 800), 0, 200, 0, PI))
-        scale(2.5)
-            ambientMaterial(255);
+    rotateX(map(-($(document).scrollTop() / 10 - 800), 0, 200, 0, TWO_PI / 6))
+    rotateY(map(-($(document).scrollTop() / 10 - 800), 0, 200, 0, PI))
+    scale(2.5)
+    ambientMaterial(255);
     model(I);
     pop()
     //-------------------------cccccccccccccccccc
     push()
-    translate(-width/2, -($(document).scrollTop() - 0)*1.1, 0)
-    rotateX(map(-($(document).scrollTop() - 800), 0, 200, 0, TWO_PI / 6)+PI/4)
+    translate(-width / 2, -($(document).scrollTop() - 0) * 1.1, 0)
+    rotateX(map(-($(document).scrollTop() - 800), 0, 200, 0, TWO_PI / 6) + PI / 4)
     rotateY(map(-($(document).scrollTop() - 800), 0, 200, 0, PI / 3))
     scale(2)
     ambientMaterial(255);
