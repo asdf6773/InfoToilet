@@ -1,0 +1,12 @@
+{
+  "name": "c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sketch.js",
+  "scripts": {
+    "build": "browserify index.js -o bundle.js",
+     "dev": "budo index.js:bundle.js --live"
+  },
+  "author": "zhangyang",
+  "license": "ISC"
+}
