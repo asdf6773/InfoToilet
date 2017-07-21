@@ -18,6 +18,9 @@ function preload() {
 
 
 }
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight, WEBGL);

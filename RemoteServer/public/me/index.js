@@ -29,11 +29,12 @@ function setup() {
     // var src = seriously.source("")
 
 }
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
-}
 
 function draw() {
+
+  if (canvas.width != window.innerWidth || canvas.height != window.innerHeight) {
+      resizeCanvas(window.innerWidth, window.innerHeight);
+  }
     depth = Math.floor($(document).scrollTop() * 1.1 + 2000)
     // console.log($(document).scrollTop());
     $("#obj").css("top", $(document).scrollTop())

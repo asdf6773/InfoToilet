@@ -14,8 +14,24 @@ var rotateOfCam;
 var rotateCamIndex;
 var distOfRotate;
 var mr, mg, mb;
-
+var qr;
+var qrSize;
+var canvas;
+var scan;
 function setup() {
+    canvas = createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+    qr = createImg('/domino/lib/qr.png', "qr");
+        // scan = createDiv("在移动设备上体验互动");
+
+        // scan.id("scan")
+    qr.id("qr")
+    qrSize = {
+        width: width / 10,
+        height: width / 10
+    }
+    qr.size(qrSize.width, qrSize.height)
+    // scan.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 10)
+    qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
     // colorMode(HSB,255)
     $("#intro").click(function() {
         if ($("#introDiv").css("display") == "none") {
@@ -34,7 +50,7 @@ function setup() {
     rotateOfCam = 0;
     distOfRotate = 0;
     rotateCamIndex = 0;
-    createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+
     // rr = createDiv('this is some text');
     // aa = createDiv('this is some text');
     flag = false;
@@ -56,7 +72,17 @@ function setup() {
     ax = 0
     ay = 0
     az = 0
-    print(myDiv)
+    // print(myDiv)
+}
+// $(window).resize(function() {
+//   resizeCanvas(window.innerWidth, window.innerHeight);
+//   // alert(windowHeight)
+// });
+function windowResized() {
+    // alert(canvas.width)
+    // alert(windowWidth+" "+windowHeight)
+
+    // qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
 }
 
 function SwitchOn() {
@@ -88,6 +114,17 @@ window.ondevicemotion = function(event) {
 }
 
 function draw() {
+    $('body').prop('scrollTop','0');
+    if (canvas.width != window.innerWidth || canvas.height != window.innerHeight) {
+        resizeCanvas(window.innerWidth, window.innerHeight);
+
+         qrSize = {
+             width: width / 10,
+             height: width / 10
+         }
+           qr.size(qrSize.width, qrSize.height)
+              qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
+    }
     //Control----------------------------------------------------
     // pointLight(200, 200, 200, 100,400,-100);
     ambientLight(255);
@@ -111,7 +148,7 @@ function draw() {
     rotateOfCam = -Math.atan(-Math.cos(falled * 0.2)) / 3;
     //------------------------------------------------
     // aa.html(Math.floor(ax) + " " + Math.floor(ay) + " " + Math.floor(az));
-        background(this.distToCam * 0.2 - 10, 150 * abs(Math.sin(falled * 0.03)) + 50, 255 * abs(Math.cos(falled * 0.03)) + 50);
+    background(this.distToCam * 0.2 - 10, 150 * abs(Math.sin(falled * 0.03)) + 50, 255 * abs(Math.cos(falled * 0.03)) + 50);
     // rotateX(PI );
     rotateX(PI / 7);
     distOfRotate = rotateOfCam - rotateCamIndex;
@@ -146,18 +183,20 @@ function draw() {
     // print(d[0].distToCam)
     // print(falled + ' ' + d[d.length - 1].id + "flag " + flag)
 
-    mr = Math.floor(255 - (d[0].distToCam / 10 ))
-    mg =Math.floor( 150 * abs(Math.sin(falled * 0.03)) +40)
+    mr = Math.floor(255 - (d[0].distToCam / 10))
+    mg = Math.floor(150 * abs(Math.sin(falled * 0.03)) + 40)
     mb = Math.floor(255 * abs(Math.cos(falled * 0.03)) + 40)
-    document.getElementById("intro").style.backgroundColor ="rgb("+mr+","+mg+","+mb+")"
-    print("rgb("+mr+","+mg+","+mb+")")
+    document.getElementById("intro").style.backgroundColor = "rgb(" + mr + "," + mg + "," + mb + ")"
+    // print("rgb("+mr+","+mg+","+mb+")")
 }
-function colorRGB2Hex(r,g,b) {
+
+function colorRGB2Hex(r, g, b) {
 
 
     var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     return hex;
- }
+}
+
 function domino(x, y, z, id) {
 
     this.id = id;
