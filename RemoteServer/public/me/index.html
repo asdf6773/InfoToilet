@@ -22,7 +22,7 @@
     <a id="back"></a>
     <script language="javascript" type="text/javascript" src="/washroom/display/ip.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdn.bootcss.com/p5.js/0.5.9/p5.min.js"></script>
+    <script src="https://cdn.bootcss.com/p5.js/0.5.9/p5.min.js"></script>
     <script language="javascript" type="text/javascript" src="/socket.io/socket.io.js"></script>
 
     <script language="javascript" type="text/javascript" src="/me/app.js"></script>
@@ -56,8 +56,10 @@
                 <a href="./washroom">
                     <img src="/washroom/lib/catalog/all.jpg" class="work">
                 </a>
+                <div>
+                </div>
                 <a href="https://mp.weixin.qq.com/s/wsVdteLes6D70nFkfuXxzQ">
-                    <image id="pop" src="/washroom/lib/pop.jpg" style="display: inline-block;" />
+                    <image src="/washroom/lib/pop.jpg" class="work" />
                 </a>
                 <div class="info content"> 《Domino》H5互动游戏
                 </div>
@@ -78,7 +80,9 @@
 
 
             <form id="message">
-                <textarea id="text" name="text" style="width:80%;height:80px;"></textarea>
+                <textarea id="text" name="text" style="height:80px;"></textarea>
+                <div>
+                </div>
                 <input type="submit" value="留言" id="send"></input>
             </form>
             <div class="info title" id="txtQR">
@@ -151,7 +155,7 @@
                 return flag;
             }
         </script>
-            <script language="javascript" type="text/javascript" src="/me/index.js"></script>
+        <script language="javascript" type="text/javascript" src="/me/index.js"></script>
 </body>
 
 </html>

@@ -25,8 +25,6 @@ function setup() {
     // img= loadImage("/washroom/me/lib/dryer.png");
     noStroke();
     aaa = 0;
-    // var seriously = new Seriously()
-    // var src = seriously.source("")
 
 }
 function windowResized() {
