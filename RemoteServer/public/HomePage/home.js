@@ -26,24 +26,28 @@ function homePreload() {
         row = 3
         col = 10
         spacing = window.innerWidth / 20;
-        select("#name").style("font-size", 20 + "px")
-        select("#name").style("top", spacing + "px")
-        select("#name").style("right", spacing + "px");
+        grid = new Grid(row, col, spacing);
+        select(".name").style("top", grid[col - 4][row - 2].y + "px")
+        select(".name").style("right", spacing + "px");
+        select(".name2").style("top", grid[col - 3][row - 2].y + "px")
+        select(".name2").style("right", spacing + "px");
+
     } else {
         row = 7
         col = 5
         spacing = window.innerWidth / 50
-        select("#name").style("font-size", 50 + "px")
-        select("#name").style("top", spacing + "px")
-        select("#name").style("right", spacing + "px");
-
+        grid = new Grid(row, col, spacing);
+        select(".name").style("top", spacing + "px")
+        select(".name").style("right", spacing + "px");
+        select(".name2").style("top", spacing * 4 + "px")
+        select(".name2").style("right", spacing + "px");
     }
     select("#footer").style("text-align", "left")
     select("#footer").style("bottom", +1.5 + "%")
     select("#footer").style("left", spacing + "px")
     select("#footer").style("z-index", "10")
-    grid = new Grid(row, col, spacing);
-      select("body").style("height",grid[col-1][row-1].y+"px")
+
+    select("body").style("height", grid[col - 1][row - 1].y + "px")
     myp5 = new p5(s, 'logo')
     select("#logo").style("top", grid[0][0].x + "px")
     select("#logo").style("left", grid[0][0].x + "px")
@@ -264,6 +268,10 @@ function windowResized() {
 
 function unfold() {
     if (!unfolded) {
+        if (!mobile) {
+            select(".name2").style("display", "none")
+            select(".name").style("display", "none")
+        }
         logo.target.size = grid[0][0].doubleSize;
         var rand = floor(random(3));
         for (var i = 0; i < works.length; i++) {
@@ -298,6 +306,8 @@ function unfold() {
         select('#mask').style("display", "block");
         unfolded = !unfolded;
     } else {
+        select(".name2").style("display","block")
+        select(".name").style("display","block")
         logo.target.size = grid[0][0].size;
         for (var i = 0; i < works.length; i++) {
             works[i].target.size = grid[0][i % row].size;
