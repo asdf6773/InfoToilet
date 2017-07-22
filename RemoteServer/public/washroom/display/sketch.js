@@ -14,7 +14,7 @@ var textBufferLoaded = false;
 var bufferLoaded = false;
 var upload;
 var hole;
-var bg, bg_pc;
+var bg, bg_pc,keyboard;
 var layer, layer_pc;
 var waterHeight;
 var rise, fall;
@@ -66,8 +66,9 @@ function setup() {
     offset = 0;
     pc_qr = loadImage("http://" + ip + "/washroom/lib/toilet_pc_qr.png")
     matt = loadImage("http://" + ip + "/washroom/lib/matt.png")
+        keyboard = loadImage("http://" + ip + "/washroom/lib/keyboard.png")
     waterHeight = 1
-    document.getElementById('back').href = 'http://' + ip + '/toilet';
+
     hole = 50;
     bg = loadImage("http://" + ip + "/washroom/lib/toilet-display.png")
     bg_pc = loadImage("http://" + ip + "/washroom/lib/bg_pc.png")
@@ -88,15 +89,16 @@ function setup() {
         document.getElementById("back").style.display = "none";
     }
     if (!mobile) {
-
+        document.getElementById("back").style.display = "none"
         // flush.class('toiletButton');
         flush.id('flush');
         flush.style("width", 100 + "px");
         flush.style("height", 100 + "px");
         flush.style("font-size", "15px");
-        flush.position(width - 200, height - 200);
+        flush.position(width - 200, height - 150);
         flush.style("border-radius", "200px");
     } else {
+          document.getElementById('back').href = 'http://' + ip + '/toilet';
         flush.size(width, 80)
         flush.position(0, height - 30);
     }
@@ -325,7 +327,8 @@ function draw() {
         pop()
 
     } else if (!mobile) {
-        image(pc_qr, 200,height-160, pc_qr.width/2.5, pc_qr.height/2.5)
+        image(pc_qr, 200, height - 160, pc_qr.width / 2.5, pc_qr.height / 2.5)
+          image(keyboard, 200, height - 450, keyboard.width / 2.5, keyboard.height / 2.5)
     }
 
 }
