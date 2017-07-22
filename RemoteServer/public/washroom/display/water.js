@@ -10,7 +10,7 @@ var water = function() {
             translate(0, -30)
             scale(0.7);
         } else {
-            translate(0, -200)
+            translate(0, 50)
             scale(0.7);
         }
     }

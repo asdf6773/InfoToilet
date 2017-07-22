@@ -4,9 +4,15 @@
 function Particle(attractor) {
     //  this.attractor = attractor_;
     this.scale = 1;
+    if (projector) {
+  this.des = createVector(random(80), random(80));
 
-    this.des = createVector(random(width / 4), random(width / 4));
-
+    } else {
+        if (mobile)
+            this.des = createVector(random(width / 4), random(width / 4));
+        else
+            this.des = createVector(random(80), random(80));
+    }
     this.scaleRandom = 0.5 * Math.random() + 1;
     // this.dir = random(TWO_PI)
     this.dir = random(TWO_PI)
