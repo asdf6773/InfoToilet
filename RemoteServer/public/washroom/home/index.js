@@ -8,7 +8,7 @@ window.onload = function() {
   } else {
       mobile = false;
 
-      $("#aToilet").attr("href","./display")
+      $("#aToilet").attr("href","/display")
   }
 
     if (mobile)
