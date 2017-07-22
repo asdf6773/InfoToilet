@@ -260,7 +260,7 @@ function draw() {
                 translate(window.innerWidth / 2, 50);
             }
         else {
-            translate(ratio / 2, ratio / 1.8);
+            translate(window.innerWidth  / 2, ratio / 1.8);
         }
 
         if (imageRandomBuffer[i]) {

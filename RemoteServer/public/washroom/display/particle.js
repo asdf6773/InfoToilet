@@ -4,15 +4,14 @@
 function Particle(attractor) {
     //  this.attractor = attractor_;
     this.scale = 1;
-    if(mobile)
-    this.des = createVector(random(width / 3), random(width / 3));
-    else
-      this.des = createVector(random(80), random(80));
+
+    this.des = createVector(random(width / 4), random(width / 4));
+
     this.scaleRandom = 0.5 * Math.random() + 1;
     // this.dir = random(TWO_PI)
     this.dir = random(TWO_PI)
     this.speed = random(PI, TWO_PI)
-    this.pos = createVector(width/2,height);
+    this.pos = createVector(width / 2, height);
     // createVector(random(30, width - 30), random(height - 300, height - 100));
     // this.pos = createVector(random(width / 3), random(width / 3));
     // console.log(this.scale + ' ' + this.scaleRandom)
