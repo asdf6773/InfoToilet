@@ -39,6 +39,7 @@ var d = new Date();
 var yNoise;
 var mobile;
 var ratio;
+var pc_qr;
 // var en; //noise parameter
 document.oncontextmenu = function() {
     return false;
@@ -63,6 +64,7 @@ function setup() {
     var minute = d.getMinutes()
     console.log(hour + ' ' + minute)
     offset = 0;
+    pc_qr = loadImage("http://" + ip + "/washroom/lib/toilet_pc_qr.png")
     matt = loadImage("http://" + ip + "/washroom/lib/matt.png")
     waterHeight = 1
     document.getElementById('back').href = 'http://' + ip + '/toilet';
@@ -80,13 +82,25 @@ function setup() {
     flush.class('toiletButton');
     flush.id('flush');
     flush.style("font-size", "15px");
+
     if (projector) {
         flush.style("display", "none");
         document.getElementById("back").style.display = "none";
     }
-    flush.size(width, 80)
-    flush.position(0, height - 30);
-    flush.mousePressed(flushing);
+    if (!mobile) {
+
+        // flush.class('toiletButton');
+        flush.id('flush');
+        flush.style("width", 100 + "px");
+        flush.style("height", 100 + "px");
+        flush.style("font-size", "15px");
+        flush.position(width - 200, height - 200);
+        flush.style("border-radius", "200px");
+    } else {
+        flush.size(width, 80)
+        flush.position(0, height - 30);
+    }
+
     socket = io.connect('http://' + ip + '/projector')
     if (projector) {
         socketToProjector = io.connect('http://' + ip + '/projectorStatus')
@@ -96,7 +110,7 @@ function setup() {
     socket.on('imageBuffer', loadImageBuffer);
     socket.on('flushByOther', flushByOther);
     socket.on('flushPressedFromServer', addWater);
-    flush.touchStarted(flushPressed); //-----------------------------毕展后开放
+    flush.mousePressed(flushPressed); //-----------------------------毕展后开放
     socket.on('flushFromConsole', flushPressed)
     socket.on('isFlushingSetup', function(status) {
 
@@ -167,43 +181,6 @@ function setup() {
     })
 }
 
-/*
-var ratio = ratio;
-translate(ratio / 2, ratio / 1.8);
-if (projector) {
-    translate(0, 20)
-    scale(0.7);
-} else {
-    if (mobile) {
-        ratio = ratio;
-        translate(0, -30)
-        scale(0.7);
-    } else {
-        ratio = 400
-        translate(0, -ratio / 3)
-        scale(ratio / 2500);
-    }
-
-    //------------------
-
-
-    push();
-var ratio = ratio
-    translate(ratio / 2, ratio / 1.8);
-    if (projector) {
-        translate(0, 20)
-        scale(0.7);
-    } else {
-        if (mobile) {
-            translate(0, -30)
-            scale(0.7);
-        } else {
-            translate(0, -ratio/3)
-            scale(ratio/2500);
-        }
-    }
-}*/
-
 function draw() {
     xNoise = noise(offset);
     yNoise = noise(offset + 100);
@@ -260,7 +237,7 @@ function draw() {
                 translate(window.innerWidth / 2, 50);
             }
         else {
-            translate(window.innerWidth  / 2, ratio / 1.8);
+            translate(window.innerWidth / 2, ratio / 1.8);
         }
 
         if (imageRandomBuffer[i]) {
@@ -307,7 +284,7 @@ function draw() {
     //---------------------
     fill(222);
     imgAngle += 0.005;
-    if (waterHeight <= 0){
+    if (waterHeight <= 0) {
         rising = true;
         clearInterval(fall)
         clearInterval(rise)
@@ -341,12 +318,16 @@ function draw() {
     }
     if (projector) {
         push()
-        translate(width / 2, height / 2-300 )
+        translate(width / 2, height / 2 - 300)
         scale(-0.56);
         image(matt, 0, 0)
+
         pop()
 
+    } else if (!mobile) {
+        image(pc_qr, 200,height-160, pc_qr.width/2.5, pc_qr.height/2.5)
     }
+
 }
 
 function keyTyped() {

@@ -91,7 +91,7 @@ a:active {
 }
 
 -->body {
-    background-color: #000000;
+    background-color: #b8c3ca;
     font-family: 'Varela Round', sans-serif;
     font-family: 15px;
     overflow: hidden;
@@ -186,13 +186,22 @@ footer {
     /*font-size：100px;*/
     position: relative;
     /*margin-top: 50px;*/
-    width: 100%;
+    /*width: 10vw;*/
     background: #E0EEE7;
     color: #527283;
     padding: 20px;
     transition: 0.9s;
 }
-
+#flush_pc {
+    /*font-size：100px;*/
+    position: relative;
+    /*margin-top: 50px;*/
+    width: 10vw;
+    background: #E0EEE7;
+    color: #527283;
+    padding: 20px;
+    transition: 0.9s;
+}
 #back {
     background: url(../lib/back.png);
     position: absolute;
