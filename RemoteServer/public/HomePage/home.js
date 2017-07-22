@@ -13,8 +13,10 @@ var row, col, spacing;
 var qr;
 
 function homePreload() {
-    qr = createImg('./lib/qr.png', "qr");
 
+    qr = createImg('./lib/qr.png', "qr");
+    qr.style("opacity", "0.6")
+    qr.id("qr")
     if (width <= height) {
         mobile = true;
     } else {
@@ -22,7 +24,7 @@ function homePreload() {
     }
     if (mobile) {
         row = 3
-        col = 5
+        col = 10
         spacing = window.innerWidth / 20;
         select("#name").style("font-size", 20 + "px")
         select("#name").style("top", spacing + "px")
@@ -39,10 +41,14 @@ function homePreload() {
     select("#footer").style("text-align", "left")
     select("#footer").style("bottom", +1.5 + "%")
     select("#footer").style("left", spacing + "px")
+    select("#footer").style("z-index", "10")
     grid = new Grid(row, col, spacing);
+      select("body").style("height",grid[col-1][row-1].y+"px")
     myp5 = new p5(s, 'logo')
     select("#logo").style("top", grid[0][0].x + "px")
     select("#logo").style("left", grid[0][0].x + "px")
+
+    // select("#logo").style("display", "none")//-------------------------------------------------------------------------------logo css
     select("#logo").mouseClicked(unfold);
     // select("#defaultCanvas1").style("width",100+"px")
     //     select("#defaultCanvas1").style("height",100+"px")
@@ -121,7 +127,8 @@ function homePreload() {
         var newWork = {
             id: countOfWork,
             name: name,
-            img: createImg(src, "name"),
+            img: createDiv(""),
+            inner: createImg(src, "name"),
             diff: 0,
             pos: createVector(0, 0),
             size: 200,
@@ -139,15 +146,22 @@ function homePreload() {
                     return width / 4
             },
             init: function() {
-                this.size = grid[0][this.id % row].size;
-                this.maxSize = grid[0][this.id % row].size;
-                this.minSize = grid[0][this.id % row].size;
-                this.img.style("z-index", -this.id + 10)
-                this.img.position(this.pos.x, this.pos.y)
-                this.target.size = grid[0][this.id % row].size
-                this.target.pos.x = logo.pos.x + width / ratioWorkSpacing * (this.id % row + 1);
-                this.target.pos.y = logo.pos.y + width / ratioWorkSpacing * (this.id % row + 1);
-                this.img.size(this.size, this.size);
+                this.img.child(this.inner)
+                this.img.style("height", 100 + "px")
+                // this.img.style("margin-top", 100 + "px")
+                this.inner.style("width", grid[0][0].size + "px")
+                // this.div.id("workDiv")
+                console.log(this.div)
+                // this.size = grid[0][this.id % row].size;
+                // this.maxSize = grid[0][this.id % row].size;
+                // this.minSize = grid[0][this.id % row].size;
+                this.img.class("work")
+                this.img.style("z-index", 100 - this.id)
+                // this.img.position(this.pos.x, this.pos.y)
+                // this.target.size = grid[0][this.id % row].size
+                // this.target.pos.x = logo.pos.x + width / ratioWorkSpacing * (this.id % row + 1);
+                // this.target.pos.y = logo.pos.y + width / ratioWorkSpacing * (this.id % row + 1);
+                // this.img.size(this.size, this.size);
             }
         };
         countOfWork += 1;
@@ -164,32 +178,39 @@ function homeSetup() {
     }
 
     qr.size(qrSize.width, qrSize.height)
-    qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
+    // qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
     countOfWork = 0;
     mask = createDiv("");
     mask.id("mask");
-    mask.size(width, height);
+    mask.size(width, height + 10000);
     unfolded = false;
-
+    works.push(new work("washroom", './lib/washroom.jpg'))
     works.push(new work("atomicBomb", './lib/atomicBomb.jpg'))
     works.push(new work("domino", './lib/domino.jpg'))
     works.push(new work("domino", './lib/jelly.jpg'))
-    works.push(new work("washroom", './lib/washroom.jpg'))
+
+    works.push(new work("poseidon", './lib/poseidon_small.jpg'))
+
+
+
 
 
     others.push(new other("about", './lib/about.png'))
     others.push(new other("about", './lib/blog.png'))
     works[0].img.mouseClicked(function() {
-        window.location = "./atomicBomb"
+        window.location = "./washroom"
     })
     works[1].img.mouseClicked(function() {
-        window.location = "./domino"
+        window.location = "./atomicBomb"
     })
     works[2].img.mouseClicked(function() {
-        window.location = "./jelly"
+        window.location = "./domino"
     })
     works[3].img.mouseClicked(function() {
-        window.location = "./washroom"
+        window.location = "./atomicbomb"
+    })
+    works[4].img.mouseClicked(function() {
+        window.location = "https://v.qq.com/x/page/t03472zm3w5.html"
     })
     others[0].img.mouseClicked(function() {
         window.location = "./me"
@@ -210,12 +231,12 @@ function homeSetup() {
 function home() {
     // select("#defaultCanvas1").style("height",mouseX+"px")
     // logo.img.size(logo.size, logo.size);
-
-
+    // alert(window.innerWidth)
+    // alert(width)
     logo.diff = logo.target.size - logo.size;
     logo.size += logo.diff * 0.3;
-        select("#defaultCanvas1").style("height",  logo.size+"px")
-                select("#defaultCanvas1").style("width",  logo.size+"px")
+    select("#defaultCanvas0").style("height", logo.size + "px")
+    select("#defaultCanvas0").style("width", logo.size + "px")
     for (var i = 0; i < works.length; i++) {
         workAnim(works[i])
     }
@@ -237,6 +258,8 @@ function workAnim(object) {
 
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    // alert("sd")
+    mask.size(window.innerWidth, window.innerHeight);
 }
 
 function unfold() {
@@ -246,11 +269,15 @@ function unfold() {
         for (var i = 0; i < works.length; i++) {
             works[i].target.size = grid[0][i % row].size;
             if (mobile) {
-                works[i].target.pos.x = grid[0][i % row].x; //step*index+start
-                works[i].target.pos.y = grid[i % 2 == 0 ? 3 : 2][i % row].y;
+                console.log(Math.floor(i / 5) + " " + Math.floor(i % col))
+                works[i].target.pos.x = grid[0][Math.floor(i % row)].x; //step*index+start
+                works[i].target.pos.y = grid[Math.floor(i / row) + 2][0].y;
+                // works[i].target.pos.y = grid[i % 2 == 0 ? 3 : 2][0].y;
             } else {
-                works[i].target.pos.x = grid[0][i + 2].x; //step*index+start
-                works[i].target.pos.y = grid[i % 2 == 0 ? 1 : 0][i].y;
+
+                works[i].target.pos.x = grid[0][Math.floor((i % col) + 2)].x; //step*index+start
+                works[i].target.pos.y = grid[Math.floor(i / col)][0].y;
+
             }
         }
 

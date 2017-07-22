@@ -101,6 +101,10 @@
  app.get("/jelly", function(req, res) {
      res.sendFile(__dirname + "/public/jelly/index.html");
  });
+ app.get("/mirror_pc", function(req, res) {
+     res.sendFile(__dirname + "/public/washroom/mirror/client_pc.html");
+ });
+
  app.get("/me", function(req, res) {
      res.sendFile(__dirname + "/public/me/index.html");
  });

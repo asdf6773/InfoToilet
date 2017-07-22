@@ -15,7 +15,7 @@ var rotateCamIndex;
 var distOfRotate;
 var mr, mg, mb;
 function preload() {
-
+var canvas;
 
 }
 function windowResized() {
@@ -23,7 +23,9 @@ function windowResized() {
 }
 
 function setup() {
-    createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+    canvas = createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+    canvas.id("canvasBG");
+      // canvas.style("z-index","100")
     homePreload();
     homeSetup();
     $("#intro").click(function() {
