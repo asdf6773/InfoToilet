@@ -319,7 +319,7 @@ function unfold() {
             others[i].target.pos.x = logo.pos.x + width / ratioWorkSpacing * (i + countOfWork); //border+offset
             others[i].target.pos.y = logo.pos.y + width / ratioWorkSpacing * (i + countOfWork);
         }
-        select('#mask').style("display", "none");
+        // select('#mask').style("display", "none");
         unfolded = !unfolded;
     }
 
