@@ -4,7 +4,10 @@
 function Particle(attractor) {
     //  this.attractor = attractor_;
     this.scale = 1;
+    if(mobile)
     this.des = createVector(random(width / 3), random(width / 3));
+    else
+      this.des = createVector(random(80), random(80));
     this.scaleRandom = 0.5 * Math.random() + 1;
     // this.dir = random(TWO_PI)
     this.dir = random(TWO_PI)
@@ -20,13 +23,10 @@ function Particle(attractor) {
     this.maxspeed = random(0.1, 0.2);
     this.opacity = 255;
     this.update = function(rotate) {
-
         // var distance = this.pos.dist(this.des)
         var temp = p5.Vector.sub(this.des, this.pos)
         if (this.pos.dist(this.des) > 1)
             this.pos.add(temp.mult(0.09));
-
-
         this.scale = 1;
         //add attraction
         var dir = p5.Vector.sub(attractor, this.pos);

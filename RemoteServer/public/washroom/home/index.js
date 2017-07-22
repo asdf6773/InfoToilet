@@ -1,16 +1,21 @@
 var grid
 var mobile
+
 window.onload = function() {
-    if (window.innerWidth <= window.innerHeight) {
-        mobile = true;
-    } else {
-        mobile = false;
-    }
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      mobile = true;
+
+  } else {
+      mobile = false;
+
+      $("#aToilet").attr("href","./display")
+  }
 
     if (mobile)
         positionOnMobile();
     else {
         positionOnDestop();
+
     }
 }
 

@@ -1,0 +1,249 @@
+.box {
+    max-width: 80vw;
+    margin: 0 auto;
+    position: relative;
+    top: 10px;
+    font-size: 10;
+    line-height: 1.5;
+    /*transform: translateY(-50%);*/
+    perspective: 400px;
+}
+
+#foot {
+    position: absolute;
+    bottom: 0px;
+    text-align: center;
+    height: 30px;
+    color: white;
+    font-size: 10px;
+    /*line-height: 10px;*/
+    width: 100%;
+}
+
+#introImg {
+    /*height:20px;*/
+    position: relative;
+    vertical-align: middle;
+    width: 70vw;
+    border-radius: 5px;
+    top: 100px;
+}
+
+#introDiv {
+    height: 0px;
+    text-align: center;
+    margin: 0 0;
+    display: block;
+}
+
+#intro {
+    background: url(../lib/intro.png);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    border-radius: 40px;
+}
+
+#weibo {
+    position: relative;
+    top: 2px;
+    width: 15px;
+    height: 15px;
+}
+
+.box p {
+    position: absolute;
+    bottom: 0px;
+    font-size: 10;
+    line-height: 1.5;
+}
+
+.box p div div div {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    background-blend-mode: color-dodge;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 100px 100px 100px 100px;
+    text-align: center;
+}
+
+#file {
+    display: none;
+}
+
+<!-- a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+-->body {
+    background-color: #000000;
+    font-family: 'Varela Round', sans-serif;
+    font-family: 15px;
+    overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#acc {
+    position: absolute;
+    topL10px;
+}
+
+button {
+    border: none;
+}
+
+h1 {
+    color: #3c4954;
+    text-align: center;
+    margin-top: 100px;
+    font-size: 36px;
+}
+
+p {
+    color: #a4b0b9;
+    line-height: 200%;
+}
+
+* {
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.form-div {
+    margin-top: 50px;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 20px;
+}
+
+.fa {
+    margin-right: 10px;
+}
+
+.input-label:hover {
+    background: #aaaaaa;
+    cursor: pointer;
+}
+
+.submit-label:hover {
+    background: #aaeeaa;
+    cursor: pointer;
+}
+
+.submit-label {
+    width: 100%;
+    background: #aaeeaa;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.transit {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    background: #aaeeaa;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+
+/*.toiletButton:hover {
+    background: #aaaaaa;
+    cursor: pointer;
+}
+
+.toiletUpload:hover {
+    background: #aaeeaa;
+    cursor: pointer;
+}*/
+
+.toiletButton {
+    /*font-size：100px;*/
+    position: relative;
+    /*margin-top: 50px;*/
+    width: 100%;
+    background: #E0EEE7;
+    color: #527283;
+    padding: 20px;
+    transition: 0.9s;
+}
+
+#back {
+    background: url(../lib/back.png);
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    left: 10px;
+    border-radius: 40px;
+    /*background: #E0EEE7;*/
+    /*color: #527283;*/
+}
+
+.divide {
+    width: 1px;
+    padding-top: 20px;
+    background: #B4CBD4;
+    position: absolute;
+    left: 50%;
+    z-index: 999;
+}
+
+.toiletUpload {
+    /*font-size：100px;*/
+    position: relative;
+    /*margin-top: 50px;*/
+    width: 100%;
+    /*z-index:999;*/
+    background: #E0EEE7;
+    color: #527283;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+.transitToToilet {
+    position: relative;
+    margin-top: 50px;
+    width: 100%;
+    background: #bbbbbb;
+    color: #ffffff;
+    padding: 20px;
+    transition: 0.3s;
+}
+
+.input-label {
+    width: 100%;
+    background: #bbbbbb;
+    color: #ffffff;
+    padding: 30px;
+    transition: 0.3s;
+}
+
+#btnSubmit {
+    display: none;
+}
