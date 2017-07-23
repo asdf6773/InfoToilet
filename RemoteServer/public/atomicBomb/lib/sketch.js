@@ -10,7 +10,10 @@ var greenLight, purpleLight, redLight;
 // var ip = "192.168.137.1:8888"
 var green, red, purple;
 var dice;
-
+var video;
+var playing = false;
+var fingers;
+var button;
 function preload() {
     green_standby = loadImage("/atomicBomb/lib/green_standby.png");
     green_pushed = loadImage("/atomicBomb/lib/green_pushed.png");
@@ -26,11 +29,26 @@ function preload() {
 
 var Y_AXIS = 1;
 var X_AXIS = 2;
-var c = document.getElementById("video");
-var ctx = c.getContext("2d");
 
+function toggleVid() {
+  if (playing) {
+    video.pause();
+    button.html('play');
+  } else {
+    video.loop();
+    button.html('pause');
+  }
+  playing = !playing;
+}
 
 function setup() {
+
+    video = createVideo(["/atomicBomb/lib/video.mov"])
+
+      // button = createButton('play');
+ // button.mousePressed(toggleVid);
+    // video = createCapture(VIDEO)
+    video.style("display","none")
     dice = Math.floor(random(0, 3));
     b1 = color(199, 214, 214);
     b2 = color(210, 218, 214);
@@ -45,7 +63,7 @@ function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     socket = io.connect('http://' + ip + '/Button')
     socket.on("boom", function(init) {
-      alert("boom!!!")
+      toggleVid()
     })
 
     socket.on("init", function(data) {
@@ -105,9 +123,6 @@ function setup() {
         if (!mouseIsPressed)
             flag = false;
     })
-
-
-
 }
 
 function draw() {
@@ -154,6 +169,7 @@ function draw() {
     pop()
     noFill();
     noStroke();
+    image(video,0,0,video.width/2,video.height/2)
 }
 
 function mousePressed() {

@@ -73,8 +73,11 @@ function homeSetup() {
     works.push(new work("washroom", './lib/washroom.jpg'))
     works.push(new work("atomicBomb", './lib/atomicBomb.jpg'))
     works.push(new work("domino", './lib/domino.jpg'))
-    works.push(new work("domino", './lib/jelly.jpg'))
     works.push(new work("poseidon", './lib/poseidon_small.jpg'))
+    works.push(new work("domino", './lib/jelly.jpg'))
+    works.push(new work("domino", './lib/connection.jpg'))
+
+
     others.push(new other("about", './lib/about.png'))
     others.push(new other("about", './lib/blog.png'))
     works[0].img.mouseClicked(function() {
@@ -87,10 +90,13 @@ function homeSetup() {
         window.location = "./domino"
     })
     works[3].img.mouseClicked(function() {
-        window.location = "./atomicbomb"
+        window.location = "https://v.qq.com/x/page/t03472zm3w5.html"
     })
     works[4].img.mouseClicked(function() {
-        window.location = "https://v.qq.com/x/page/t03472zm3w5.html"
+        window.location = "./jelly"
+    })
+    works[5].img.mouseClicked(function() {
+        window.location = "./connection"
     })
     others[0].img.mouseClicked(function() {
         window.location = "./me"
@@ -144,6 +150,7 @@ function workAnim(object) {
 
 
 }
+
 function unfold() {
     if (!unfolded) {
         collapse();
@@ -184,6 +191,7 @@ function collapse() {
         others[1].target.pos.y = grid[2][0].y;
     }
 }
+
 function withdraw() {
     logo.target.size = grid[0][0].size;
     for (var i = 0; i < works.length; i++) {

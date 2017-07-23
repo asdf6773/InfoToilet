@@ -117,6 +117,9 @@
  app.get("/domino", function(req, res) {
          res.sendFile(__dirname + "/public/domino/index.html");
  });
+ app.get("/connection", function(req, res) {
+         res.sendFile(__dirname + "/public/connection/index.html");
+ });
  app.get("/atomicBomb", function(req, res) {
      res.sendFile(__dirname + "/public/atomicBomb/test.html");
  });
