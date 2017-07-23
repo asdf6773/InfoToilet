@@ -22,7 +22,8 @@ var Logo = function() {
             size: 200,
         },
         init: function() {
-            this.size = grid[0][0].size;
+          if(unfolded)
+
             this.target.size = grid[0][0].size;
             this.target.pos.x = grid[0][0].x;
             this.target.pos.y = grid[0][0].y;
@@ -92,7 +93,7 @@ work = function(name, src) {
             this.inner.style("width", grid[0][0].size + "px")
             this.img.class("work")
             this.img.style("z-index", 100 - this.id)
-            
+
         }
     };
     countOfWork += 1;
