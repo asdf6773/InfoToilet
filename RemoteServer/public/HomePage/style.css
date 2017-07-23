@@ -46,7 +46,7 @@
     left: 0;
     background: #eeeeee;
     opacity: 0.3;
-    display: none;
+    display: block;
     margin-bottom: 50px;
     /*z-index:-999;*/
 }

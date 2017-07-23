@@ -1,16 +1,25 @@
 @media screen and (min-width:501px) {
-  #scan{
+    #scan {
         font-family: "Microsoft YaHei", "黑体", "宋体";
-        position:fixed;
-        bottom:1vw;
-        right:2vw
-  }
+        position: fixed;
+        bottom: 1vw;
+        right: 2vw
+    }
     #qr {
         position: fixed;
-        bottom: 20px;
-        right: 20px;
+        bottom: 10px;
+        right: 10px;
         width: 10vw;
+        opacity: 0.6
         /*display: grid;*/
+    }
+    #logo {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        width: 10vw;
+
+
     }
     #catalog1 {
         /*background-image: url(../lib/catalog/catalog-1.png);*/
@@ -109,13 +118,21 @@
 }
 
 @media screen and (max-width:500px) {
-  #qr {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 10vw;
-      display: none;
-  }
+    #qr {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 10vw;
+        display: none;
+    }
+    #logo {
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        width: 12vw;
+
+
+    }
     #catalog1 {
         /*background-image: url(../lib/catalog/catalog-1.png);*/
     }

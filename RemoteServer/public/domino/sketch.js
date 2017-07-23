@@ -18,12 +18,19 @@ var qr;
 var qrSize;
 var canvas;
 var scan;
+var logoA,logo;
+
 function setup() {
     canvas = createCanvas(window.innerWidth, window.innerHeight, WEBGL);
     qr = createImg('/domino/lib/qr.png', "qr");
-        // scan = createDiv("在移动设备上体验互动");
+    logo = createImg('/lib/logo_white.png', "logo");
+    logoA = createA("/")
+    logoA.child(logo)
+    logo.id("logo")
 
-        // scan.id("scan")
+    // scan = createDiv("在移动设备上体验互动");
+
+    // scan.id("scan")
     qr.id("qr")
     qrSize = {
         width: width / 10,
@@ -31,7 +38,7 @@ function setup() {
     }
     qr.size(qrSize.width, qrSize.height)
     // scan.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 10)
-    qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
+    // qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
     // colorMode(HSB,255)
     $("#intro").click(function() {
         if ($("#introDiv").css("display") == "none") {
@@ -114,16 +121,16 @@ window.ondevicemotion = function(event) {
 }
 
 function draw() {
-    $('body').prop('scrollTop','0');
+    $('body').prop('scrollTop', '0');
     if (canvas.width != window.innerWidth || canvas.height != window.innerHeight) {
         resizeCanvas(window.innerWidth, window.innerHeight);
 
-         qrSize = {
-             width: width / 10,
-             height: width / 10
-         }
-           qr.size(qrSize.width, qrSize.height)
-              qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
+        qrSize = {
+            width: width / 10,
+            height: width / 10
+        }
+        qr.size(qrSize.width, qrSize.height)
+        // qr.position(width - qrSize.width - window.innerWidth / 50, height - qrSize.width - window.innerWidth / 50)
     }
     //Control----------------------------------------------------
     // pointLight(200, 200, 200, 100,400,-100);

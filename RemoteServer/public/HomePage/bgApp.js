@@ -18,7 +18,7 @@ var canvas;
 var angleOfView;
 
 function initApp() {
-    canvas = createCanvas(window.innerWidth, window.innerHeight, WEBGL);
+
     canvas.id("canvasBG");
     $("#intro").click(function() {
         if ($("#introDiv").css("display") == "none") {
