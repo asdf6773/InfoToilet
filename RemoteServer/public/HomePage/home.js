@@ -71,9 +71,10 @@ function homeSetup() {
     mask.size(width, height + 10000);
     unfolded = false;
     works.push(new work("washroom", './lib/washroom.jpg'))
-    works.push(new work("atomicBomb", './lib/atomicBomb.jpg'))
+
     works.push(new work("domino", './lib/domino.jpg'))
     works.push(new work("poseidon", './lib/poseidon_small.jpg'))
+    works.push(new work("atomicBomb", './lib/atomicBomb.jpg'))
     works.push(new work("domino", './lib/jelly.jpg'))
     works.push(new work("domino", './lib/connection.jpg'))
 
@@ -83,14 +84,15 @@ function homeSetup() {
     works[0].img.mouseClicked(function() {
         window.location = "./washroom"
     })
+
     works[1].img.mouseClicked(function() {
-        window.location = "./atomicBomb"
-    })
-    works[2].img.mouseClicked(function() {
         window.location = "./domino"
     })
-    works[3].img.mouseClicked(function() {
+    works[2].img.mouseClicked(function() {
         window.location = "https://v.qq.com/x/page/t03472zm3w5.html"
+    })
+    works[3].img.mouseClicked(function() {
+        window.location = "./atomicBomb"
     })
     works[4].img.mouseClicked(function() {
         window.location = "./jelly"

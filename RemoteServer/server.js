@@ -123,6 +123,9 @@
  app.get("/atomicBomb", function(req, res) {
      res.sendFile(__dirname + "/public/atomicBomb/test.html");
  });
+ app.get("/live", function(req, res) {
+     res.sendFile(__dirname + "/public/atomicBomb/live.html");
+ });
  app.get("/atomicBombTest", function(req, res) {
      res.sendFile(__dirname + "/public/atomicBomb/test.html");
  });

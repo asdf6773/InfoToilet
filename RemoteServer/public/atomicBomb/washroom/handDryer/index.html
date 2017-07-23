@@ -2,7 +2,9 @@
 <html>
 
 <head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		 <link rel="stylesheet" type=".public/handDryer/text/css" href="css.css">
+       <link href="./lib//favicon.ico" rel="shortcut icon">
 	<meta charset=utf-8>
 	<title>Connection v 1.0.8</title>
 	<style>
@@ -15,11 +17,10 @@
 			height: 100%
 		}
 	</style>
-	    <link rel="stylesheet" type="text/css" href="/connection/style.css">
-	    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
-<body id = "threejs"  touchend ="touch(event)" onclick="show_coords(event)" onmousemove ="show_coords(event)" style='overflow:hidden' >
+<body id = "threejs" style='overflow:hidden' >
+	<!-- <div id="info">Artisticode</div> -->
 	<script type="x-shader/x-vertex" id="vertexshader">
     #ifdef GL_ES
 		precision highp float;
@@ -27,11 +28,11 @@
 
 		uniform vec2 mouse;
 		varying vec3 vNormal;
-
+		varying vec3 newPosition;
 		void main() {
 			vNormal = normal;
-			vec3 newPosition = position;
-			  gl_PointSize = 5.0;
+			newPosition = position;
+			gl_PointSize =3000000.0/newPosition.z/newPosition.z;
 
 		  gl_Position = projectionMatrix *
 		                modelViewMatrix *
@@ -44,14 +45,17 @@
 	  #ifdef GL_ES
 		precision highp float;
 		#endif
+		varying vec3 newPosition;
 		varying vec3 vNormal;
 		vec4 color;
 		void main() {
+
 			float dist = distance(gl_PointCoord, vec2(0.5, 0.5));
 			if (dist < 0.5) {
 				gl_FragColor = vec4(
-					1.0,1.0,1.0,0.8)	;
-				} else {
+					1.0,0.0,0.0,250.0/newPosition.z);
+				}
+				 else {
 					discard;
 				}
 		 }
@@ -69,7 +73,7 @@
 				void main() {
 
 						gl_FragColor = vec4(
-		  				1.0,1.0,1.0,0.2)	;
+		  				1.0,1.0,1.0,0.8)	;
 
 		     }
 
@@ -77,8 +81,12 @@
 
 
 	</script>
-    <script src="https://cdn.bootcss.com/three.js/r83/three.min.js"></script>
-    <script src="/connection/bundle.js"></script>
+      <script language="javascript" type="text/javascript" src="./display/ip.js"></script>
+      <script language="javascript" type="text/javascript" src="./socket.io/socket.io.js"></script>
+      <script src="./handDryer/io.js"></script>
+      <script src="./handDryer/js/three.min.js"></script>
+      <script src="./handDryer/bundle.js"></script>
+
 
     <script>
 
@@ -88,7 +96,6 @@
 	<script>
 		// Our Javascript will go here.
 	</script>
-	<a id = "logo" href="/"><img  id="logoImg" src = "/lib/logo_white.png"></a>
 </body>
 
 

@@ -1,0 +1,151 @@
+<html>
+
+<head>
+      <title>关于作者</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link href="./lib//favicon.ico" rel="shortcut icon">
+    <link rel="stylesheet" href="/washroom/css/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/washroom/author/style.css">
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+    <script language="javascript" type="text/javascript">
+    </script>
+</head>
+
+<body>
+    <label for="back" id="backLabel" class="entry" style="position:abolute"></label>
+    <a id="back"></a>
+    <script language="javascript" type="text/javascript" src="/washroom/display/ip.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+    <script language="javascript" type="text/javascript" src="/washroom/author/app.js"></script>
+    <div class="author" id="author">
+        <div class="name ">张阳</div>
+        <div class="name name_ titlex`x">互动设计师/开发者</div>
+        <div id="pdiv">
+            <div id="pdiv">
+                <image id="portrait" src="/washroom/lib/portait.jpg" style="display: inline-block;" />
+            </div>
+
+            <div class="info title" id="uni">清华大学美术学院
+                <div class="info word" id="dep">信息艺术设计系</div>
+            </div>
+
+            <div class="info title" id="tu">指导老师
+                <div class="info word" id="tuN">师丹青</div>
+            </div>
+
+
+            <div id="pdiv">
+              学院推送
+              <a href = "https://mp.weixin.qq.com/s/wsVdteLes6D70nFkfuXxzQ">  <image id="pop" src="/washroom/lib/pop.jpg" style="display: inline-block;" /></a>
+            </div>
+            <div class="info title" id="intro">作品简介
+                <div class="info content">我会一直让你肆无忌惮地宣泄和张狂。
+                    <div class="info insc">——马桶</div>
+                </div>
+                <div class="info content">你从未感激过的这些水，它们最终都将会被抛弃和遗忘。
+                    <div class="info insc">——水龙头</div>
+                </div>
+                <div class="info content">我帮你清除掉那些纠缠不放的累赘。
+                    <div class="info insc">——烘手机</div>
+                </div>
+                <div class="info content">一个巨大的下水循环系统。每家每户的厕所就是人们接入这个系统的终端。人们在里面宣泄、获取、放松、消遣。这一切都成为如今网络社区的强烈缩影。
+                    <div class="info insc">——作者</div>
+                </div>
+                <div class="info content" id="anonymous">
+                    <div id=comment>
+                        <div class="comment" id="comment0"></div>
+                        <div class="comment" id="comment1"></div>
+                        <div class="comment" id="comment2"></div>
+                    </div>
+                    <div class="info" id="loadMore">
+                        <image id="arrow" onclick="loadComments();" src="/washroom/lib/arrow.png" />
+                    </div>
+                    <div class="info insc" id="anon">——匿名</div>
+
+                </div>
+            </div>
+            <form id="message">
+                <textarea id="text" name="text" style="width:80%;height:80px;"></textarea>
+                <input type="submit" value="留言" id="send"></input>
+            </form>
+            <div class="info title" id="txtQR">
+        添加微信交流创意和想法</div>
+            <img src="/washroom/lib/qr.png" id="qr">
+              <div class="info title" id="intro">
+          即将上线</div>
+                <img src="/washroom/lib/atomicBomb.png" id="atomic">
+        </div>
+        <script>
+            var dataGlobal;
+            var num = 3
+
+            function loadComments() {
+
+                for (var i = 0; i < 5; i++) {
+                    var newDiv = document.createElement("div");
+
+                    num += 1;
+                    newDiv.className = "comment";
+                    // newDiv.className = "comment";
+                    newDiv.id = "comment" + (num - 1).toString();
+                    document.getElementById("comment").appendChild(newDiv);
+                    $("#comment" + (num - 1).toString()).html(dataGlobal.comments[dataGlobal.comments.length - num].comment);
+                }
+            }
+
+            function update(data) {
+                dataGlobal = data;
+                //console.log(data);
+                comments = data;
+                for (var i = 0; i < num; i++) {
+                    var obj = "#comment" + i.toString()
+                    $(obj).html(data.comments[data.comments.length - i - 1].comment);
+
+                    //console.log(obj)
+
+                }
+            }
+            $.ajax({
+                type: 'GET',
+                url: "/comments",
+                data: 0,
+                success: update
+                // dataType: 'text',
+            });
+            var comments;
+            var form = document.getElementById("message");
+            form.onsubmit = function(e) {
+                if (document.getElementById("text").value == "") {
+                    alert("请输入内容")
+                    return mySubmit(false);
+                } else {
+                    e.preventDefault();
+                    var result = {
+                        text: form.text.value
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: "/comments",
+                        data: result,
+                        success: update
+                        // dataType: 'text',
+                    });
+
+                    form.reset()
+                }
+            }
+            function mySubmit(flag) {
+                return flag;
+            }
+        </script>
+</body>
+
+</html>

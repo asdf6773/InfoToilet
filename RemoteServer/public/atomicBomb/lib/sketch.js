@@ -14,6 +14,7 @@ var video;
 var playing = false;
 var fingers;
 var button;
+
 function preload() {
     green_standby = loadImage("/atomicBomb/lib/green_standby.png");
     green_pushed = loadImage("/atomicBomb/lib/green_pushed.png");
@@ -24,31 +25,26 @@ function preload() {
     green = loadImage("/atomicBomb/lib/green.png");
     purple = loadImage("/atomicBomb/lib/purple.png");
     red = loadImage("/atomicBomb/lib/red.png");
-    title = loadImage("/atomicBomb/lib/title.png");
+    title = loadImage("/atomicBomb/lib/title_2.png");
 }
 
 var Y_AXIS = 1;
 var X_AXIS = 2;
 
 function toggleVid() {
-  if (playing) {
-    video.pause();
-    button.html('play');
-  } else {
     video.loop();
-    button.html('pause');
-  }
-  playing = !playing;
 }
 
 function setup() {
 
-    video = createVideo(["/atomicBomb/lib/video.mov"])
-
-      // button = createButton('play');
- // button.mousePressed(toggleVid);
+    // video = createVideo(["/atomicBomb/lib/video.mov"])
+    // video.size(200, 200)
+    // video.id ("video")
+    // $("#video").attr("playsinline")
+    // button = createButton('play');
+    // button.mousePressed(toggleVid);
     // video = createCapture(VIDEO)
-    video.style("display","none")
+    // video.style("display", "none")
     dice = Math.floor(random(0, 3));
     b1 = color(199, 214, 214);
     b2 = color(210, 218, 214);
@@ -63,9 +59,24 @@ function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
     socket = io.connect('http://' + ip + '/Button')
     socket.on("boom", function(init) {
-      toggleVid()
+        toggleVid()
+        console.log("boom!!")
     })
-
+    $("#intro").click(function() {
+      $("#intro").css("z-index","1000")
+        if ($("#introDiv").css("display") == "none") {
+            $("#introDiv").css('display', 'block')
+        } else {
+            $("#introDiv").css('display', 'none')
+        }
+    })
+    $("#introImg").click(function() {
+        if ($("#introDiv").css("display") == "none") {
+            $("#introDiv").css('display', 'block')
+        } else {
+            $("#introDiv").css('display', 'none')
+        }
+    })
     socket.on("init", function(data) {
         greenLight = data.green;
         redLight = data.red;
@@ -169,7 +180,7 @@ function draw() {
     pop()
     noFill();
     noStroke();
-    image(video,0,0,video.width/2,video.height/2)
+    // image(video, 0, 0, video.width / 2, video.height / 2)
 }
 
 function mousePressed() {

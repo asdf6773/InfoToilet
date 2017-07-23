@@ -1,0 +1,130 @@
+.shock {
+    font-size: 15px;
+    font-weight: bold;
+    color: red;
+}
+
+body {
+    font-family: 'Varela Round', sans-serif;
+    font-family: 15px;
+    overflow: hidden;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+html {
+    /*height: 200px;*/
+    /*background-attachment:fixed;*/
+    background: -webkit-linear-gradient(#D6E3E9, #DEDEDE);
+    /* Safari 5.1 - 6.0 */
+    background: -o-linear-gradient(#D6E3E9, #DEDEDE);
+    /* Opera 11.1 - 12.0 */
+    background: -moz-linear-gradient(#D6E3E9, #DEDEDE);
+    /* Firefox 3.6 - 15 */
+    background: linear-gradient(#D6E3E9, #DEDEDE);
+    /* 标准的语法（必须放在最后） */
+    background-attachment: fixed;
+}
+.wrapper {
+    position: relative;
+    width: 320;
+    height: 400;
+    z-index: -1;
+}
+
+.wrapper canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+input {
+    position: absolute;
+    bottom: 0;
+}
+
+.submit-label {
+    border: 10px;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    border-color: #527283;
+    border-right: 1px;
+    bottom: 0;
+    width: 50%;
+    background: #E0EEE7;
+    color: #527283;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    transition: 0.3s;
+}
+
+.divide {
+    width: 1px;
+    padding-top: 20px;
+    background: #B4CBD4;
+    position: absolute;
+    bottom:10px;
+    left: 50%;
+    z-index: 999;
+}
+
+#entrance {
+    background: url(../lib/magnifying.png);
+
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    right: 10px;
+    border-radius: 40px;
+    /*background: #E0EEE7;*/
+    /*color: #527283;*/
+}
+#back {
+    /*background: url(../lib/magnifying.png);*/
+
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 10px;
+    left: 10px;
+    border-radius: 40px;
+    /*background: #E0EEE7;*/
+    /*color: #527283;*/
+}
+
+.input-label {
+    border: 10px;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    background: #E0EEE7;
+    color: #527283;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-color: #527283;
+    /*padding:  16px;*/
+    /*padding-bottom: : 16px;*/
+    transition: 0.3s;
+}
+
+#imgFile {
+    display: none;
+}
+
+a {
+    /*display: none;*/
+}
+
+#submit {
+    display: none;
+}
+
+.form-div {
+    margin-top: 50px;
+}
