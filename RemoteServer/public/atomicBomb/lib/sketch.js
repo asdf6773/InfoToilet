@@ -36,15 +36,6 @@ function toggleVid() {
 }
 
 function setup() {
-
-    // video = createVideo(["/atomicBomb/lib/video.mov"])
-    // video.size(200, 200)
-    // video.id ("video")
-    // $("#video").attr("playsinline")
-    // button = createButton('play');
-    // button.mousePressed(toggleVid);
-    // video = createCapture(VIDEO)
-    // video.style("display", "none")
     dice = Math.floor(random(0, 3));
     b1 = color(199, 214, 214);
     b2 = color(210, 218, 214);
@@ -58,10 +49,7 @@ function setup() {
     imageMode(CENTER);
     createCanvas(window.innerWidth, window.innerHeight);
     socket = io.connect('http://' + ip + '/Button')
-    socket.on("boom", function(init) {
-        toggleVid()
-        console.log("boom!!")
-    })
+
     $("#intro").click(function() {
       $("#intro").css("z-index","1000")
         if ($("#introDiv").css("display") == "none") {
@@ -77,63 +65,8 @@ function setup() {
             $("#introDiv").css('display', 'none')
         }
     })
-    socket.on("init", function(data) {
-        greenLight = data.green;
-        redLight = data.red;
-        purpleLight = data.purple;
-        if (dice == 0 && data.green) {
-            flag = true
-        }
-        if (dice == 1 && data.red) {
-            flag = true
-        }
-        if (dice == 2 && data.purple) {
-            flag = true
-        }
-    })
-    socket.on("buttonInit", function(init) {
-        flag = init;
-    })
+  socketSetup();
 
-    socket.on("greenPressed", function() {
-        if (dice == 0)
-            flag = true;
-        greenLight = true;
-    })
-    socket.on("redPressed", function() {
-        if (dice == 1)
-            flag = true;
-        redLight = true;
-    })
-    socket.on("purplePressed", function() {
-        if (dice == 2)
-            flag = true;
-        purpleLight = true;
-    })
-    socket.on("releaseGreen", function() {
-        if (dice == 0)
-            flag = false;
-        greenLight = false;
-    })
-    socket.on("releaseRed", function() {
-        if (dice == 1)
-            flag = false;
-        redLight = false;
-    })
-    socket.on("releasePurple", function() {
-        if (dice == 2)
-            flag = false;
-        purpleLight = false;
-    })
-
-    socket.on("presser", function() {
-        presser = true;
-        flag = true;
-    })
-    socket.on("released", function() {
-        if (!mouseIsPressed)
-            flag = false;
-    })
 }
 
 function draw() {
@@ -236,4 +169,68 @@ function setGradient(x, y, w, h, c1, c2, axis) {
             line(i, y, i, y + h);
         }
     }
+}
+
+function socketSetup(){
+  socket.on("boom", function(init) {
+      toggleVid()
+      console.log("boom!!")
+  })
+  socket.on("init", function(data) {
+      greenLight = data.green;
+      redLight = data.red;
+      purpleLight = data.purple;
+      if (dice == 0 && data.green) {
+          flag = true
+      }
+      if (dice == 1 && data.red) {
+          flag = true
+      }
+      if (dice == 2 && data.purple) {
+          flag = true
+      }
+  })
+  socket.on("buttonInit", function(init) {
+      flag = init;
+  })
+
+  socket.on("greenPressed", function() {
+      if (dice == 0)
+          flag = true;
+      greenLight = true;
+  })
+  socket.on("redPressed", function() {
+      if (dice == 1)
+          flag = true;
+      redLight = true;
+  })
+  socket.on("purplePressed", function() {
+      if (dice == 2)
+          flag = true;
+      purpleLight = true;
+  })
+  socket.on("releaseGreen", function() {
+      if (dice == 0)
+          flag = false;
+      greenLight = false;
+  })
+  socket.on("releaseRed", function() {
+      if (dice == 1)
+          flag = false;
+      redLight = false;
+  })
+  socket.on("releasePurple", function() {
+      if (dice == 2)
+          flag = false;
+      purpleLight = false;
+  })
+
+  socket.on("presser", function() {
+      presser = true;
+      flag = true;
+  })
+  socket.on("released", function() {
+      if (!mouseIsPressed)
+          flag = false;
+  })
 }
