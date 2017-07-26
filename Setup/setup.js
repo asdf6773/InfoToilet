@@ -122,9 +122,9 @@ function setup() {
     // isSetup = false;
     setTimeout(function() {
 
-        childProcess.exec('start chrome --kiosk artisticode.net/mirrorScreen --window-position=2160,0 --kiosk --user-data-dir=c:/monitor1');
+        childProcess.exec('start chrome --kiosk artisticode.net/mirrorScreen --window-position=0,0 --kiosk --user-data-dir=c:/monitor1');
         setTimeout(function() {
-            childProcess.exec('start chrome --kiosk artisticode.net/projector --window-position=1440,0 --kiosk --user-data-dir=c:/monitor2');
+            childProcess.exec('start chrome --kiosk artisticode.net/projector --window-position=720,0 --kiosk --user-data-dir=c:/monitor2');
 
         }, 1000)
         isSetting = false;
