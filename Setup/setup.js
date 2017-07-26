@@ -64,7 +64,7 @@ setInterval(function() {
         isSetup = false;
         var _ap = {
             ssid: "washroom",
-            password: ""
+            password: "89154055qQ"
         }; //连上后自动登陆
         var results = WiFiControl.connectToAP(_ap, function(err, response) {
             if (err) console.log(err);
