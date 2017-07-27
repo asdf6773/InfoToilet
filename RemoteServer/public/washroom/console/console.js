@@ -23,6 +23,12 @@ $(document).ready(function() {
             socket.emit("restart")
 
     })
+    $("#shutdown").click(function() {
+        var c = confirm("确认重启页面？");
+        if (c)
+            socket.emit("restart")
+
+    })
     $("#reboot").click(function() {
         var c = confirm("确认重启主机？");
         if (c)

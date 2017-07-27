@@ -522,6 +522,10 @@
          io.of('/checkStatus').emit('restart');
          console.log("restart by console")
      })
+     socket.on("shutdown", function() {
+         io.of('/checkStatus').emit('shutdown');
+         console.log("restart by console")
+     })
      socket.on("reopen", function() {
          io.of('/checkStatus').emit('reopen');
          console.log("reopen by console")

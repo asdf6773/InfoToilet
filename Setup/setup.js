@@ -103,6 +103,9 @@ socket2.on("reopen", function() {
 socket2.on("reboot", function() {
       childProcess.exec('shutdown /r /t 0');
 })
+socket2.on("shutdown", function() {
+      childProcess.exec('shutdown -s -t 0');
+})
 //---------------------------------------------------
 
 
