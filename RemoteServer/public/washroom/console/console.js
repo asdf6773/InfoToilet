@@ -26,7 +26,7 @@ $(document).ready(function() {
     $("#shutdown").click(function() {
         var c = confirm("确认重启页面？");
         if (c)
-            socket.emit("restart")
+            socket.emit("shutdown")
 
     })
     $("#reboot").click(function() {
