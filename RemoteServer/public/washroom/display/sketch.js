@@ -191,7 +191,7 @@ function draw() {
     if (!projector) {
         background("#b8c3ca");
     } else {
-        background(100);
+        background(0);
     }
     if (attractForce != 0) {
         attractor.z -= 0.05
