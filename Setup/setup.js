@@ -39,7 +39,7 @@ if (ifaceState.ssid != "washroom" || ifaceState.ssid == undefined) {
 } else {
     login()
 }
-listenPort.setup("COM3")
+listenPort.setup("COM5")
 // Initialize wifi module
 // Absolutely necessary even to set interface to null
 
@@ -124,7 +124,6 @@ function setup() {
     childProcess.exec("taskkill /IM chrome.exe");
     // isSetup = false;
     setTimeout(function() {
-
         childProcess.exec('start chrome --kiosk artisticode.net/mirrorScreen --window-position=0,0 --kiosk --user-data-dir=c:/monitor1');
         setTimeout(function() {
             childProcess.exec('start chrome --kiosk artisticode.net/projector --window-position=720,0 --kiosk --user-data-dir=c:/monitor2');

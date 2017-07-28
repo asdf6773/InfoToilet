@@ -524,7 +524,7 @@
      })
      socket.on("shutdown", function() {
          io.of('/checkStatus').emit('shutdown');
-         console.log("restart by console")
+         console.log("shutdown by console")
      })
      socket.on("reopen", function() {
          io.of('/checkStatus').emit('reopen');
