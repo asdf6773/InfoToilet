@@ -3,6 +3,7 @@
         /*background-image: url(../lib/catalog/catalog-1.png);*/
     }
     #anonymous {
+          margin-top: 20px;
         height: auto;
     }
     #anon {
@@ -15,7 +16,7 @@
         width: 10%;
     }
     #loadMore {
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
     .work {
         width: 82vw;
@@ -237,6 +238,7 @@
         /*background-image: url(../lib/catalog/catalog-1.png);*/
     }
     #anonymous {
+      margin-top: 20px;
         height: auto;
     }
     #anon {
