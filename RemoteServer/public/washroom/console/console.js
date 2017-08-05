@@ -53,8 +53,8 @@ $(document).ready(function() {
     var max = document.getElementById("max");
     var status = document.getElementById("status");
     current.getElementsByTagName("li")[0].innerHTML = "在线人数：" + onlineUser;
-    current.getElementsByTagName("li")[1].innerHTML = "投影机"+ + onlineProjector;
-    current.getElementsByTagName("li")[2].innerHTML = "图片数量：" + totalImage;
+    current.getElementsByTagName("li")[1].innerHTML = "投影机：" + onlineProjector;
+    current.getElementsByTagName("li")[2].innerHTML = "图片剩余：" + totalImage;
     current.getElementsByTagName("li")[3].innerHTML = "正在冲水：" + isFlushing;
     //
     // max.getElementsByTagName("li")[0].innerHTML = "最多在线人数：" + totalUser;
@@ -93,8 +93,8 @@ $(document).ready(function() {
         faucet = data.status_faucet;
 
         current.getElementsByTagName("li")[0].innerHTML = "在线人数：" + onlineUser;
-        current.getElementsByTagName("li")[1].innerHTML = "投影机" + onlineProjector;
-        current.getElementsByTagName("li")[2].innerHTML = "图片数量：" + currentImage;
+        current.getElementsByTagName("li")[1].innerHTML = "投影机：" + onlineProjector;
+        current.getElementsByTagName("li")[2].innerHTML = "图片剩余：" + currentImage;
         current.getElementsByTagName("li")[3].innerHTML = "正在冲水：" + isFlushing;
         //
         //
