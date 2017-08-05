@@ -52,10 +52,10 @@ $(document).ready(function() {
     var total = document.getElementById("total");
     var max = document.getElementById("max");
     var status = document.getElementById("status");
-    // current.getElementsByTagName("li")[0].innerHTML = "当前在线人数：" + onlineUser;
-    // current.getElementsByTagName("li")[1].innerHTML = "当前观察剩余：" + onlineProjector;
-    // current.getElementsByTagName("li")[2].innerHTML = "当前图片剩余：" + totalImage;
-    // current.getElementsByTagName("li")[3].innerHTML = "马桶冲水状态：" + isFlushing;
+    current.getElementsByTagName("li")[0].innerHTML = "在线人数：" + onlineUser;
+    current.getElementsByTagName("li")[1].innerHTML = "投影机"+ + onlineProjector;
+    current.getElementsByTagName("li")[2].innerHTML = "图片数量：" + totalImage;
+    current.getElementsByTagName("li")[3].innerHTML = "正在冲水：" + isFlushing;
     //
     // max.getElementsByTagName("li")[0].innerHTML = "最多在线人数：" + totalUser;
     // max.getElementsByTagName("li")[1].innerHTML = "最多观察人数：" + onlineProjector;
@@ -92,10 +92,10 @@ $(document).ready(function() {
         dryer = data.status_dryer;
         faucet = data.status_faucet;
 
-        // current.getElementsByTagName("li")[0].innerHTML = "当前在线人数：" + onlineUser;
-        // current.getElementsByTagName("li")[1].innerHTML = "当前观察剩余：" + onlineProjector;
-        // current.getElementsByTagName("li")[2].innerHTML = "当前图片剩余：" + currentImage;
-        // current.getElementsByTagName("li")[3].innerHTML = "马桶冲水状态：" + isFlushing;
+        current.getElementsByTagName("li")[0].innerHTML = "当前在线人数：" + onlineUser;
+        current.getElementsByTagName("li")[1].innerHTML = "当前观察剩余：" + onlineProjector;
+        current.getElementsByTagName("li")[2].innerHTML = "当前图片剩余：" + currentImage;
+        current.getElementsByTagName("li")[3].innerHTML = "马桶冲水状态：" + isFlushing;
         //
         //
         // max.getElementsByTagName("li")[0].innerHTML = "最多在线人数：" + maxOnlineUser;
