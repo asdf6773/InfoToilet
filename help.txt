@@ -1,3 +1,5 @@
 Git: Ignore tracked files
 
-git update-index --assume-unchanged file
+git update-index --assume-unchanged /path/file
+
+git update-index --no-assume-unchanged /path/file

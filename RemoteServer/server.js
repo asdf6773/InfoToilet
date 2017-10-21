@@ -518,6 +518,10 @@
          //     io.of('/mirror').emit('clearBonus');
          // }, 9000)
      })
+     socket.on("flow", function() {
+         io.of('/faucet').emit('weiboData',weiboData);
+         console.log("flow by console")
+     })
      socket.on("restart", function() {
          io.of('/checkStatus').emit('restart');
          console.log("restart by console")

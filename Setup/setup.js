@@ -39,7 +39,7 @@ if (ifaceState.ssid != "washroom" || ifaceState.ssid == undefined) {
 } else {
     login()
 }
-listenPort.setup("COM5")
+listenPort.setup("COM3")
 // Initialize wifi module
 // Absolutely necessary even to set interface to null
 
