@@ -14,10 +14,11 @@ var textBufferLoaded = false;
 var bufferLoaded = false;
 var upload;
 var hole;
-var bg, bg_pc,keyboard;
+var bg, bg_pc, keyboard;
 var layer, layer_pc;
 var waterHeight;
 var rise, fall;
+var flushSound;
 var matt;
 var flag = true;
 var addWater;
@@ -42,309 +43,310 @@ var ratio;
 var pc_qr;
 // var en; //noise parameter
 document.oncontextmenu = function() {
-    return false;
+	return false;
 }
 var waitForFlush = false;
 
 function preload() {
-
-    dropSound.push(loadSound('/washroom/lib/drop.wav'))
-    dropSound.push(loadSound('/washroom/lib/drop2.mp3'))
-    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-        mobile = true;
-        ratio = window.innerWidth
-    } else {
-        mobile = false;
-        ratio = 400
-    }
+    flushSound=loadSound('/washroom/lib/flushSound.wav')
+	dropSound.push(loadSound('/washroom/lib/drop.wav'))
+	dropSound.push(loadSound('/washroom/lib/drop2.mp3'))
+	if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		mobile = true;
+		ratio = window.innerWidth
+	} else {
+		mobile = false;
+		ratio = 400
+	}
 }
 
 function setup() {
-    var hour = d.getHours()
-    var minute = d.getMinutes()
-    console.log(hour + ' ' + minute)
-    offset = 0;
-    pc_qr = loadImage("http://" + ip + "/washroom/lib/toilet_pc_qr.png")
-    matt = loadImage("http://" + ip + "/washroom/lib/matt.png")
-        keyboard = loadImage("http://" + ip + "/washroom/lib/keyboard.png")
-    waterHeight = 1
 
-    hole = 50;
-    bg = loadImage("http://" + ip + "/washroom/lib/toilet-display.png")
-    bg_pc = loadImage("http://" + ip + "/washroom/lib/bg_pc.png")
-    layer = loadImage("http://" + ip + "/washroom/lib/toilet-layer.png")
-    layer_pc = loadImage("http://" + ip + "/washroom/lib/layer_pc.png")
-    imageMode(CENTER);
-    noiseSeed = 0;
-    createCanvas(windowWidth, windowHeight - 50);
-    attractor = createVector(width / 2, 170); //
-    flush = createButton('冲水');
-    divide = createA('/', '');
-    flush.class('toiletButton');
-    flush.id('flush');
-    flush.style("font-size", "15px");
+	var hour = d.getHours()
+	var minute = d.getMinutes()
+	console.log(hour + ' ' + minute)
+	offset = 0;
+	pc_qr = loadImage("http://" + ip + "/washroom/lib/toilet_pc_qr.png")
+	matt = loadImage("http://" + ip + "/washroom/lib/matt.png")
+	keyboard = loadImage("http://" + ip + "/washroom/lib/keyboard.png")
+	waterHeight = 1
 
-    if (projector) {
-        flush.style("display", "none");
-        document.getElementById("back").style.display = "none";
-    }
-    if (!mobile) {
-        document.getElementById("back").style.display = "none"
-        // flush.class('toiletButton');
-        flush.id('flush');
-        flush.style("width", 100 + "px");
-        flush.style("height", 100 + "px");
-        flush.style("font-size", "15px");
-        flush.position(width - 200, height - 150);
-        flush.style("border-radius", "200px");
-    } else {
-          document.getElementById('back').href = 'http://' + ip + '/toilet';
-        flush.size(width, 80)
-        flush.position(0, height - 30);
-    }
+	hole = 50;
+	bg = loadImage("http://" + ip + "/washroom/lib/toilet-display.png")
+	bg_pc = loadImage("http://" + ip + "/washroom/lib/bg_pc.png")
+	layer = loadImage("http://" + ip + "/washroom/lib/toilet-layer.png")
+	layer_pc = loadImage("http://" + ip + "/washroom/lib/layer_pc.png")
+	imageMode(CENTER);
+	noiseSeed = 0;
+	createCanvas(windowWidth, windowHeight - 50);
+	attractor = createVector(width / 2, 170); //
+	flush = createButton('冲水');
+	divide = createA('/', '');
+	flush.class('toiletButton');
+	flush.id('flush');
+	flush.style("font-size", "15px");
 
-    socket = io.connect('http://' + ip + '/projector')
-    if (projector) {
-        socketToProjector = io.connect('http://' + ip + '/projectorStatus')
-    }
-    socket.on('uploadName', addImage);
-    socket.on('flushOther', flushFromToilet);
-    socket.on('imageBuffer', loadImageBuffer);
-    socket.on('flushByOther', flushByOther);
-    socket.on('flushPressedFromServer', addWater);
-    flush.mousePressed(flushPressed); //-----------------------------毕展后开放
-    socket.on('flushFromConsole', flushPressed)
-    socket.on('isFlushingSetup', function(status) {
+	if (projector) {
+		flush.style("display", "none");
+		document.getElementById("back").style.display = "none";
+	}
+	if (!mobile) {
+		document.getElementById("back").style.display = "none"
+		// flush.class('toiletButton');
+		flush.id('flush');
+		flush.style("width", 100 + "px");
+		flush.style("height", 100 + "px");
+		flush.style("font-size", "15px");
+		flush.position(width - 200, height - 150);
+		flush.style("border-radius", "200px");
+	} else {
+		document.getElementById('back').href = 'http://' + ip + '/toilet';
+		flush.size(width, 80)
+		flush.position(0, height - 30);
+	}
 
-        isFlushing = status; //test！！！！！！！！！！！！！！！！！！！！！！！！
-        if (isFlushing) {
-            flush.elt.innerHTML = "正在冲水"
-            document.getElementById('flush').style.background = "#BDD9E0";
-            document.getElementById('flush').style.color = "#AAAAAA";
-        } else {
-            if (isFlushing === false) {
-                flush.elt.innerHTML = "冲水"
-            }
-            document.getElementById('flush').style.background = "#E0EEE7";
-            document.getElementById('flush').style.color = "#527283";
-        }
-    });
-    socket.on('limitFromServer', function(limitFromServer) {
-        limit = limitFromServer;
-    });
-    socket.on('isFlushing', function(status) {
+	socket = io.connect('http://' + ip + '/projector')
+	if (projector) {
+		socketToProjector = io.connect('http://' + ip + '/projectorStatus')
+	}
+	socket.on('uploadName', addImage);
+	socket.on('flushOther', flushFromToilet);
+	socket.on('imageBuffer', loadImageBuffer);
+	socket.on('flushByOther', flushByOther);
+	socket.on('flushPressedFromServer', addWater);
+	flush.mousePressed(flushPressed); //-----------------------------毕展后开放
+	socket.on('flushFromConsole', flushPressed)
+	socket.on('isFlushingSetup', function(status) {
 
-        isFlushing = status; //tese。。。。。。。。。。。。。。。。。。。。。。。。。。。。！！！！！！
-        if (isFlushing) {
-            flush.elt.innerHTML = "正在冲水"
-            document.getElementById('flush').style.background = "#BDD9E0";
-            document.getElementById('flush').style.color = "#AAAAAA";
-        } else {
-            flush.elt.innerHTML = "冲水"
-            document.getElementById('flush').style.background = "#E0EEE7";
-            document.getElementById('flush').style.color = "#527283";
-        }
-    });
-    socket.on('imageScaleBuffer', function(imageScaleBuffer) {
-        imageRandomBuffer = imageScaleBuffer;
-        for (var i = 0; i < imageScaleBuffer.length; i++) {
-            if (imgPos[i])
-                imgPos[i].scale = imageRandomBuffer[i];
-        }
-    });
-    socket.on("newText", function(key) {
-        var num = floor(random(0, 2));
-        var temp = loadImage("http://" + ip + "/washroom/lib/text/" + key + key + ".png");
-        dropSound[num].setVolume(random(0.8, 1));
-        dropSound[num].play();
-        imgPos.push(new Particle(attractor));
-        img.push(temp);
-    })
-    socket.on("Cfont", function(key) {
-        var num = floor(random(0, 2));
-        var temp = loadImage("http://" + ip + "/washroom/lib/text/" + key + ".png");
-        dropSound[num].setVolume(random(0.3, 0.8));
-        dropSound[num].play();
-        imgPos.push(new Particle(attractor));
-        img.push(temp);
-    })
-    socket.on("return", function(key) {
-        var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var n = 5,
-            s = "";
-        for (var i = 0; i < n; i++) {
-            var rand = Math.floor(Math.random() * str.length);
-            s = str.charAt(rand);
-        }
-        var temp = loadImage("http://" + ip + "/washroom/lib/text/" + s + ".png");
-        imgPos.push(new Particle(attractor));
-        imgPos[imgPos.length - 1].pos = createVector(0, 0);
-        img.push(temp);
-    })
+		isFlushing = status; //test！！！！！！！！！！！！！！！！！！！！！！！！
+		if (isFlushing) {
+			flush.elt.innerHTML = "正在冲水"
+			document.getElementById('flush').style.background = "#BDD9E0";
+			document.getElementById('flush').style.color = "#AAAAAA";
+		} else {
+			if (isFlushing === false) {
+				flush.elt.innerHTML = "冲水"
+			}
+			document.getElementById('flush').style.background = "#E0EEE7";
+			document.getElementById('flush').style.color = "#527283";
+		}
+	});
+	socket.on('limitFromServer', function(limitFromServer) {
+		limit = limitFromServer;
+	});
+	socket.on('isFlushing', function(status) {
+
+		isFlushing = status; //tese。。。。。。。。。。。。。。。。。。。。。。。。。。。。！！！！！！
+		if (isFlushing) {
+			flush.elt.innerHTML = "正在冲水"
+			document.getElementById('flush').style.background = "#BDD9E0";
+			document.getElementById('flush').style.color = "#AAAAAA";
+		} else {
+			flush.elt.innerHTML = "冲水"
+			document.getElementById('flush').style.background = "#E0EEE7";
+			document.getElementById('flush').style.color = "#527283";
+		}
+	});
+	socket.on('imageScaleBuffer', function(imageScaleBuffer) {
+		imageRandomBuffer = imageScaleBuffer;
+		for (var i = 0; i < imageScaleBuffer.length; i++) {
+			if (imgPos[i])
+				imgPos[i].scale = imageRandomBuffer[i];
+		}
+	});
+	socket.on("newText", function(key) {
+		var num = floor(random(0, 2));
+		var temp = loadImage("http://" + ip + "/washroom/lib/text/" + key + key + ".png");
+		dropSound[num].setVolume(random(0.8, 1));
+		dropSound[num].play();
+		imgPos.push(new Particle(attractor));
+		img.push(temp);
+	})
+	socket.on("Cfont", function(key) {
+		var num = floor(random(0, 2));
+		var temp = loadImage("http://" + ip + "/washroom/lib/text/" + key + ".png");
+		dropSound[num].setVolume(random(0.3, 0.8));
+		dropSound[num].play();
+		imgPos.push(new Particle(attractor));
+		img.push(temp);
+	})
+	socket.on("return", function(key) {
+		var str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		var n = 5,
+			s = "";
+		for (var i = 0; i < n; i++) {
+			var rand = Math.floor(Math.random() * str.length);
+			s = str.charAt(rand);
+		}
+		var temp = loadImage("http://" + ip + "/washroom/lib/text/" + s + ".png");
+		imgPos.push(new Particle(attractor));
+		imgPos[imgPos.length - 1].pos = createVector(0, 0);
+		img.push(temp);
+	})
 }
 
 function draw() {
-    xNoise = noise(offset);
-    yNoise = noise(offset + 100);
-    offset += 0.007;
-    for (var i = 0; i < imgPos.length; i++) {}
-    if (!projector) {
-        background("#b8c3ca");
-    } else {
-        background(0);
-    }
-    if (attractForce != 0) {
-        attractor.z -= 0.05
-    }
-    if (attractForce === 0) {
-        attractor.z -= 0;
-    }
-    if (img.length === 0) {
-        attractForce = 0;
-    }
-    //bg
-    imageMode(CORNER)
-    if (!projector) {
-        if (mobile)
-            image(bg, 0, -ratio / 5, ratio, ratio * 2 / 1.2);
-        else {
-            image(bg_pc, width / 2 - bg_pc.width / 1.2 / 2, 0, bg_pc.width / 1.2, bg_pc.height / 1.2);
-        }
-    }
-    imageMode(CENTER)
-    //------------bg
+	xNoise = noise(offset);
+	yNoise = noise(offset + 100);
+	offset += 0.007;
+	for (var i = 0; i < imgPos.length; i++) {}
+	if (!projector) {
+		background("#b8c3ca");
+	} else {
+		background(0);
+	}
+	if (attractForce != 0) {
+		attractor.z -= 0.05
+	}
+	if (attractForce === 0) {
+		attractor.z -= 0;
+	}
+	if (img.length === 0) {
+		attractForce = 0;
+	}
+	//bg
+	imageMode(CORNER)
+	if (!projector) {
+		if (mobile)
+			image(bg, 0, -ratio / 5, ratio, ratio * 2 / 1.2);
+		else {
+			image(bg_pc, width / 2 - bg_pc.width / 1.2 / 2, 0, bg_pc.width / 1.2, bg_pc.height / 1.2);
+		}
+	}
+	imageMode(CENTER)
+	//------------bg
 
-    if (angle > 3) {
-        IAstep += 0.02;
-        imgAngle += constrain(IAstep, 0, 0.8);
-    }
-    if (rising && riseIndex > 0) {
+	if (angle > 3) {
+		IAstep += 0.02;
+		imgAngle += constrain(IAstep, 0, 0.8);
+	}
+	if (rising && riseIndex > 0) {
 
-    } else if (fallActive && riseIndex > 0) {
-        riseIndex -= 0.008;
-    }
+	} else if (fallActive && riseIndex > 0) {
+		riseIndex -= 0.008;
+	}
 
-    for (var i = 0; i < imgPos.length; i++) {
-        if (imgPos[i].pos)
-            var pos = imgPos[i].pos
-        if (imgPos[i].pos)
-            imgPos[i].update(attractForce);
+	for (var i = 0; i < imgPos.length; i++) {
+		if (imgPos[i].pos)
+			var pos = imgPos[i].pos
+		if (imgPos[i].pos)
+			imgPos[i].update(attractForce);
 
-        push();
-        if (!projector)
-            if (mobile)
-                translate(window.innerWidth / 2, window.innerWidth / 2.5);
-            else {
-                translate(0, ratio / 1.8);
-                translate(window.innerWidth / 2, 50);
-            }
-        else {
-            translate(window.innerWidth / 2, ratio / 1.8);
-        }
+		push();
+		if (!projector)
+			if (mobile)
+				translate(window.innerWidth / 2, window.innerWidth / 2.5);
+			else {
+				translate(0, ratio / 1.8);
+				translate(window.innerWidth / 2, 50);
+			}
+		else {
+			translate(window.innerWidth / 2, ratio / 1.8);
+		}
 
-        if (imageRandomBuffer[i]) {
-            if (imgPos[i].pos)
-                imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
-        } else {
-            if (imgPos[i].pos)
-                imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
-        }
-        if (imgPos[i].pos)
-            rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
-        if (imgPos[i].pos)
-            scale(imgPos[i].scale);
-        if (imgPos[i].pos) {
-            if (projector)
-                image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
-            else
-                image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 200), img[i].height / (constrain(width, 0, 400) / 200));
-        }
-        pop();
-
-
-    }
-    //------------------water
-    noStroke();
-    fill(204, 230, 237, map(waterHeight, 10, 200, 50, 100))
+		if (imageRandomBuffer[i]) {
+			if (imgPos[i].pos)
+				imgPos[i].scale = (waterHeight / 400 + riseIndex) * imageRandomBuffer[i];
+		} else {
+			if (imgPos[i].pos)
+				imgPos[i].scale = (waterHeight / 400 + riseIndex) * imgPos[i].scaleRandom;
+		}
+		if (imgPos[i].pos)
+			rotate((imgAngle / 7 + imgPos[i].dir) * imgPos[i].speed / PI / 2);
+		if (imgPos[i].pos)
+			scale(imgPos[i].scale);
+		if (imgPos[i].pos) {
+			if (projector)
+				image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 400), img[i].height / (constrain(width, 0, 400) / 400));
+			else
+				image(img[i], imgPos[i].pos.x, imgPos[i].pos.y, img[i].width / (constrain(width, 0, 400) / 200), img[i].height / (constrain(width, 0, 400) / 200));
+		}
+		pop();
 
 
-    water();
+	}
+	//------------------water
+	noStroke();
+	fill(204, 230, 237, map(waterHeight, 10, 200, 50, 100))
 
 
-    attractor.x = width / 2 + 200 * cos(noiseSeed)
-    attractor.y = height / 2 + 200 * sin(noiseSeed)
-    noiseSeed += 0.1;
-    imageMode(CORNER);
-    if (!projector) {
-        if (mobile)
-            image(layer, 0, -ratio / 5, ratio, ratio * 2 / 1.2);
-        else {
-            image(layer_pc, width / 2 - layer_pc.width / 1.2 / 2, 0, layer_pc.width / 1.2, layer_pc.height / 1.2);
-        }
-    }
-    imageMode(CENTER)
-    //---------------------
-    fill(222);
-    imgAngle += 0.005;
-    if (waterHeight <= 0) {
-        rising = true;
-        clearInterval(fall)
-        clearInterval(rise)
-        waterHeight = 0;
-        angle = 0;
-        if (riseIndex < 0.5) {
-            riseIndex += 0.005177;
-            if (IAstepForEase > 0.005) {
-                IAstepForEase -= 0.01;
-                imgAngle += IAstepForEase;
-            } else
-                imgAngle += 0.005;
-        }
-        flag = true;
-        if (IAstep > 0) {
-            IAstep -= 0.025;
-        } else if (riseIndex >= 0.5) {
-            waterHeight = 1
-            socket.emit('flushOver', false)
-        }
-    }
-    for (var i = 0; i < imgPos.length; i++) {
-        if (imgPos[i].pos)
-            if (imgPos[i].scale < 0.1 && limit > 0) {
-                imgPos.splice(i, 1);
-                img.splice(i, 1);
-                socket.emit('imgFlushed', i);
-                limit -= 1
-            }
+	water();
 
-    }
-    if (projector) {
-        push()
-        translate(width / 2, height / 2 - 300)
-        scale(-0.56);
-        image(matt, 0, 0)
 
-        pop()
+	attractor.x = width / 2 + 200 * cos(noiseSeed)
+	attractor.y = height / 2 + 200 * sin(noiseSeed)
+	noiseSeed += 0.1;
+	imageMode(CORNER);
+	if (!projector) {
+		if (mobile)
+			image(layer, 0, -ratio / 5, ratio, ratio * 2 / 1.2);
+		else {
+			image(layer_pc, width / 2 - layer_pc.width / 1.2 / 2, 0, layer_pc.width / 1.2, layer_pc.height / 1.2);
+		}
+	}
+	imageMode(CENTER)
+	//---------------------
+	fill(222);
+	imgAngle += 0.005;
+	if (waterHeight <= 0) {
+		rising = true;
+		clearInterval(fall)
+		clearInterval(rise)
+		waterHeight = 0;
+		angle = 0;
+		if (riseIndex < 0.5) {
+			riseIndex += 0.005177;
+			if (IAstepForEase > 0.005) {
+				IAstepForEase -= 0.01;
+				imgAngle += IAstepForEase;
+			} else
+				imgAngle += 0.005;
+		}
+		flag = true;
+		if (IAstep > 0) {
+			IAstep -= 0.025;
+		} else if (riseIndex >= 0.5) {
+			waterHeight = 1
+			socket.emit('flushOver', false)
+		}
+	}
+	for (var i = 0; i < imgPos.length; i++) {
+		if (imgPos[i].pos)
+			if (imgPos[i].scale < 0.1 && limit > 0) {
+				imgPos.splice(i, 1);
+				img.splice(i, 1);
+				socket.emit('imgFlushed', i);
+				limit -= 1
+			}
 
-    } else if (!mobile) {
-        image(pc_qr, 200, height - 160, pc_qr.width / 2.5, pc_qr.height / 2.5)
-          image(keyboard, 200, height - 450, keyboard.width / 2.5, keyboard.height / 2.5)
-    }
+	}
+	if (projector) {
+		push()
+		translate(width / 2, height / 2 - 300)
+		scale(-0.56);
+		image(matt, 0, 0)
+
+		pop()
+
+	} else if (!mobile) {
+		image(pc_qr, 200, height - 160, pc_qr.width / 2.5, pc_qr.height / 2.5)
+		image(keyboard, 200, height - 450, keyboard.width / 2.5, keyboard.height / 2.5)
+	}
 
 }
 
 function keyTyped() {
 
-    keyTriggered(key);
+	keyTriggered(key);
 
 }
 
 function addFont(key) {
-    console.log(key)
-    socket.emit("typed", key)
+	console.log(key)
+	socket.emit("typed", key)
 }
 
 function addCFont(key) {
-    console.log(key)
-    socket.emit("Cfont", key)
+	console.log(key)
+	socket.emit("Cfont", key)
 }

@@ -66,15 +66,15 @@ function flow() {
     }
 
     $(split.chars).each(function(i) {
-        TweenMax.to($(this), 30, {
+        TweenMax.to($(this), 12, {
             opacity: 0,
             x: random(-40, 40),
-            y: random(800, 850),
+            y: random(200, 1200),
             z: random(-0, 20),
-            scale: .5,
+            scale: .9,
             delay: 0,
             yoyo: true,
-            repeatDelay: 10
+            repeatDelay: 1
         });
     });
 
@@ -83,7 +83,7 @@ function flow() {
     // console.log($p)
     // num += 1
     if (num < 10 * times) {
-        setTimeout(flow, 1000)
+        setTimeout(flow, 100)
         num += 1
     }
 

@@ -91,14 +91,19 @@ function draw() {
     noStroke()
 
     // print(particles[0].pos)
-    fill(82, 114, 131, 100);
+
     for (var i = 0; i < particles.length; i++) {
         push()
         textSize(particles[i].scaleRandom);
         translate(particles[i].pos.x, particles[i].pos.y);
         rotate(particles[i].rotate);
-        if (str.charAt(i))
+
+        if (str.charAt(i)){
+                fill(255, 255, 255, 100);
+            ellipse(0,0,25,25)
+                fill(82, 114, 131, 100);
             text(str.charAt(i), 0, 0);
+        }
         pop()
     }
     // image(dryer, width / 2, (dryPosY-50)*2, dryer.width, dryer.height)

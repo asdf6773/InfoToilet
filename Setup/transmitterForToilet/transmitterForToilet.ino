@@ -62,7 +62,7 @@ void loop() {
   busy = digitalRead(2);
   int val  = map(analogRead(A0), 0, 736, 0, 1023);
   int val1  = map(analogRead(A1), 0, 736, 0, 1023);
-  //    Serial.print(val);
+      Serial.println(val);
   //        Serial.print(" ");
   //             Serial.println(val1);
   //  if ( lastVal < 500 && val >= 500) {

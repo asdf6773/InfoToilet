@@ -54,7 +54,8 @@ var water = function() {
 
 
 function addWater() {
-
+    flushSound.setVolume(1);
+    flushSound.play();
     riseIndex = 0.5;
 
     waitForFlush = false;
