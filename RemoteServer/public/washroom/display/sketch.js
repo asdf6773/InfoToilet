@@ -193,7 +193,7 @@ function draw() {
 	if (!projector) {
 		background("#b8c3ca");
 	} else {
-		background(100);
+		background(15);
 	}
 	if (attractForce != 0) {
 		attractor.z -= 0.05
@@ -322,8 +322,8 @@ function draw() {
 	}
 	if (projector) {
 		push()
-		translate(width / 2, height / 2 -100)
-		scale(-0.56);
+		translate(width / 2, height / 2 -300)
+		scale(-0.46);
 		rotate(PI/6);
 		image(matt, 0, 0);
 
