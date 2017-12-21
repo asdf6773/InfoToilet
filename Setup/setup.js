@@ -26,9 +26,9 @@ if (ifaceState) {
 }
 // console.log(ifaceState.ssid === undefined)
 
-if (ifaceState.ssid != "Vision Prosper" || ifaceState.ssid == undefined) {
+if (ifaceState.ssid != "Vision_Prosper" || ifaceState.ssid == undefined) {
     var _ap = {
-        ssid: "Vision Prosper",
+        ssid: "Vision_Prosper",
         password: "18616849599"
     };
     var results = WiFiControl.connectToAP(_ap, function(err, response) {
@@ -60,10 +60,10 @@ function checkInternet(cb) {
 setInterval(function() {
     console.log("isSetup？：" + isSetup)
     ifaceState = WiFiControl.getIfaceState();
-    if (ifaceState.ssid != "Vision Prosper" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
+    if (ifaceState.ssid != "Vision_Prosper" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
         isSetup = false;
         var _ap = {
-            ssid: "Vision Prosper",
+            ssid: "Vision_Prosper",
             password: "18616849599"
         }; //连上后自动登陆
         var results = WiFiControl.connectToAP(_ap, function(err, response) {
