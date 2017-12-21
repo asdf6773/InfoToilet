@@ -71,7 +71,7 @@ void loop() {
     checkCount = 0;
   }
   //---------
-
+Serial.println(val);
   if ((val > 500 && lastVal <= 500) && busy == 1) {
 
 
