@@ -37,11 +37,11 @@ var water = function() {
     // translate(0,20)
     fill(204, 230, 237, map(waterHeight, 10, 200, 50, 100) / 2)
     if (projector) {
-        ellipse(0 + xNoise * 20, -88 + yNoise * 20, ratio / (2.1), ratio / (1.95));
-        ellipse(0 - xNoise * 20, -100 + yNoise * 10, ratio / (2), ratio / (1.85));
-        ellipse(10 + yNoise * 20, -90 + xNoise * 20, ratio / (2), ratio / (1.85));
-        ellipse(20 + xNoise * 20, -118 + yNoise * 20 + xNoise * 20, ratio / (2.1), ratio / (1.95));
-        ellipse(0 + yNoise * 20, -128 + xNoise * 20, ratio / (2.1), ratio / (1.95));
+        ellipse(0 + xNoise * 50, -138 + yNoise *50, ratio / (2.1), ratio / (1.95));
+        ellipse(0 - xNoise * 50, -150 + yNoise * 100, ratio / (2), ratio / (1.85));
+        ellipse(10 + yNoise * 50, -140 + xNoise * 200, ratio / (2), ratio / (1.85));
+        ellipse(20 + xNoise * 50, -168 + yNoise * 200 + xNoise * 20, ratio / (2.1), ratio / (1.95));
+        ellipse(0 + yNoise * 50, -168 + xNoise * 200, ratio / (2.1), ratio / (1.95));
     } else {
         ellipse(5, -55, ratio / (1.6), ratio / (1.5));
         ellipse(0, -50, ratio / (1.6), ratio / (1.5));

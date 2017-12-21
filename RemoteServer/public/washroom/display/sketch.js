@@ -188,12 +188,12 @@ function setup() {
 function draw() {
 	xNoise = noise(offset);
 	yNoise = noise(offset + 100);
-	offset += 0.007;
+	offset += 0.001;
 	for (var i = 0; i < imgPos.length; i++) {}
 	if (!projector) {
 		background("#b8c3ca");
 	} else {
-		background(0);
+		background(100);
 	}
 	if (attractForce != 0) {
 		attractor.z -= 0.05
@@ -322,9 +322,10 @@ function draw() {
 	}
 	if (projector) {
 		push()
-		translate(width / 2, height / 2 - 300)
+		translate(width / 2, height / 2 -100)
 		scale(-0.56);
-		image(matt, 0, 0)
+		rotate(PI/6);
+		image(matt, 0, 0);
 
 		pop()
 

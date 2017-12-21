@@ -10,7 +10,7 @@ var isSetup = false;
 var isSetting = false;
 var options = {
     name: 'y-zhang-13',
-    pwd: '89154055qQ'
+    pwd: '18616849599'
 }
 
 
@@ -26,10 +26,10 @@ if (ifaceState) {
 }
 // console.log(ifaceState.ssid === undefined)
 
-if (ifaceState.ssid != "washroom" || ifaceState.ssid == undefined) {
+if (ifaceState.ssid != "Vision Prosper" || ifaceState.ssid == undefined) {
     var _ap = {
-        ssid: "washroom",
-        password: "89154055qQ"
+        ssid: "Vision Prosper",
+        password: "18616849599"
     };
     var results = WiFiControl.connectToAP(_ap, function(err, response) {
         if (err) console.log(err);
@@ -60,11 +60,11 @@ function checkInternet(cb) {
 setInterval(function() {
     console.log("isSetup？：" + isSetup)
     ifaceState = WiFiControl.getIfaceState();
-    if (ifaceState.ssid != "washroom" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
+    if (ifaceState.ssid != "Vision Prosper" || ifaceState.ssid == undefined) { //如果没连接校园网，则自动连接
         isSetup = false;
         var _ap = {
-            ssid: "washroom",
-            password: "89154055qQ"
+            ssid: "Vision Prosper",
+            password: "18616849599"
         }; //连上后自动登陆
         var results = WiFiControl.connectToAP(_ap, function(err, response) {
             if (err) console.log(err);
