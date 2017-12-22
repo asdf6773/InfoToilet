@@ -20,7 +20,7 @@ window.onload = function() {
 }
 
 function positionOnDestop() {
-    grid = new Grid(6, 3, window.innerWidth / 50)
+    grid = new Grid(5, 3, window.innerWidth / 50)
     // $(".name").css("top", window.innerWidth / 50+"vw")
     $(".img").css("position", "absolute")
     $(".item").css("position", "absolute")
@@ -81,23 +81,23 @@ function positionOnDestop() {
 
 
 
-
-    $("#nodejs")
-        .css("bottom", grid.grid[2][5].size / 5 *0.6+ "px")
-        .css("left", grid.grid[2][5].x * 1.06 + "px")
-        .css("width", grid.grid[2][5].size * 0.5 + "px")
-    $("#p5js")
-        .css("bottom", grid.grid[2][5].size / 1.7*0.6 + "px")
-        .css("left", grid.grid[2][5].x * 1.064 + "px")
-        .css("width", grid.grid[2][5].size * 0.3 + "px")
+    //
+    // $("#nodejs")
+    //     .css("bottom", grid.grid[2][5].size / 5 *0.6+ "px")
+    //     .css("left", grid.grid[2][5].x * 1.06 + "px")
+    //     .css("width", grid.grid[2][5].size * 0.5 + "px")
+    // $("#p5js")
+    //     .css("bottom", grid.grid[2][5].size / 1.7*0.6 + "px")
+    //     .css("left", grid.grid[2][5].x * 1.064 + "px")
+    //     .css("width", grid.grid[2][5].size * 0.3 + "px")
 
     $("#powerby")
         // .css("width", 100 + "%")
         // .css("height", 100 + "px")
         // .css("text-align", "right")
         .css("position", "absolute")
-        .css("left", grid.grid[2][5].x*1.063+ "px")
-        .css("bottom", grid.grid[2][5].size / 1.15*0.6 + "px")
+        // .css("left", grid.grid[2][5].x*1.063+ "px")
+        // .css("bottom", grid.grid[2][5].size / 1.15*0.6 + "px")
 
     $("#up1")
         .css("top", grid.grid[1][1].y + grid.grid[0][1].size * 0.20 + "px")
@@ -127,7 +127,7 @@ function positionOnDestop() {
 }
 
 function positionOnMobile() {
-    grid = new Grid(2, 5, 10)
+    grid = new Grid(2, 4, 10)
     $(".name").css("top", +window.innerWidth / 5 + "px")
     $(".en").css("top", +window.innerWidth / 3.5 + "px")
     $(".img").css("position", "absolute")
@@ -152,16 +152,16 @@ function positionOnMobile() {
         .css("left", grid.grid[3][1].x + "px")
         .css("width", grid.grid[3][1].size + "px")
 
-    $("#me")
-        .css("top", grid.grid[4][0].y + "px")
-        .css("left", grid.grid[4][0].x + "px")
-        .css("width", grid.grid[4][0].size + "px")
-
-    $("#logo")
-        .css("top", grid.grid[4][1].y + "px")
-        .css("left", grid.grid[4][1].x + "px")
-        .css("width", grid.grid[4][1].size + "px")
-
+    // $("#me")
+    //     .css("top", grid.grid[4][0].y + "px")
+    //     .css("left", grid.grid[4][0].x + "px")
+    //     .css("width", grid.grid[4][0].size + "px")
+    //
+    // $("#logo")
+    //     .css("top", grid.grid[4][1].y + "px")
+    //     .css("left", grid.grid[4][1].x + "px")
+    //     .css("width", grid.grid[4][1].size + "px")
+    //
 
     $("#catalog1")
         .css("top", grid.grid[0][1].y + "px")
@@ -184,29 +184,29 @@ function positionOnMobile() {
         .css("width", grid.grid[3][0].size + "px")
 
 
-    $("#catalog5")
-        .css("top", grid.grid[4][0].y * 0.95 + "px")
-        .css("left", grid.grid[4][0].x + "px")
-        .css("width", grid.grid[4][0].size + "px")
-
-    $("#catalog6").css("top", grid.grid[4][1].y * 0.95 + "px")
-        .css("left", grid.grid[4][1].x + "px")
-        .css("width", grid.grid[4][1].size + "px")
+    // $("#catalog5")
+    //     .css("top", grid.grid[4][0].y * 0.95 + "px")
+    //     .css("left", grid.grid[4][0].x + "px")
+    //     .css("width", grid.grid[4][0].size + "px")
+    //
+    // $("#catalog6").css("top", grid.grid[4][1].y * 0.95 + "px")
+    //     .css("left", grid.grid[4][1].x + "px")
+    //     .css("width", grid.grid[4][1].size + "px")
     $("body").css("height", grid.bodyHeight * 1.1 + "px")
 
-    $("#nodejs").css("top", grid.grid[4][1].y * 1.25 * 1.029 + "px")
-        .css("left", grid.grid[4][1].x + "px")
-        .css("width", grid.grid[4][1].size * 0.5 + "px")
-    $("#p5js").css("top", grid.grid[4][1].y * 1.265 * 1.029 + "px")
-        .css("left", grid.grid[4][1].x * 0.62 + "px")
-        .css("width", grid.grid[4][1].size * 0.3 + "px")
-
-    $("#powerby")
-        .css("width", 100 + "%")
-        .css("text-align", "center")
-        .css("position", "absolute")
-        .css("font-size",grid.grid[4][1].size/12 + "px")
-        .css("top", grid.grid[4][1].y * 1.22 * 1.029 + "px")
+    // $("#nodejs").css("top", grid.grid[4][1].y * 1.25 * 1.029 + "px")
+    //     .css("left", grid.grid[4][1].x + "px")
+    //     .css("width", grid.grid[4][1].size * 0.5 + "px")
+    // $("#p5js").css("top", grid.grid[4][1].y * 1.265 * 1.029 + "px")
+    //     .css("left", grid.grid[4][1].x * 0.62 + "px")
+    //     .css("width", grid.grid[4][1].size * 0.3 + "px")
+    //
+    // $("#powerby")
+    //     .css("width", 100 + "%")
+    //     .css("text-align", "center")
+    //     .css("position", "absolute")
+    //     .css("font-size",grid.grid[4][1].size/12 + "px")
+    //     .css("top", grid.grid[4][1].y * 1.22 * 1.029 + "px")
 
     $("#left1")
         .css("top", grid.grid[0][1].y + grid.grid[0][1].size * 0.42 + "px")

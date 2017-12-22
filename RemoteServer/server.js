@@ -380,6 +380,7 @@
  });
  //socket
  io.of("/faucet").on('connection', function(socket) {
+      socket.emit("initData", weiboData);
      socket.on("test", function() {
          socket.emit("weiboData", weiboData);
      })
