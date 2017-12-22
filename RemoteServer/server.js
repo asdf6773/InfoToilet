@@ -139,7 +139,7 @@
      res.sendFile(__dirname + "/public/washroom/author/index.html");
  });
  app.get("/toilet", function(req, res) {
-     res.sendFile(__dirname + "/public/washroom/closestool/uploader.html");
+     res.sendFile(__dirname + "/public/washroom/closestool/washroom.html");
  });
  app.get("/mirror", function(req, res) {
      res.sendFile(__dirname + "/public/washroom/mirror/index.html");
