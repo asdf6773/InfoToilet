@@ -74,6 +74,9 @@
  router.get('/toilet', function(req, res) {
      res.sendFile(__dirname + "/public/washroom/closestool/uploader.html");
  })
+ router.get('/toilet2', function(req, res) {
+     res.sendFile(__dirname + "/public/washroom/closestool/uploader.html");
+ })
  router.get('/faucet', function(req, res) {
      res.sendFile(__dirname + "/public/washroom/faucet/index.html");
  })
