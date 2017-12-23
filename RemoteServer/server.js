@@ -174,7 +174,9 @@
  app.get("/console", function(req, res) {
      res.sendFile(__dirname + "/public/washroom/console/console.html");
  });
-
+ app.get('/toilet2', function(req, res) {
+     res.sendFile(__dirname + "/public/washroom/closestool/uploader.html");
+ })
 
  var urlencodedParser = bodyParser.urlencoded({
      extended: false
